@@ -1,11 +1,24 @@
-var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var pkg = require('./package.json');
+var webpack = require('webpack');
+var fs = require('fs');
 var name = pkg.name;
 var plugins = [];
 
 if (process.env.WEBPACK_ENV !== 'dev') {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
-  plugins.push(new webpack.BannerPlugin(name + ' - ' + pkg.version));
+  plugins = [
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compressor: {warnings: false},
+    }),
+    new webpack.BannerPlugin(name + ' - ' + pkg.version),
+  ]
+} else {
+  var index = 'index.html';
+  var indexDev = '_' + index;
+  plugins.push(new HtmlWebpackPlugin({
+    template: fs.existsSync(indexDev) ? indexDev : index
+  }));
 }
 
 module.exports = {
@@ -17,14 +30,12 @@ module.exports = {
   },
   module: {
     loaders: [{
-        test: /\.jsx?$/,
+        test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
         include: /src/,
-        query: {
-          presets: ['es2015']
-        }
+        exclude: /node_modules/
     }],
   },
-  plugins: plugins
+  externals: {'grapesjs': 'grapesjs'},
+  plugins: plugins,
 };

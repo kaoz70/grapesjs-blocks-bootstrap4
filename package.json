@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-plugin-boilerplate",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "GrapesJS Plugin Boilerplate",
   "main": "dist/YOUR-PLUGIN-NAME.min.js",
   "scripts": {

@@ -44,7 +44,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 ## Download
 
-* `npm i YOUR-PLUGIN-NAME` or `yarn add YOUR-PLUGIN-NAME`
+* `npm i YOUR-PLUGIN-NAME`
 
 
 
