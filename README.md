@@ -3,6 +3,10 @@
 
 <span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
 
+<a rel="nofollow" href="https://app.codesponsor.io/link/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate">
+  <img alt="Sponsor" width="888" height="68" src="https://app.codesponsor.io/embed/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate.svg"/>
+</a>
+
 This boilerplate helps you quickly start a production ready plugin for GrapesJS. If you don't know from where to start, check this guide [Creating plugins](https://github.com/artf/grapesjs/wiki/Creating-plugins). Sections below are also used as boilerplate for your README, follow steps
 
 ### Usage
@@ -82,22 +86,22 @@ $ git clone https://github.com/YOUR-NAME/YOUR-PLUGIN-NAME.git
 $ cd YOUR-PLUGIN-NAME
 ```
 
-Install it
+Install dependencies
 
 ```sh
 $ npm i
+```
+
+The plugin relies on GrapesJS via `peerDependencies` so you have to install it manually (without adding it to package.json)
+
+```sh
+$ npm i grapesjs --no-save
 ```
 
 Start the dev server
 
 ```sh
 $ npm start
-```
-
-Build before the commit. This will also increase the patch level version of the package
-
-```sh
-$ npm run build
 ```
 
 

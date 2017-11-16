@@ -2,12 +2,16 @@
   "name": "grapesjs-plugin-boilerplate",
   "version": "0.0.1",
   "description": "GrapesJS Plugin Boilerplate",
-  "main": "dist/grapesjs-plugin.min.js",
+  "main": "dist/YOUR-PLUGIN-NAME.min.js",
   "scripts": {
     "lint": "eslint src",
     "v:patch": "npm version --no-git-tag-version patch",
     "build": "cross-env WEBPACK_ENV=prod && npm run v:patch && webpack",
     "start": "cross-env WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artf/grapesjs-plugin-boilerplate.git"
   },
   "keywords": [
     "grapesjs",
@@ -19,32 +23,24 @@
   "license": "BSD-3-Clause",
   "babel": {
     "presets": [
-      [
-        "env",
-        {
-          "targets": [
-            "> 1%",
-            "ie 11",
-            "safari 8"
-          ],
-          "useBuiltIns": true
-        }
-      ]
+      "env"
     ],
     "plugins": [
       "transform-object-rest-spread"
     ]
   },
+  "peerDependencies": {
+    "grapesjs": "0.x"
+  },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "cross-env": "^5.0.2",
-    "grapesjs": "^0.9.19",
-    "jquery": "^3.2.1",
-    "node-sass": "^4.5.3",
-    "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "html-webpack-plugin": "^2.30.1",
+    "cross-env": "^5.1.1",
+    "eslint": "^4.1.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   }
 }

@@ -1,11 +1,9 @@
-var path = require('path');
 var webpack = require('webpack');
 var pkg = require('./package.json');
 var name = pkg.name;
-var env = process.env.WEBPACK_ENV;
 var plugins = [];
 
-if (env !== 'dev') {
+if (process.env.WEBPACK_ENV !== 'dev') {
   plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
   plugins.push(new webpack.BannerPlugin(name + ' - ' + pkg.version));
 }
