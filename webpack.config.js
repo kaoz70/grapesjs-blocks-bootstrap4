@@ -1,21 +1,18 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var pkg = require('./package.json');
-var webpack = require('webpack');
-var fs = require('fs');
-var name = pkg.name;
-var plugins = [];
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const pkg = require('./package.json');
+const webpack = require('webpack');
+const fs = require('fs');
+const name = pkg.name;
+let plugins = [];
 
 if (process.env.WEBPACK_ENV !== 'dev') {
   plugins = [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compressor: {warnings: false},
-    }),
-    new webpack.BannerPlugin(name + ' - ' + pkg.version),
+    new webpack.optimize.UglifyJsPlugin({ minimize: true, compressor: { warnings: false }}),
+    new webpack.BannerPlugin(`${name} - ${pkg.version}`),
   ]
 } else {
-  var index = 'index.html';
-  var indexDev = '_' + index;
+  const index = 'index.html';
+  const indexDev = '_' + index;
   plugins.push(new HtmlWebpackPlugin({
     template: fs.existsSync(indexDev) ? indexDev : index
   }));
@@ -24,7 +21,7 @@ if (process.env.WEBPACK_ENV !== 'dev') {
 module.exports = {
   entry: './src',
   output: {
-      filename: './dist/' + name + '.min.js',
+      filename: `./dist/${name}.min.js`,
       library: name,
       libraryTarget: 'umd',
   },
@@ -33,7 +30,6 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: /src/,
-        exclude: /node_modules/
     }],
   },
   externals: {'grapesjs': 'grapesjs'},
