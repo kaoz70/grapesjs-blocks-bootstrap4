@@ -26,8 +26,12 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 ## Summary
 
 * Plugin name: `YOUR-PLUGIN-NAME`
-* Components: `new-component1`, `new-component2`, ...
-* Blocks: `new-block1`, `new-block1`, ...
+* Components
+  * `new-component1`
+  * `new-component2`
+* Blocks
+  * `new-block1`
+  * `new-block1`
 ...
 
 
@@ -36,7 +40,9 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 ## Options
 
-* `option1` Description option, default: `default value`
+|Option|Description|Default|
+|-|-|-
+|`option1`|Description option|`default value`|
 
 
 
@@ -44,7 +50,12 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 ## Download
 
-* `npm i YOUR-PLUGIN-NAME`
+* CDN
+  * `https://unpkg.com/YOUR-PLUGIN-NAME`
+* NPM
+  * `npm i YOUR-PLUGIN-NAME`
+* GIT
+  * `git clone https://github.com/YOUR-NAME/YOUR-PLUGIN-NAME.git`
 
 
 
@@ -53,8 +64,8 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 ## Usage
 
 ```html
-<link href="path/to/grapes.min.css" rel="stylesheet"/>
-<script src="path/to/grapes.min.js"></script>
+<link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
+<script src="https://unpkg.com/grapesjs"></script>
 <script src="path/to/YOUR-PLUGIN-NAME.min.js"></script>
 
 <div id="gjs"></div>
