@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint src",
     "v:patch": "npm version --no-git-tag-version patch",
-    "build": "cross-env WEBPACK_ENV=prod && npm run v:patch && webpack",
-    "start": "cross-env WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --colors"
+    "build": "npm run v:patch && webpack --env.production",
+    "start": "webpack-dev-server --open --progress --colors"
   },
   "repository": {
     "type": "git",
