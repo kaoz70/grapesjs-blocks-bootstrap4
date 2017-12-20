@@ -16,6 +16,42 @@ export default (editor, config = {}) => {
     });
   }
 
+  if (blocks.container) {
+    bm.add('container').set({
+      label: c.labels.container,
+      category: 'Layout',
+      attributes: {class:'fa fa-columns'},
+      content: {
+        type: 'container',
+        classes: ['container']
+      }
+    });
+  }
+
+  if (blocks.row) {
+    bm.add('row').set({
+      label: c.labels.row,
+      category: 'Layout',
+      attributes: {class:'fa fa-columns'},
+      content: {
+        type: 'row',
+        classes: ['row']
+      }
+    });
+  }
+
+  if (blocks.column) {
+    bm.add('column').set({
+      label: c.labels.column,
+      category: 'Layout',
+      attributes: {class:'fa fa-columns'},
+      content: {
+        type: 'column',
+        classes: ['col']
+      }
+    });
+  }
+
   if (blocks.header) {
     bm.add('header', {
       label: c.labels.header,

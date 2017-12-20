@@ -1,8 +1,8 @@
 # GrapesJS Bootstrap v4 Blocks Plugin
 
-<!--<span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
+<!--<span><a href="https://david-dm.org/z1lk/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>-->
 
-<a rel="nofollow" href="https://app.codesponsor.io/link/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate">
+<!--<a rel="nofollow" href="https://app.codesponsor.io/link/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate">
   <img alt="Sponsor" width="888" height="68" src="https://app.codesponsor.io/embed/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate.svg"/>
 </a>-->
 
@@ -10,9 +10,15 @@
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
 * Components
+  * `container`
+  * `row`
+  * `column`
   * `text`
   * `header`
 * Blocks
+  * `container`
+  * `row`
+  * `column`
   * `text`
   * `header`
 
@@ -26,15 +32,20 @@
 
 |Option|Description|Default|
 |-|-|-
+|`container`|Containers (fixed/fluid)|true|
+|`row`|Row|true|
+|`column`|Columns of all sizes|true|
 |`text`|Default text component with utility traits|true|
 |`header`|H1-H6|true|
 
+<!--
 ### Labels
 
 |Option|Description|Default|
 |-|-|-
 |`text`||'Text'|
 |`header`||'Header'|
+-->
 
 
 

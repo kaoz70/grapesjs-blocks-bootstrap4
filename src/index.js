@@ -11,16 +11,36 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
   delete opts['blocks'];
   delete opts['labels'];
 
+  const default_blocks = {
+    text: true,
+    container: true,
+    row: true,
+    column: true,
+    header: true
+  }
+
+  const default_labels = {
+    text: 'Text',
+    container: 'Container',
+    row: 'Row',
+    column: 'Column',
+    header: 'Header'
+  }
+
   let options = { ...{
-    blocks: Object.assign({
-      text: true,
-      header: true
-    }, opts_blocks),
-    labels: Object.assign({
-      text: 'Text',
-      header: 'Header'
-    }, opts_labels)
+    blocks: Object.assign(default_blocks, opts_blocks),
+    labels: Object.assign(default_labels, opts_labels)
   },  ...opts };
+
+ editor.addComponents(`
+    <style>
+      .gjs-dashed .container, .gjs-dashed .container-fluid,
+      .gjs-dashed .row,
+      .gjs-dashed .col, .gjs-dashed [class^="col-"] {
+        min-height: 1rem !important;
+      }
+    </style>
+  `);
 
   // Add components
   loadComponents(editor, options);
