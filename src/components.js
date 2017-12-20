@@ -52,7 +52,6 @@ export default (editor, config = {}) => {
           const size = this.get('display-heading-size');
           this.removeClass(['display-1', 'display-2', 'display-3', 'display-4']);
           if(['1','2','3','4'].includes(size)) {
-            console.log('adding display class');
             this.addClass(`display-${size}`);
           }
           this.em.trigger('change:selectedComponent');
