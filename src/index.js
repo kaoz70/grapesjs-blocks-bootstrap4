@@ -6,13 +6,20 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
 
   window.editor = editor;
 
+  const opts_blocks = opts.blocks || {};
+  const opts_labels = opts.labels || {};
+  delete opts['blocks'];
+  delete opts['labels'];
+
   let options = { ...{
-    blocks: [
-      'text', 'header'
-    ],
-    labels: {
+    blocks: Object.assign({
+      text: true,
+      header: true
+    }, opts_blocks),
+    labels: Object.assign({
+      text: 'Text',
       header: 'Header'
-    }
+    }, opts_labels)
   },  ...opts };
 
   // Add components

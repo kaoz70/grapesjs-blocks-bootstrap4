@@ -7,9 +7,9 @@ export default (editor, config = {}) => {
   const defaultModel = defaultType.model;
   const defaultView = defaultType.view;
 
-  const textTypeOrig = domc.getType('text');
-  const textModelOrig = textTypeOrig.model;
-  const textViewOrig = textTypeOrig.view;
+  var textType = domc.getType('text');
+  var textModel = textType.model;
+  var textView = textType.view;
 
   const linkType = domc.getType('link');
   const linkModel = linkType.model;
@@ -20,58 +20,60 @@ export default (editor, config = {}) => {
   const imageView = imageType.view;
 
   // Rebuild the text component and add some "utility" traits to it
-  domc.addType('text', {
-    model: textModelOrig.extend({
-      defaults: Object.assign({}, textModelOrig.prototype.defaults, {
-        'custom-name': 'Text',
-        tagName: 'div',
-        attributes: {
-          'data-bs-text': true
+  if (blocks.text) {
+    domc.addType('text', {
+      model: textModel.extend({
+        defaults: Object.assign({}, textModel.prototype.defaults, {
+          'custom-name': 'Text',
+          tagName: 'div',
+          attributes: {
+            'data-bs-text': true
+          },
+          traits: [
+            {
+              type: 'select',
+              options: [
+                {value: '0', name: 'None'},
+                {value: '1', name: 'One (largest)'},
+                {value: '2', name: 'Two '},
+                {value: '3', name: 'Three '},
+                {value: '4', name: 'Four (smallest)'}
+              ],
+              label: 'Display Heading',
+              name: 'display-heading-size',
+              changeProp: 1
+            }
+          ].concat(textModel.prototype.defaults.traits)
+        }),
+        init() {
+          this.listenTo(this, 'change:display-heading-size', this.changeDisplayHeadingClass);
         },
-        traits: [
-          {
-            type: 'select',
-            options: [
-              {value: '0', name: 'None'},
-              {value: '1', name: 'One (largest)'},
-              {value: '2', name: 'Two '},
-              {value: '3', name: 'Three '},
-              {value: '4', name: 'Four (smallest)'}
-            ],
-            label: 'Display Heading',
-            name: 'display-heading-size',
-            changeProp: 1
+        changeDisplayHeadingClass() {
+          const size = this.get('display-heading-size');
+          this.removeClass(['display-1', 'display-2', 'display-3', 'display-4']);
+          if(['1','2','3','4'].includes(size)) {
+            console.log('adding display class');
+            this.addClass(`display-${size}`);
           }
-        ].concat(textModelOrig.prototype.defaults.traits)
+          this.em.trigger('change:selectedComponent');
+        },
+      }, {
+        isComponent(el) {
+          if(el && el.dataset && el.dataset.bsText) {
+            return {type: 'bs_text'};
+          }
+        }
       }),
-      init() {
-        this.listenTo(this, 'change:display-heading-size', this.changeDisplayHeadingClass);
-      },
-      changeDisplayHeadingClass() {
-        const size = this.get('display-heading-size');
-        this.removeClass(['display-1', 'display-2', 'display-3', 'display-4']);
-        if(['1','2','3','4'].includes(size)) {
-          console.log('adding display class');
-          this.addClass(`display-${size}`);
-        }
-        this.em.trigger('change:selectedComponent');
-      },
-    }, {
-      isComponent(el) {
-        if(el && el.dataset && el.dataset.bsText) {
-          return {type: 'bs_text'};
-        }
-      }
-    }),
-    view: textViewOrig
-  });
-  const textType = domc.getType('text');
-  const textModel = textType.model;
-  const textView = textType.view;
+      view: textView
+    });
+    textType = domc.getType('text');
+    textModel = textType.model;
+    textView = textType.view;
+  }
 
   // Header
 
-  if (blocks.indexOf('header') >= 0) {
+  if (blocks.header) {
     domc.addType('header', {
       model: textModel.extend({
         defaults: Object.assign({}, textModel.prototype.defaults, {

@@ -1,4 +1,4 @@
-# GrapesJS Plugin Boilerplate
+# GrapesJS Bootstrap v4 Blocks Plugin
 
 <!--<span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
 
@@ -10,6 +10,7 @@
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
 * Components
+  * `text`
   * `header`
 * Blocks
   * `text`
@@ -21,9 +22,19 @@
 
 ## Options
 
+### Blocks
+
 |Option|Description|Default|
 |-|-|-
-|`option1`|Description option|`default value`|
+|`text`|Default text component with utility traits|true|
+|`header`|H1-H6|true|
+
+### Labels
+
+|Option|Description|Default|
+|-|-|-
+|`text`||'Text'|
+|`header`||'Header'|
 
 
 
@@ -31,10 +42,10 @@
 
 ## Download
 
-* CDN
+<!--* CDN
   * `https://unpkg.com/grapesjs-blocks-bootstrap4`
 * NPM
-  * `npm i grapesjs-blocks-bootstrap4`
+  * `npm i grapesjs-blocks-bootstrap4`-->
 * GIT
   * `git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git`
 
@@ -58,7 +69,12 @@
       plugins: ['grapesjs-blocks-bootstrap4'],
       pluginsOpts: {
         'grapesjs-blocks-bootstrap4': {
-          // options
+          blocks: {
+            // ...
+          },
+          labels: {
+            // ...
+          }
         }
       }
   });
