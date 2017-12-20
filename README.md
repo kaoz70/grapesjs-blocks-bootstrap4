@@ -1,38 +1,19 @@
 # GrapesJS Plugin Boilerplate
 
-
-<span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
+<!--<span><a href="https://david-dm.org/artf/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>
 
 <a rel="nofollow" href="https://app.codesponsor.io/link/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate">
   <img alt="Sponsor" width="888" height="68" src="https://app.codesponsor.io/embed/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate.svg"/>
-</a>
-
-This boilerplate helps you quickly start a production ready plugin for GrapesJS. If you don't know from where to start, check this guide [Creating plugins](https://github.com/artf/grapesjs/wiki/Creating-plugins). Sections below are also used as boilerplate for your README, follow steps
-
-### Usage
-1. Clone this repository `git clone https://github.com/artf/grapesjs-plugin-boilerplate.git`
-1. Replace in all files `grapesjs-blocks-bootstrap4` with your plugin name
-1. Update `package.json`
-1. Install dependencies `npm i` and run the local server `npm start`
-1. Start creating your plugin from `src/index.js`
-1. Show some gif/demo if possible
-1. Update README
-1. When you're ready update the production file `npm run build`
-1. Publish
-
-
-
+</a>-->
 
 ## Summary
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
 * Components
-  * `new-component1`
-  * `new-component2`
+  * `header`
 * Blocks
-  * `new-block1`
-  * `new-block1`
-...
+  * `text`
+  * `header`
 
 
 

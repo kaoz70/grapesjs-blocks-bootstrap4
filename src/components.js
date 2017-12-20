@@ -44,10 +44,10 @@ export default (editor, config = {}) => {
           }
         ].concat(textModelOrig.prototype.defaults.traits)
       }),
-      init: function () {
+      init() {
         this.listenTo(this, 'change:display-heading-size', this.changeDisplayHeadingClass);
       },
-      changeDisplayHeadingClass: function() {
+      changeDisplayHeadingClass() {
         const size = this.get('display-heading-size');
         this.removeClass(['display-1', 'display-2', 'display-3', 'display-4']);
         if(['1','2','3','4'].includes(size)) {
@@ -57,7 +57,7 @@ export default (editor, config = {}) => {
         this.em.trigger('change:selectedComponent');
       },
     }, {
-      isComponent: function(el) {
+      isComponent(el) {
         if(el && el.dataset && el.dataset.bsText) {
           return {type: 'bs_text'};
         }
@@ -96,7 +96,7 @@ export default (editor, config = {}) => {
         }),
 
       }, {
-        isComponent: function(el) {
+        isComponent(el) {
           if(el && ['H1','H2','H3','H4','H5','H6'].includes(el.tagName)) {
             return {type: 'header'};
           }

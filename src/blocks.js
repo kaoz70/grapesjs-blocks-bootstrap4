@@ -2,7 +2,19 @@ export default (editor, config = {}) => {
   const c = config;
   let bm = editor.BlockManager;
   let blocks = c.blocks;
-  let stylePrefix = c.stylePrefix;
+
+
+  if (blocks.indexOf('text') >= 0) {
+    bm.add('text', {
+      label: 'Text',
+      category: 'Typography',
+      attributes: {class:'fa fa-font'},
+      content: {
+        type:'text',
+        content: 'Insert your text here'
+      }
+    });
+  }
 
   if (blocks.indexOf('header') >= 0) {
     bm.add('header', {

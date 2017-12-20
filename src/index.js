@@ -8,12 +8,11 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
 
   let options = { ...{
     blocks: [
-      'header'
+      'text', 'header'
     ],
     labels: {
       header: 'Header'
-    },
-    stylePrefix: ''
+    }
   },  ...opts };
 
   // Add components
