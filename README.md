@@ -11,7 +11,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 ### Usage
 1. Clone this repository `git clone https://github.com/artf/grapesjs-plugin-boilerplate.git`
-1. Replace in all files `YOUR-PLUGIN-NAME` with your plugin name
+1. Replace in all files `grapesjs-blocks-bootstrap4` with your plugin name
 1. Update `package.json`
 1. Install dependencies `npm i` and run the local server `npm start`
 1. Start creating your plugin from `src/index.js`
@@ -25,7 +25,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 
 ## Summary
 
-* Plugin name: `YOUR-PLUGIN-NAME`
+* Plugin name: `grapesjs-blocks-bootstrap4`
 * Components
   * `new-component1`
   * `new-component2`
@@ -51,11 +51,11 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 ## Download
 
 * CDN
-  * `https://unpkg.com/YOUR-PLUGIN-NAME`
+  * `https://unpkg.com/grapesjs-blocks-bootstrap4`
 * NPM
-  * `npm i YOUR-PLUGIN-NAME`
+  * `npm i grapesjs-blocks-bootstrap4`
 * GIT
-  * `git clone https://github.com/YOUR-NAME/YOUR-PLUGIN-NAME.git`
+  * `git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git`
 
 
 
@@ -66,7 +66,7 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 ```html
 <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/grapesjs"></script>
-<script src="path/to/YOUR-PLUGIN-NAME.min.js"></script>
+<script src="path/to/grapesjs-blocks-bootstrap4.min.js"></script>
 
 <div id="gjs"></div>
 
@@ -74,9 +74,9 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
   var editor = grapesjs.init({
       container : '#gjs',
       ...
-      plugins: ['YOUR-PLUGIN-NAME'],
+      plugins: ['grapesjs-blocks-bootstrap4'],
       pluginsOpts: {
-        'YOUR-PLUGIN-NAME': {
+        'grapesjs-blocks-bootstrap4': {
           // options
         }
       }
@@ -93,8 +93,8 @@ This boilerplate helps you quickly start a production ready plugin for GrapesJS.
 Clone the repository
 
 ```sh
-$ git clone https://github.com/YOUR-NAME/YOUR-PLUGIN-NAME.git
-$ cd YOUR-PLUGIN-NAME
+$ git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git
+$ cd grapesjs-blocks-bootstrap4
 ```
 
 Install dependencies

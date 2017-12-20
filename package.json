@@ -1,8 +1,8 @@
 {
-  "name": "grapesjs-plugin-boilerplate",
-  "version": "0.1.7",
-  "description": "GrapesJS Plugin Boilerplate",
-  "main": "dist/YOUR-PLUGIN-NAME.min.js",
+  "name": "grapesjs-blocks-bootstrap4",
+  "version": "0.0.1",
+  "description": "GrapesJS Bootstrap v4 Blocks Plugin",
+  "main": "dist/grapesjs-blocks-bootstrap4.min.js",
   "scripts": {
     "lint": "eslint src",
     "v:patch": "npm version --no-git-tag-version patch",
@@ -11,15 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/artf/grapesjs-plugin-boilerplate.git"
+    "url": "https://github.com/z1lk/grapesjs-bootstrap4-blocks.git"
   },
   "keywords": [
     "grapesjs",
     "plugin",
-    "boilerplate",
-    "wysiwyg"
+    "bootstrap"
   ],
-  "author": "Artur Arseniev",
+  "author": "z1lk",
   "license": "BSD-3-Clause",
   "babel": {
     "presets": [
