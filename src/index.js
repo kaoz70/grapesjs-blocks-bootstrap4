@@ -4,6 +4,8 @@ import loadBlocks from './blocks';
 
 export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts = {}) => {
 
+  window.editor = editor;
+
   let options = { ...{
     blocks: [
       'header'
