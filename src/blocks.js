@@ -52,6 +52,17 @@ export default (editor, config = {}) => {
     });
   }
 
+  if (blocks.column_break) {
+    bm.add('column_break').set({
+      label: c.labels.column_break,
+      category: 'Layout',
+      attributes: {class:'fa fa-columns'},
+      content: {
+        type: 'column_break'
+      }
+    });
+  }
+
   if (blocks.header) {
     bm.add('header', {
       label: c.labels.header,

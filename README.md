@@ -28,6 +28,18 @@
 
 ## Options
 
+```js
+{
+  blocks: {
+    ...
+  }
+  labels: {
+    ...
+  }
+  ...
+}
+```
+
 ### Blocks
 
 |Option|Description|Default|
@@ -38,18 +50,23 @@
 |`text`|Default text component with utility traits|true|
 |`header`|H1-H6|true|
 
-<!--
 ### Labels
+
+Same as keys as blocks, but value is the label for the block.
 
 |Option|Description|Default|
 |-|-|-
 |`text`||'Text'|
 |`header`||'Header'|
--->
 
+etc.
 
+### Other
 
-
+|Option|Description|Default|
+|-|-|-
+|`gridDevices`|Add devices based on BS grid breakpoints|true|
+|`gridDevicesPanel`|Build a panel in the top-left corner with device buttons (use with editor `showDevices`=`false`)|false|
 
 ## Download
 

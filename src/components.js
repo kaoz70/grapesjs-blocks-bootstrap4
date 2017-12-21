@@ -19,6 +19,49 @@ export default (editor, config = {}) => {
   const imageModel = imageType.model;
   const imageView = imageType.view;
 
+  // Select trait that maps a class list to the select options.
+  // The default select option is set if the input has a class, and class list is modified when select value changes.
+  editor.TraitManager.addType('class_select', {
+    events:{
+      'change': 'onChange',  // trigger parent onChange method on keyup
+    },
+
+    getInputEl: function() {
+      if (!this.inputEl) {
+        var md = this.model;
+        var opts = md.get('options') || [];
+        var input = document.createElement('select');
+        var target = this.target;
+        var target_view_el = this.target.view.el;
+        for(let i = 0; i < opts.length; i++) {
+          let name = opts[i].name;
+          let value = opts[i].value;
+          let option = document.createElement('option');
+          option.text = name;
+          option.value = value;
+          if(target_view_el.classList.contains(value)) {
+            option.setAttribute('selected', 'selected');
+          }
+          input.append(option);
+        }
+        this.inputEl = input;
+      }
+      return this.inputEl;
+    },
+
+    onValueChange: function () {
+      var classes = this.model.get('options').map(opt => opt.value);
+      for(let i = 0; i < classes.length; i++) {
+        this.target.removeClass(classes[i]);
+      }
+      const value = this.model.get('value');
+      if(value.length) {
+        this.target.addClass(value);
+      }
+      this.target.em.trigger('change:selectedComponent');
+    }
+  });
+
   // Rebuild the text component and add some "utility" traits to it
   if (blocks.text) {
     domc.addType('text', {
@@ -31,31 +74,19 @@ export default (editor, config = {}) => {
           },
           traits: [
             {
-              type: 'select',
+              type: 'class_select',
               options: [
-                {value: '0', name: 'None'},
-                {value: '1', name: 'One (largest)'},
-                {value: '2', name: 'Two '},
-                {value: '3', name: 'Three '},
-                {value: '4', name: 'Four (smallest)'}
+                {value: '', name: 'None'},
+                {value: 'display-1', name: 'One (largest)'},
+                {value: 'display-2', name: 'Two '},
+                {value: 'display-3', name: 'Three '},
+                {value: 'display-4', name: 'Four (smallest)'}
               ],
               label: 'Display Heading',
-              name: 'display-heading-size',
-              changeProp: 1
+              name: 'display-heading-size'
             }
           ].concat(textModel.prototype.defaults.traits)
-        }),
-        init() {
-          this.listenTo(this, 'change:display-heading-size', this.changeDisplayHeadingClass);
-        },
-        changeDisplayHeadingClass() {
-          const size = this.get('display-heading-size');
-          this.removeClass(['display-1', 'display-2', 'display-3', 'display-4']);
-          if(['1','2','3','4'].includes(size)) {
-            this.addClass(`display-${size}`);
-          }
-          this.em.trigger('change:selectedComponent');
-        },
+        })
       }, {
         isComponent(el) {
           if(el && el.dataset && el.dataset.bsText) {
@@ -82,26 +113,15 @@ export default (editor, config = {}) => {
           tagName: 'div',
           traits: [
             {
-              type: 'select',
+              type: 'class_select',
               options: [
-                {value: 'fixed', name: 'Fixed'},
-                {value: 'fluid', name: 'Fluid'}
+                {value: 'container', name: 'Fixed'},
+                {value: 'container-fluid', name: 'Fluid'}
               ],
-              label: 'Width',
-              name: 'container-width',
-              changeProp: 1
+              label: 'Width'
             }
           ].concat(defaultModel.prototype.defaults.traits)
-        }),
-        init() {
-          this.listenTo(this, 'change:container-width', this.changeContainerWidthClass);
-        },
-        changeContainerWidthClass() {
-          this.removeClass(['container', 'container-fluid']);
-          const width = this.get('container-width');
-          if(width=='fixed') this.addClass('container');
-          if(width=='fluid') this.addClass('container-fluid');
-        }
+        })
       }, {
         isComponent(el) {
           if(el && el.classList && (el.classList.contains('container') || el.classList.contains('container-fluid'))) {
@@ -118,7 +138,17 @@ export default (editor, config = {}) => {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Row',
-          tagName: 'div'
+          tagName: 'div',
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Yes'},
+                {value: 'no-gutters', name: 'No'}
+              ],
+              label: 'Gutters?'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
         })
       }, {
         isComponent(el) {
@@ -138,137 +168,96 @@ export default (editor, config = {}) => {
           'custom-name': 'Column',
           traits: [
             {
-              type: 'select',
+              type: 'class_select',
               options: [
                 {value: 'col', name: 'Equal'},
                 {value: 'col-auto', name: 'Variable'},
-                {value: 'col-1', name: '1/12'}, {value: 'col-2', name: '2/12'}, {value: 'col-3', name: '3/12'},
-                {value: 'col-4', name: '4/12'}, {value: 'col-5', name: '5/12'}, {value: 'col-6', name: '6/12'},
-                {value: 'col-7', name: '7/12'}, {value: 'col-8', name: '8/12'}, {value: 'col-9', name: '9/12'},
-                {value: 'col-10', name: '10/12'}, {value: 'col-11', name: '11/12'}, {value: 'col-12', name: '12/12'}
+                ... [1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'col-'+i, name: i+'/12'} })
               ],
               label: 'XS Width',
-              name: 'xs-class',
-              changeProp: 1
             },
             {
-              type: 'select',
+              type: 'class_select',
               options: [
                 {value: '', name: 'None'},
                 {value: 'col-sm', name: 'Equal'},
                 {value: 'col-sm-auto', name: 'Variable'},
-                {value: 'col-sm-1', name: '1/12'}, {value: 'col-sm-2', name: '2/12'}, {value: 'col-sm-3', name: '3/12'},
-                {value: 'col-sm-4', name: '4/12'}, {value: 'col-sm-5', name: '5/12'}, {value: 'col-sm-6', name: '6/12'},
-                {value: 'col-sm-7', name: '7/12'}, {value: 'col-sm-8', name: '8/12'}, {value: 'col-sm-9', name: '9/12'},
-                {value: 'col-sm-10', name: '10/12'}, {value: 'col-sm-11', name: '11/12'}, {value: 'col-sm-12', name: '12/12'}
+                ... [1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'col-sm-'+i, name: i+'/12'} })
               ],
               label: 'SM Width',
-              name: 'sm-class',
-              changeProp: 1
             },
             {
-              type: 'select',
+              type: 'class_select',
               options: [
                 {value: '', name: 'None'},
                 {value: 'col-md', name: 'Equal'},
                 {value: 'col-md-auto', name: 'Variable'},
-                {value: 'col-md-1', name: '1/12'}, {value: 'col-md-2', name: '2/12'}, {value: 'col-md-3', name: '3/12'},
-                {value: 'col-md-4', name: '4/12'}, {value: 'col-md-5', name: '5/12'}, {value: 'col-md-6', name: '6/12'},
-                {value: 'col-md-7', name: '7/12'}, {value: 'col-md-8', name: '8/12'}, {value: 'col-md-9', name: '9/12'},
-                {value: 'col-md-10', name: '10/12'}, {value: 'col-md-11', name: '11/12'}, {value: 'col-md-12', name: '12/12'}
+                ... [1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'col-md-'+i, name: i+'/12'} })
               ],
               label: 'MD Width',
-              name: 'md-class',
-              changeProp: 1
             },
             {
-              type: 'select',
+              type: 'class_select',
               options: [
                 {value: '', name: 'None'},
                 {value: 'col-lg', name: 'Equal'},
                 {value: 'col-lg-auto', name: 'Variable'},
-                {value: 'col-lg-1', name: '1/12'}, {value: 'col-lg-2', name: '2/12'}, {value: 'col-lg-3', name: '3/12'},
-                {value: 'col-lg-4', name: '4/12'}, {value: 'col-lg-5', name: '5/12'}, {value: 'col-lg-6', name: '6/12'},
-                {value: 'col-lg-7', name: '7/12'}, {value: 'col-lg-8', name: '8/12'}, {value: 'col-lg-9', name: '9/12'},
-                {value: 'col-lg-10', name: '10/12'}, {value: 'col-lg-11', name: '11/12'}, {value: 'col-lg-12', name: '12/12'}
+                ... [1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'col-lg-'+i, name: i+'/12'} })
               ],
               label: 'LG Width',
-              name: 'lg-class',
-              changeProp: 1
             },
             {
-              type: 'select',
+              type: 'class_select',
               options: [
                 {value: '', name: 'None'},
                 {value: 'col-xl', name: 'Equal'},
                 {value: 'col-xl-auto', name: 'Variable'},
-                {value: 'col-xl-1', name: '1/12'}, {value: 'col-xl-2', name: '2/12'}, {value: 'col-xl-3', name: '3/12'},
-                {value: 'col-xl-4', name: '4/12'}, {value: 'col-xl-5', name: '5/12'}, {value: 'col-xl-6', name: '6/12'},
-                {value: 'col-xl-7', name: '7/12'}, {value: 'col-xl-8', name: '8/12'}, {value: 'col-xl-9', name: '9/12'},
-                {value: 'col-xl-10', name: '10/12'}, {value: 'col-xl-11', name: '11/12'}, {value: 'col-xl-12', name: '12/12'}
+                ... [1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'col-xl-'+i, name: i+'/12'} })
               ],
               label: 'XL Width',
-              name: 'xl-class',
-              changeProp: 1
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'offset-'+i, name: i+'/12'} })
+              ],
+              label: 'XS Offset',
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'offset-sm-'+i, name: i+'/12'} })
+              ],
+              label: 'SM Offset',
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'offset-md-'+i, name: i+'/12'} })
+              ],
+              label: 'MD Offset',
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'offset-lg-'+i, name: i+'/12'} })
+              ],
+              label: 'LG Offset',
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... [0,1,2,3,4,5,6,7,8,9,10,11,12].map(function(i) { return {value: 'offset-xl-'+i, name: i+'/12'} })
+              ],
+              label: 'XL Offset',
             },
           ]
         }),
-        init: function() {
-          this.listenTo(this, 'change:xs-class', this.changeXsClass);
-          this.listenTo(this, 'change:sm-class', this.changeSmClass);
-          this.listenTo(this, 'change:md-class', this.changeMdClass);
-          this.listenTo(this, 'change:lg-class', this.changeLgClass);
-          this.listenTo(this, 'change:xl-class', this.changeXlClass);
-        },
-
-        changeXsClass: function() {
-          var class_to_add = this.get('xs-class');
-          var class_pattern_to_remove = /^col(-auto|-\d{1,2})?$/;
-          this.changeColClass(class_to_add, class_pattern_to_remove);
-        },
-      
-        changeSmClass: function() {
-          var class_to_add = this.get('sm-class');
-          var class_pattern_to_remove = /^col-sm(-auto|-\d{1,2})?$/;
-          this.changeColClass(class_to_add, class_pattern_to_remove);
-        },
-      
-        changeMdClass: function() {
-          var class_to_add = this.get('md-class');
-          var class_pattern_to_remove = /^col-md(-auto|-\d{1,2})?$/;
-          this.changeColClass(class_to_add, class_pattern_to_remove);
-        },
-      
-        changeLgClass: function() {
-          var class_to_add = this.get('lg-class');
-          var class_pattern_to_remove = /^col-lg(-auto|-\d{1,2})?$/;
-          this.changeColClass(class_to_add, class_pattern_to_remove);
-        },
-      
-        changeXlClass: function() {
-          var class_to_add = this.get('xl-class');
-          var class_pattern_to_remove = /^col-xl(-auto|-\d{1,2})?$/;
-          this.changeColClass(class_to_add, class_pattern_to_remove);
-        },
-      
-        changeColClass: function(class_to_add, class_pattern_to_remove) {
-          var classes = this.get('classes');
-
-          classes.forEach(function(element) {
-            if(element && element.id.match(class_pattern_to_remove)) {
-              classes.remove(element);
-            }
-          });
-
-          var sm = this.sm.get('SelectorManager');
-
-          if(class_to_add.length) {
-            var class_obj = sm.add(class_to_add)
-            classes.add(class_obj);
-          }
-
-          this.em.trigger('change:selectedComponent');
-        }
       }, {
         isComponent(el) {
           let match = false;
@@ -280,6 +269,23 @@ export default (editor, config = {}) => {
             });
           }
           if(match) return {type: 'column'};
+        }
+      }),
+      view: defaultView
+    });
+
+    domc.addType('column_break', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Column Break',
+          tagName: 'div',
+          classes: ['w-100']
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('w-100')) {
+            return {type: 'column_break'};
+          }
         }
       }),
       view: defaultView

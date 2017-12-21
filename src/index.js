@@ -1,6 +1,7 @@
 import grapesjs from 'grapesjs';
 import loadComponents from './components';
 import loadBlocks from './blocks';
+import loadDevices from './devices';
 
 export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts = {}) => {
 
@@ -16,6 +17,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     container: true,
     row: true,
     column: true,
+    column_break: true,
     header: true
   }
 
@@ -24,12 +26,15 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     container: 'Container',
     row: 'Row',
     column: 'Column',
+    column_break: 'Column Break',
     header: 'Header'
   }
 
   let options = { ...{
     blocks: Object.assign(default_blocks, opts_blocks),
-    labels: Object.assign(default_labels, opts_labels)
+    labels: Object.assign(default_labels, opts_labels),
+    gridDevices: true,
+    gridDevicesPanel: false,
   },  ...opts };
 
  editor.addComponents(`
@@ -39,6 +44,10 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
       .gjs-dashed .col, .gjs-dashed [class^="col-"] {
         min-height: 1rem !important;
       }
+      .gjs-dashed .w-100 {
+        min-height: .25rem !important;
+        background-color: rgba(0,0,0,0.1);
+      }
     </style>
   `);
 
@@ -47,6 +56,9 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
 
   // Add blocks
   loadBlocks(editor, options);
+
+  // Add blocks
+  loadDevices(editor, options);
 
   // TODO Remove
   //editor.on('load', () => editor.addComponents(`<div style="margin:0 100px; padding:25px;">Content loaded from the plugin</div>`))
