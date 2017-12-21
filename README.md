@@ -13,12 +13,14 @@
   * `container`
   * `row`
   * `column`
+  * `column_break`
   * `text`
   * `header`
 * Blocks
   * `container`
   * `row`
   * `column`
+  * `column_break`
   * `text`
   * `header`
 
@@ -47,12 +49,13 @@
 |`container`|Containers (fixed/fluid)|true|
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|
+|`column_break`|Column-break (`div.w-100`)|true|
 |`text`|Default text component with utility traits|true|
 |`header`|H1-H6|true|
 
 ### Labels
 
-Same as keys as blocks, but value is the label for the block.
+Same keys as blocks, but value is the label for the block.
 
 |Option|Description|Default|
 |-|-|-
@@ -102,7 +105,8 @@ etc.
           },
           labels: {
             // ...
-          }
+          },
+          // ...
         }
       },
       canvas: {
