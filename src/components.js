@@ -1,4 +1,7 @@
+import _ from 'underscore';
+import _s from 'underscore.string';
 export default (editor, config = {}) => {
+
   const c = config;
   let domc = editor.DomComponents;
   let blocks = c.blocks;
@@ -19,49 +22,6 @@ export default (editor, config = {}) => {
   const imageModel = imageType.model;
   const imageView = imageType.view;
 
-  // Select trait that maps a class list to the select options.
-  // The default select option is set if the input has a class, and class list is modified when select value changes.
-  editor.TraitManager.addType('class_select', {
-    events:{
-      'change': 'onChange',  // trigger parent onChange method on keyup
-    },
-
-    getInputEl: function() {
-      if (!this.inputEl) {
-        var md = this.model;
-        var opts = md.get('options') || [];
-        var input = document.createElement('select');
-        var target = this.target;
-        var target_view_el = this.target.view.el;
-        for(let i = 0; i < opts.length; i++) {
-          let name = opts[i].name;
-          let value = opts[i].value;
-          let option = document.createElement('option');
-          option.text = name;
-          option.value = value;
-          if(target_view_el.classList.contains(value)) {
-            option.setAttribute('selected', 'selected');
-          }
-          input.append(option);
-        }
-        this.inputEl = input;
-      }
-      return this.inputEl;
-    },
-
-    onValueChange: function () {
-      var classes = this.model.get('options').map(opt => opt.value);
-      for(let i = 0; i < classes.length; i++) {
-        this.target.removeClass(classes[i]);
-      }
-      const value = this.model.get('value');
-      if(value.length) {
-        this.target.addClass(value);
-      }
-      this.target.em.trigger('change:selectedComponent');
-    }
-  });
-
   // Rebuild the text component and add some "utility" traits to it
   if (blocks.text) {
     domc.addType('text', {
@@ -72,6 +32,7 @@ export default (editor, config = {}) => {
           attributes: {
             'data-bs-text': true
           },
+          droppable: true,
           traits: [
             {
               type: 'class_select',
@@ -111,6 +72,7 @@ export default (editor, config = {}) => {
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Container',
           tagName: 'div',
+          droppable: true,
           traits: [
             {
               type: 'class_select',
@@ -133,12 +95,16 @@ export default (editor, config = {}) => {
     });
   }
 
+  // Row
+
   if (blocks.row) {
     domc.addType('row', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Row',
           tagName: 'div',
+          draggable: '.container, .container-fluid',
+          droppable: true,
           traits: [
             {
               type: 'class_select',
@@ -161,11 +127,15 @@ export default (editor, config = {}) => {
     });
   }
 
+  // Column & Column Break
+
   if (blocks.column) {
     domc.addType('column', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Column',
+          draggable: '.row',
+          droppable: true,
           traits: [
             {
               type: 'class_select',
@@ -283,7 +253,7 @@ export default (editor, config = {}) => {
         })
       }, {
         isComponent(el) {
-          if(el && el.classList && el.classList.contains('w-100')) {
+          if(el && el.classList && el.classList.contains('w-100')) { // also check if parent is `.row`
             return {type: 'column_break'};
           }
         }
@@ -291,6 +261,258 @@ export default (editor, config = {}) => {
       view: defaultView
     });
 
+    // Media object
+
+    domc.addType('media_object', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Media Object',
+          tagName: 'div',
+          classes: ['media']
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('media')) {
+            return {type: 'media'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+
+    domc.addType('media_body', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Media Body',
+          tagName: 'div',
+          classes: ['media-body']
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('media-body')) {
+            return {type: 'media_body'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+
+  }
+
+  // Bootstrap "COMPONENTS
+
+  const contexts = [
+    'primary', 'secondary',
+    'success', 'info',
+    'warning', 'danger',
+    'light', 'dark'
+  ]
+
+  const sizes = {
+    'lg': 'Large',
+    'sm': 'Small'
+  }
+
+  // Alert
+
+  if (blocks.alert) {
+    domc.addType('alert', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Alert',
+          tagName: 'div',
+          classes: ['alert'],
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... contexts.map(function(v) { return {value: 'alert-'+v, name: _s.capitalize(v)} })
+              ],
+              label: 'Context'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('alert')) {
+            return {type: 'alert'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }
+
+  // Badge
+
+  if (blocks.badge) {
+    domc.addType('badge', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Badge',
+          tagName: 'span',
+          classes: ['badge'],
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... contexts.map(function(v) { return {value: 'badge-'+v, name: _s.capitalize(v)} })
+              ],
+              label: 'Context'
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Default'},
+                {value: 'badge-pill', name: 'Pill'},
+              ],
+              label: 'Shape'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('badge')) {
+            return {type: 'badge'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }
+
+  // Button
+
+  if (blocks.button) {
+    domc.addType('button', {
+      model: linkModel.extend({
+        defaults: Object.assign({}, linkModel.prototype.defaults, {
+          'custom-name': 'Button',
+          classes: ['btn'],
+          attributes: {
+            role: 'button'
+          },
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'None'},
+                ... contexts.map(function(v) { return {value: 'btn-'+v, name: _s.capitalize(v)} }),
+                ... contexts.map(function(v) { return {value: 'btn-outline-'+v, name: _s.capitalize(v) + ' (Outline)'} })
+              ],
+              label: 'Context'
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Default'},
+                ... Object.keys(sizes).map(function(k) { return {value: 'btn-'+k, name: sizes[k]} })
+              ],
+              label: 'Size'
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Inline'},
+                {value: 'btn-block', name: 'Block'}
+              ],
+              label: 'Width'
+            }
+          ].concat(linkModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('button')) {
+            return {type: 'button'};
+          }
+        }
+      }),
+      view: linkView
+    });
+  }
+
+  // Button group
+
+  if (blocks.button_group) {
+    domc.addType('button_group', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Button Group',
+          tagName: 'div',
+          classes: ['btn-group'],
+          droppable: '.btn',
+          attributes: {
+            role: 'group'
+          },
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Default'},
+                ... Object.keys(sizes).map(function(k) { return {value: 'btn-group-'+k, name: sizes[k]} })
+              ],
+              label: 'Size'
+            },
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Horizontal'},
+                {value: 'btn-group-vertical', name: 'Vertical'},
+              ],
+              label: 'Size'
+            },
+            {
+              type: 'Text',
+              label: 'ARIA Label',
+              name: 'aria-label',
+              placeholder: 'A group of buttons'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('btn-group')) {
+            return {type: 'button_group'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }
+
+  // Button group
+
+  if (blocks.button_toolbar) {
+    domc.addType('button_toolbar', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Button Toolbar',
+          tagName: 'div',
+          classes: ['btn-toolbar'],
+          droppable: '.btn-group',
+          attributes: {
+            role: 'toolbar'
+          },
+          traits: [
+            {
+              type: 'Text',
+              label: 'ARIA Label',
+              name: 'aria-label',
+              placeholder: 'A toolbar of button groups'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('btn-toolbar')) {
+            return {type: 'button_toolbar'};
+          }
+        }
+      }),
+      view: defaultView
+    });
   }
 
   // TYPOGRAPHY
@@ -332,5 +554,66 @@ export default (editor, config = {}) => {
     });
   }
 
+  // Basic
+
+  if (blocks.image) {
+    domc.addType('image', {
+      model: imageModel.extend({
+        defaults: Object.assign({}, imageModel.prototype.defaults, {
+          'custom-name': 'Image',
+          tagName: 'img',
+          resizable: 1,
+          traits: [
+            {
+              type: 'text',
+              label: 'Source (URL)',
+              name: 'src'
+            }
+          ].concat(imageModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent: function(el) {
+          if(el && el.tagName == 'IMG') {
+            return {type: 'image'};
+          }
+        }
+      }),
+      view: imageView
+    });
+  }
+
+  /*if (blocks.list) {
+    domc.addType('list', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'List',
+          tagName: 'ul',
+          resizable: 1,
+          traits: [
+            {
+              type: 'select',
+              options: [
+                {value: 'ul', name: 'No'},
+                {value: 'ol', name: 'Yes'}
+              ],
+              label: 'Ordered?',
+              name: 'tagName',
+              changeProp: 1
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent: function(el) {
+          if(el && ['UL','OL'].includes(el.tagName)) {
+            return {type: 'list'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }*/
+
+  /*if (blocks.description_list) {
+  }*/
 
 }

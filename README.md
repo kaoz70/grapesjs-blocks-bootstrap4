@@ -9,20 +9,31 @@
 ## Summary
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
-* Components
+* Blocks & Components
+  * Layout
+    * `container`
+    * `row`
+    * `column`
+    * `column_break`
+  * Components
+    * `alert`
+    * `badge`
+    * `button`
+    * `button_group`
+    * `button_toolbar`
+  * Typography
+    * `text`
+    * `header`
+  * Basic
+    * `image`
+    * `text`
+<!--* Blocks
   * `container`
   * `row`
   * `column`
   * `column_break`
   * `text`
-  * `header`
-* Blocks
-  * `container`
-  * `row`
-  * `column`
-  * `column_break`
-  * `text`
-  * `header`
+  * `header`-->
 
 
 
@@ -50,6 +61,11 @@
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|
 |`column_break`|Column-break (`div.w-100`)|true|
+|`alert`||true|
+|`badge`||true|
+|`button`||true|
+|`button_group`||true|
+|`button_toolbar`||true|
 |`text`|Default text component with utility traits|true|
 |`header`|H1-H6|true|
 

@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-blocks-bootstrap4",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "GrapesJS Bootstrap v4 Blocks Plugin",
   "main": "dist/grapesjs-blocks-bootstrap4.min.js",
   "scripts": {
@@ -40,5 +40,9 @@
     "eslint": "^4.1.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3",
+    "underscore.string": "^3.3.4"
   }
 }
