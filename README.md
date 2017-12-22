@@ -15,6 +15,7 @@
     * `row`
     * `column`
     * `column_break`
+    * `media object`
   * Components
     * `alert`
     * `badge`
