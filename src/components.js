@@ -116,7 +116,8 @@ export default (editor, config = {}) => {
           attributes: {
             'data-bs-text': true
           },
-          droppable: true
+          droppable: true,
+          editable: true
         })
       }, {
         isComponent(el) {
@@ -125,7 +126,7 @@ export default (editor, config = {}) => {
           }
         }
       }),
-      view: defaultView
+      view: textView
     });
     textType = domc.getType('text');
     textModel = textType.model;
