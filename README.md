@@ -22,12 +22,14 @@
     * `button`
     * `button_group`
     * `button_toolbar`
+    * `card`
+    * `card_container`
   * Typography
     * `text`
     * `header`
+    * `paragraph`
   * Basic
     * `image`
-    * `text`
 <!--* Blocks
   * `container`
   * `row`
@@ -58,7 +60,10 @@
 
 |Option|Description|Default|
 |-|-|-
-|`container`|Containers (fixed/fluid)|true|
+|`default`|Rebuild default component with utility settings|true|
+|`text`|Rebuild text component to re-inherit from default|true|
+|`image`|Rebuild image component to re-inherit from default|true|
+|`container`|Container (fixed/fluid)|true|
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|
 |`column_break`|Column-break (`div.w-100`)|true|
@@ -67,8 +72,10 @@
 |`button`||true|
 |`button_group`||true|
 |`button_toolbar`||true|
-|`text`|Default text component with utility traits|true|
+|`card`|Card with settings for images, image overlay, header, body, & footer components|true|
+|`card_container`|Layouts: group, deck, columns|true|
 |`header`|H1-H6|true|
+|`paragraph`|P tag with "lead" setting|true|
 
 ### Labels
 

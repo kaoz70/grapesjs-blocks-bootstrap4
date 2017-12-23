@@ -14,6 +14,9 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
   delete opts['labels'];
 
   const default_blocks = {
+    default: true,
+    text: true,
+    image: true,
     // LAYOUT
     container: true,
     row: true,
@@ -26,11 +29,12 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     button: true,
     button_group: true,
     button_toolbar: true,
+    card: true,
+    card_container: true,
     // TYPOGRAPHY
-    text: true,
     header: true,
+    paragraph: true,
     // BASIC
-    image: true,
     list: true
   }
 
@@ -47,9 +51,12 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     button: 'Button',
     button_group: 'Button Group',
     button_toolbar: 'Button Toolbar',
+    card: 'Card',
+    card_container: 'Card Container',
     // TYPOGRAPHY
     text: 'Text',
     header: 'Header',
+    paragraph: 'Paragraph',
     // BASIC
     image: 'Image',
     list: 'Simple List'
@@ -87,6 +94,12 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
       .gjs-dashed .btn-group,
       .gjs-dashed .btn-toolbar {
         padding-right: 1.5rem !important;
+        min-height: 1.5rem !important;
+      }
+      .gjs-dashed .card {
+        min-height: 1.5rem !important;
+      }
+      .gjs-dashed .card-group, .gjs-dashed .card-deck, .gjs-dashed .card-columns {
         min-height: 1.5rem !important;
       }
 

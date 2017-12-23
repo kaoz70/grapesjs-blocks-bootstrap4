@@ -1,3 +1,5 @@
+import _ from 'underscore';
+//import _s from 'underscore.string';
 export default (editor, config = {}) => {
 
   // Select trait that maps a class list to the select options.
@@ -20,7 +22,9 @@ export default (editor, config = {}) => {
           let option = document.createElement('option');
           option.text = name;
           option.value = value;
-          if(target_view_el.classList.contains(value)) {
+          const value_a = value.split(' ');
+          //if(target_view_el.classList.contains(value)) {
+          if(_.intersection(target_view_el.classList, value_a).length == value_a.length) {
             option.setAttribute('selected', 'selected');
           }
           input.append(option);
@@ -34,12 +38,20 @@ export default (editor, config = {}) => {
       var classes = this.model.get('options').map(opt => opt.value);
       for(let i = 0; i < classes.length; i++) {
         if(classes[i].length > 0) {
-          this.target.removeClass(classes[i]);
+          var classes_i_a = classes[i].split(' ');
+          for(let j = 0; j < classes_i_a.length; j++) {
+            if(classes_i_a[j].length > 0) {
+              this.target.removeClass(classes_i_a[j]);
+            }
+          }
         }
       }
       const value = this.model.get('value');
       if(value.length > 0 && value != 'GJS_NO_CLASS') {
-        this.target.addClass(value);
+        const value_a = value.split(' ');
+        for(let i = 0; i < value_a.length; i++) {
+          this.target.addClass(value_a[i]);
+        }
       }
       this.target.em.trigger('change:selectedComponent');
     }

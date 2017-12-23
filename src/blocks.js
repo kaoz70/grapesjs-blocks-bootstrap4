@@ -127,6 +127,24 @@ export default (editor, config = {}) => {
     });
   }
 
+  if (blocks.card) {
+    bm.add('card', {
+      label: c.labels.card,
+      category: 'Components',
+      attributes: {class:'fa fa-address-card-o'},
+      content: {
+        type: 'card'
+      }
+    });
+    bm.add('card_container', {
+      label: c.labels.card_container,
+      category: 'Components',
+      attributes: {class:'fa fa-address-card-o'},
+      content: {
+        type: 'card_container'
+      }
+    });
+  }
 
   // TYPOGRAPHY
 
@@ -154,6 +172,18 @@ export default (editor, config = {}) => {
     });
   }
 
+  if (blocks.paragraph) {
+    bm.add('paragraph', {
+      label: c.labels.paragraph,
+      category: 'Typography',
+      attributes: {class:'fa fa-paragraph'},
+      content: {
+        type: 'paragraph',
+        content: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.'
+      }
+    });
+  }
+
   // MISC
 
   if (blocks.image) {
@@ -170,7 +200,7 @@ export default (editor, config = {}) => {
     });
   }
 
-  if (blocks.list) {
+  /*if (blocks.list) {
     bm.add('list', {
       label: c.labels.list,
       category: 'Basic',
@@ -179,6 +209,6 @@ export default (editor, config = {}) => {
         type: 'list'
       }
     });
-  }
+  }*/
 
 }
