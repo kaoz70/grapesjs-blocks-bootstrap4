@@ -157,6 +157,28 @@ export default (editor, config = {}) => {
     });
   }
 
+  if (blocks.dropdown) {
+    bm.add('dropdown', {
+      label: c.labels.dropdown,
+      category: 'Components',
+      attributes: {class:'fa fa-caret-down'},
+      content: {
+        type: 'dropdown'
+      }
+    });
+  }
+
+  if (blocks.dropdown_menu) {
+    bm.add('dropdown_menu', {
+      label: c.labels.dropdown_menu,
+      category: 'Components',
+      attributes: {class:'fa fa-caret-down'},
+      content: {
+        type: 'dropdown_menu'
+      }
+    });
+  }
+
   // TYPOGRAPHY
 
   if (blocks.text) {

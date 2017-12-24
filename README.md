@@ -25,6 +25,8 @@
     * `card`
     * `card_container`
     * `collapse`
+    * `dropdown`
+    * `dropdown_menu`
   * Typography
     * `text`
     * `header`
@@ -77,6 +79,8 @@
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
 |`collapse`|Collapse component that can be toggled via link component|true|
+|`dropdown`|Dropdown container|true|
+|`dropdown_menu`|Dropdown menu|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
 

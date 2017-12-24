@@ -194,23 +194,31 @@ export default (editor, config = {}) => {
               ],
               label: 'Toggles',
               name: 'data-toggle',
-              //changeProp: 1
+              changeProp: 1
             }
           ].concat(textModel.prototype.defaults.traits)
         }),
         init() {
           textModel.prototype.init.call(this);
-          //this.listenTo(this, 'change:data-toggle', this.dataToggleChange);
+          this.listenTo(this, 'change:data-toggle', this.setupToggle);
+          this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
         },
-        /*dataToggleChange() {
-          this.setAttributes({'data-toggle': val});
-          const val = this.get('data-toggle');
+        setupToggle() {
           const attrs = this.getAttributes();
+          const val = this.get('data-toggle');
+          var new_attrs = Object.assign({}, attrs, {'data-toggle': val});
           const href = attrs.href;
+          var el = null;
           if(href.length > 0) {
-            //const el = 
+            const els = this.em.get('Editor').DomComponents.getWrapper().find('#'+href);
+            if(els.length > 0) {
+              el = els[0]; // should only be one
+              new_attrs['aria-expanded'] = '' // el has 'show' class
+            }
           }
-        },*/
+          this.setAttributes(new_attrs);
+          console.log(el);
+        },
         afterChange(e) {
           if(this.attributes.type == 'link') {
             if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length > 0) {
@@ -657,6 +665,7 @@ export default (editor, config = {}) => {
         init() {
           // classes model config option was causing trait select to cause a deselect of active component
           // on canvas (active class disappeared)
+          window.asdf = this;
           this.addClass('btn'); 
           linkModel.prototype.init.call(this); // call parent init in this context.
         },
@@ -1089,6 +1098,50 @@ export default (editor, config = {}) => {
         isComponent(el) {
           if(el && el.classList && el.classList.contains('collapse')) {
             return {type: 'collapse'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }
+
+  if (blocks.dropdown) {
+    domc.addType('dropdown', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Dropdown',
+          classes: ['dropdown'],
+          //droppable: 'a, .dropdown-menu'
+        }),
+        init() {
+          this.addClass('dropdown'); 
+          defaultModel.prototype.init.call(this);
+        },
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('dropdown')) {
+            return {type: 'dropdown'};
+          }
+        }
+      }),
+      view: defaultView
+    });
+  }
+  // need aria-labelledby to equal dropdown-toggle id
+  // need to insert dropdown-item class on links when added
+  if (blocks.dropdown_menu) {
+    domc.addType('dropdown_menu', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Dropdown Menu',
+          classes: ['dropdown-menu'],
+          draggable: '.dropdown',
+          droppable: 'a'
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('dropdown-menu')) {
+            return {type: 'dropdown_menu'};
           }
         }
       }),

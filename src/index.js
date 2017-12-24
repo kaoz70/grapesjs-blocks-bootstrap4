@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import loadCommands from './commands';
 import loadTraits from './traits';
 import loadComponents from './components';
 import loadBlocks from './blocks';
@@ -33,6 +34,8 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     card: true,
     card_container: true,
     collapse: true,
+    dropdown: true,
+    dropdown_menu: true,
     // TYPOGRAPHY
     header: true,
     paragraph: true,
@@ -56,6 +59,8 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     card: 'Card',
     card_container: 'Card Container',
     collapse: 'Collapse',
+    dropdown: 'Dropdown',
+    dropdown_menu: 'Dropdown Menu',
     // TYPOGRAPHY
     text: 'Text',
     header: 'Header',
@@ -108,11 +113,20 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
         display: block !important;
         min-height: 1.5rem !important;
       }
+      .gjs-dashed .dropdown {
+        display: block !important;
+        min-height: 1.5rem !important;
+      }
+      .gjs-dashed .dropdown-menu {
+        min-height: 1.5rem !important;
+        display: block !important;
+      }
 
     </style>
   `);
 
   // Add components
+  loadCommands(editor, options);
   loadTraits(editor, options);
   loadComponents(editor, options);
   loadBlocks(editor, options);
