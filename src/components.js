@@ -30,9 +30,9 @@ export default (editor, config = {}) => {
   var textModel = textType.model;
   var textView = textType.view;
 
-  const linkType = domc.getType('link');
-  const linkModel = linkType.model;
-  const linkView = linkType.view;
+  var linkType = domc.getType('link');
+  var linkModel = linkType.model;
+  var linkView = linkType.view;
 
   var imageType = domc.getType('image');
   var imageModel = imageType.model;
@@ -97,7 +97,35 @@ export default (editor, config = {}) => {
               label: 'Border radius'
             }
           ].concat(defaultModel.prototype.defaults.traits)
-        })
+        }),
+        init() {
+          this.listenTo(this, 'change', this.afterChange);
+          //this.listenTo(this.em, 'targetClassAdded targetClassRemoved targetClassUpdated', this.targetClassChanged);
+        },
+        /* method where we can check if we should changeType */
+        afterChange() {
+        },
+        /*targetClassChanged() {
+          if(this == this.em.getSelected()) {
+            window.asdf = this;
+            console.log('target class changed');
+            this.em.trigger('change:selectedComponent', this);
+          }
+        },*/
+        /* replace the comp with a copy of a different type */
+        changeType(new_type) {
+          const coll = this.collection;
+          const at = coll.indexOf(this);
+          const button_opts = {
+            type: new_type,
+            style: this.getStyle(),
+            attributes: this.getAttributes(),
+            content: this.view.el.innerHTML
+          }
+          coll.remove(this);
+          coll.add(button_opts, { at });
+          this.destroy();
+        }
       }),
       view: defaultView
     });
@@ -131,6 +159,77 @@ export default (editor, config = {}) => {
     textType = domc.getType('text');
     textModel = textType.model;
     textView = textType.view;
+  }
+
+  // Rebuild the link component with settings for collapse-control
+  if (blocks.link) {
+    domc.addType('link', {
+      model: textModel.extend({
+        defaults: Object.assign({}, textModel.prototype.defaults, {
+          'custom-name': 'Link',
+          tagName: 'a',
+          attributes: {
+            'data-bs-text': true
+          },
+          droppable: true,
+          editable: true,
+          traits: [
+            'href',
+            {
+              type: 'select',
+              options: [
+                {value: '', name: 'This window'},
+                {value: '_blank', name: 'New window'}
+              ],
+              label: 'Target',
+              name: 'target'
+            },
+            {
+              type: 'select',
+              options: [
+                {value: '', name: 'None'},
+                {value: 'button', name: 'Self'},
+                {value: 'collapse', name: 'Collapse'},
+                {value: 'dropdown', name: 'Dropdown'}
+              ],
+              label: 'Toggles',
+              name: 'data-toggle',
+              //changeProp: 1
+            }
+          ].concat(textModel.prototype.defaults.traits)
+        }),
+        init() {
+          textModel.prototype.init.call(this);
+          //this.listenTo(this, 'change:data-toggle', this.dataToggleChange);
+        },
+        /*dataToggleChange() {
+          this.setAttributes({'data-toggle': val});
+          const val = this.get('data-toggle');
+          const attrs = this.getAttributes();
+          const href = attrs.href;
+          if(href.length > 0) {
+            //const el = 
+          }
+        },*/
+        afterChange(e) {
+          if(this.attributes.type == 'link') {
+            if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length > 0) {
+              this.changeType('button');
+            }
+          }
+        }
+      }, {
+        isComponent(el) {
+          if(el && el.tagName && el.tagName == 'A') {
+            return {type: 'text'};
+          }
+        }
+      }),
+      view: linkView
+    });
+    linkType = domc.getType('link');
+    linkModel = linkType.model;
+    linkView = linkType.view;
   }
 
   if (blocks.image) {
@@ -524,7 +623,6 @@ export default (editor, config = {}) => {
       model: linkModel.extend({
         defaults: Object.assign({}, linkModel.prototype.defaults, {
           'custom-name': 'Button',
-          classes: ['btn'],
           attributes: {
             role: 'button'
           },
@@ -555,10 +653,23 @@ export default (editor, config = {}) => {
               label: 'Width'
             }
           ].concat(linkModel.prototype.defaults.traits)
-        })
+        }),
+        init() {
+          // classes model config option was causing trait select to cause a deselect of active component
+          // on canvas (active class disappeared)
+          this.addClass('btn'); 
+          linkModel.prototype.init.call(this); // call parent init in this context.
+        },
+        afterChange(e) {
+          if(this.attributes.type == 'button') {
+            if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length == 0) {
+              this.changeType('link');
+            }
+          }
+        }
       }, {
         isComponent(el) {
-          if(el && el.classList && el.classList.contains('button')) {
+          if(el && el.classList && el.classList.contains('btn')) {
             return {type: 'button'};
           }
         }
@@ -722,7 +833,6 @@ export default (editor, config = {}) => {
         cardFooter() { this.createCardComponent('card-footer'); },
         cardImageBottom() { this.createCardComponent('card-img-bottom'); },
         createCardComponent(prop) {
-          window.asdf = this;
           const state = this.get(prop);
           const type = prop.replace(/-/g,'_').replace(/img/g,'image')
           let children = this.components();
@@ -892,60 +1002,6 @@ export default (editor, config = {}) => {
       view: defaultView
     });
 
-    /*
-    domc.addType('card_title', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Card Title',
-          tagName: 'h4',
-          classes: ['card-title'],
-          'card-body-order': 1
-        })
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('card-title')) {
-            return {type: 'card_title'};
-          }
-        }
-      }),
-      view: defaultView
-    });
-
-    domc.addType('card_subtitle', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Card Subtitle',
-          classes: ['card-subtitle'],
-          'card-body-order': 2
-        })
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('card-subtitle')) {
-            return {type: 'card_subtitle'};
-          }
-        }
-      }),
-      view: defaultView
-    });
-
-    domc.addType('card_text', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Card Text',
-          classes: ['card-text'],
-          'card-body-order': 3
-        })
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('card-text')) {
-            return {type: 'card_text'};
-          }
-        }
-      }),
-      view: defaultView
-    });
-    */
-
     domc.addType('card_footer', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
@@ -1008,6 +1064,36 @@ export default (editor, config = {}) => {
       view: defaultView
     });
 
+  }
+
+  // Collapse
+
+  if (blocks.collapse) {
+    domc.addType('collapse', {
+      model: defaultModel.extend({
+        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+          'custom-name': 'Collapse',
+          classes: ['collapse'],
+          traits: [
+            {
+              type: 'class_select',
+              options: [
+                {value: '', name: 'Closed'},
+                {value: 'show', name: 'Open'}
+              ],
+              label: 'Initial state'
+            }
+          ].concat(defaultModel.prototype.defaults.traits)
+        })
+      }, {
+        isComponent(el) {
+          if(el && el.classList && el.classList.contains('collapse')) {
+            return {type: 'collapse'};
+          }
+        }
+      }),
+      view: defaultView
+    });
   }
 
   // TYPOGRAPHY

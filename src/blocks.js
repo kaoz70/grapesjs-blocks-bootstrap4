@@ -131,7 +131,7 @@ export default (editor, config = {}) => {
     bm.add('card', {
       label: c.labels.card,
       category: 'Components',
-      attributes: {class:'fa fa-address-card-o'},
+      attributes: {class:'fa fa-credit-card'},
       content: {
         type: 'card'
       }
@@ -139,9 +139,20 @@ export default (editor, config = {}) => {
     bm.add('card_container', {
       label: c.labels.card_container,
       category: 'Components',
-      attributes: {class:'fa fa-address-card-o'},
+      attributes: {class:'fa fa-credit-card'},
       content: {
         type: 'card_container'
+      }
+    });
+  }
+
+  if (blocks.collapse) {
+    bm.add('collapse', {
+      label: c.labels.collapse,
+      category: 'Components',
+      attributes: {class:'fa fa-compress'},
+      content: {
+        type: 'collapse'
       }
     });
   }
@@ -184,7 +195,21 @@ export default (editor, config = {}) => {
     });
   }
 
-  // MISC
+  // BASIC
+
+  if (blocks.link) {
+    // example of how we might include encoded image as default src. i like the idea but it mucks up the settings src field
+    //let default_src = 'data:image/png;base64,iVB\ORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEU\AAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8\yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAEl\FTkSuQmCC'
+    bm.add('link', {
+      label: c.labels.link,
+      category: 'Basic',
+      attributes: {class:'fa fa-link'},
+      content: {
+        type: 'link',
+        content: 'Link text'
+      }
+    });
+  }
 
   if (blocks.image) {
     // example of how we might include encoded image as default src. i like the idea but it mucks up the settings src field
@@ -194,8 +219,7 @@ export default (editor, config = {}) => {
       category: 'Basic',
       attributes: {class:'fa fa-picture-o'},
       content: {
-        type: 'image',
-        src: ''
+        type: 'image'
       }
     });
   }

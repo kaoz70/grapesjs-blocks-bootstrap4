@@ -24,6 +24,7 @@
     * `button_toolbar`
     * `card`
     * `card_container`
+    * `collapse`
   * Typography
     * `text`
     * `header`
@@ -62,6 +63,7 @@
 |-|-|-
 |`default`|Rebuild default component with utility settings|true|
 |`text`|Rebuild text component to re-inherit from default|true|
+|`link`|Rebuild link component to re-inherit from default and give toggle setting|true|
 |`image`|Rebuild image component to re-inherit from default|true|
 |`container`|Container (fixed/fluid)|true|
 |`row`|Row|true|
@@ -74,6 +76,7 @@
 |`button_toolbar`||true|
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
+|`collapse`|Collapse component that can be toggled via link component|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
 

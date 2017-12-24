@@ -16,6 +16,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
   const default_blocks = {
     default: true,
     text: true,
+    link: true,
     image: true,
     // LAYOUT
     container: true,
@@ -31,6 +32,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     button_toolbar: true,
     card: true,
     card_container: true,
+    collapse: true,
     // TYPOGRAPHY
     header: true,
     paragraph: true,
@@ -53,12 +55,14 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     button_toolbar: 'Button Toolbar',
     card: 'Card',
     card_container: 'Card Container',
+    collapse: 'Collapse',
     // TYPOGRAPHY
     text: 'Text',
     header: 'Header',
     paragraph: 'Paragraph',
     // BASIC
     image: 'Image',
+    link: 'Link',
     list: 'Simple List'
   }
 
@@ -96,10 +100,12 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
         padding-right: 1.5rem !important;
         min-height: 1.5rem !important;
       }
-      .gjs-dashed .card {
+      .gjs-dashed .card,
+      .gjs-dashed .card-group, .gjs-dashed .card-deck, .gjs-dashed .card-columns {
         min-height: 1.5rem !important;
       }
-      .gjs-dashed .card-group, .gjs-dashed .card-deck, .gjs-dashed .card-columns {
+      .gjs-dashed .collapse {
+        display: block !important;
         min-height: 1.5rem !important;
       }
 
