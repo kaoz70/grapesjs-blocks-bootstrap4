@@ -200,24 +200,41 @@ export default (editor, config = {}) => {
         }),
         init() {
           textModel.prototype.init.call(this);
-          this.listenTo(this, 'change:data-toggle', this.setupToggle);
+          //this.listenTo(this, 'change:data-toggle', this.setupToggle);
           this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
+          window.asdf = this;
         },
         setupToggle() {
           const attrs = this.getAttributes();
-          const val = this.get('data-toggle');
-          var new_attrs = Object.assign({}, attrs, {'data-toggle': val});
+          //const val = this.get('data-toggle');
+          //var new_attrs = Object.assign({}, attrs, {'data-toggle': val});
+          var new_attrs = attrs;
           const href = attrs.href;
-          var el = null;
-          if(href.length > 0) {
-            const els = this.em.get('Editor').DomComponents.getWrapper().find('#'+href);
+          // old attributes are not removed from DOM even if deleted...
+          delete new_attrs['data-toggle'];
+          delete new_attrs['aria-expanded'];
+          delete new_attrs['aria-controls'];
+          delete new_attrs['aria-haspopup'];
+          if(href && href.length > 0 && href.match(/^#/)) {
+            const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
             if(els.length > 0) {
-              el = els[0]; // should only be one
-              new_attrs['aria-expanded'] = '' // el has 'show' class
+              var el = els[0]; // should only be one
+              const el_attrs = el.getAttributes();
+              const el_classes = el_attrs.class;
+              if(el_classes) {
+                const el_classes_list = el_classes.split(' ');
+                const intersection = _.intersection(['collapse','dropdown'], el_classes_list);
+                if(intersection.length) {
+                  new_attrs['data-toggle'] = intersection[0]; // 'collapse' or 'dropdown'
+                  new_attrs['aria-expanded'] = el_classes_list.includes('show');
+                  if(intersection[0] == 'collapse') new_attrs['aria-controls'] = href.substring(1);
+                  if(intersection[0] == 'dropdown') new_attrs['aria-haspopup'] = true;
+                }
+              }
             }
           }
+          console.log(new_attrs);
           this.setAttributes(new_attrs);
-          console.log(el);
         },
         afterChange(e) {
           if(this.attributes.type == 'link') {
