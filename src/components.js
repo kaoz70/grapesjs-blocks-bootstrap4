@@ -111,19 +111,16 @@ export default (editor, config = {}) => {
           ] //.concat(defaultModel.prototype.defaults.traits)
         }),
         init() {
-          this.listenTo(this, 'change', this.afterChange);
-          //this.listenTo(this.em, 'targetClassAdded targetClassRemoved targetClassUpdated', this.targetClassChanged);
+          const classes = this.get('classes');
+          classes.bind('add', this.classesChanged.bind(this));
+          classes.bind('change', this.classesChanged.bind(this));
+          classes.bind('remove', this.classesChanged.bind(this));
+          this.init2();
         },
+        /* BS comps use init2, not init */
+        init2() {},
         /* method where we can check if we should changeType */
-        afterChange() {
-        },
-        /*targetClassChanged() {
-          if(this == this.em.getSelected()) {
-            window.asdf = this;
-            console.log('target class changed');
-            this.em.trigger('change:selectedComponent', this);
-          }
-        },*/
+        classesChanged() {},
         /* replace the comp with a copy of a different type */
         changeType(new_type) {
           const coll = this.collection;
@@ -210,11 +207,10 @@ export default (editor, config = {}) => {
             }
           ].concat(textModel.prototype.defaults.traits)
         }),
-        init() {
-          textModel.prototype.init.call(this);
+        init2() {
+          //textModel.prototype.init.call(this);
           this.listenTo(this, 'change:data-toggle', this.setupToggle);
           //this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
-          window.asdf = this;
         },
         setupToggle() { // this should be in the dropdown comp and not the link comp
           console.log('setup toggle');
@@ -265,7 +261,8 @@ export default (editor, config = {}) => {
           }
           this.setAttributes(new_attrs);
         },
-        afterChange(e) {
+        classesChanged(e) {
+          console.log('classes changed');
           if(this.attributes.type == 'link') {
             if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length > 0) {
               this.changeType('button');
@@ -680,6 +677,7 @@ export default (editor, config = {}) => {
           attributes: {
             role: 'button'
           },
+          classes: ['btn'],
           traits: [
             {
               type: 'class_select',
@@ -708,13 +706,9 @@ export default (editor, config = {}) => {
             }
           ].concat(linkModel.prototype.defaults.traits)
         }),
-        init() {
-          // classes model config option was causing trait select to cause a deselect of active component
-          // on canvas (active class disappeared)
-          window.asdf = this;
-          this.addClass('btn'); 
-          linkModel.prototype.init.call(this); // call parent init in this context.
-        },
+        /*init2() {
+          linkModel.prototype.init2.call(this); // call parent init in this context.
+        },*/
         afterChange(e) {
           if(this.attributes.type == 'button') {
             if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length == 0) {
@@ -868,7 +862,7 @@ export default (editor, config = {}) => {
             }
           ].concat(defaultModel.prototype.defaults.traits)
         }),
-        init() {
+        init2() {
           this.listenTo(this, 'change:card-img-top', this.cardImageTop);
           this.listenTo(this, 'change:card-header', this.cardHeader);
           this.listenTo(this, 'change:card-img', this.cardImage);
@@ -1159,10 +1153,6 @@ export default (editor, config = {}) => {
           classes: ['dropdown'],
           droppable: 'a, .dropdown-menu'
         }),
-        init() {
-          this.addClass('dropdown'); 
-          defaultModel.prototype.init.call(this);
-        },
       }, {
         isComponent(el) {
           if(el && el.classList && el.classList.contains('dropdown')) {
@@ -1183,7 +1173,7 @@ export default (editor, config = {}) => {
           draggable: '.dropdown',
           droppable: true
         }),
-        init() {
+        init2() {
           const header = {
             type: 'header',
             tagName: 'h6',
