@@ -35,7 +35,6 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     card_container: true,
     collapse: true,
     dropdown: true,
-    dropdown_menu: true,
     // TYPOGRAPHY
     header: true,
     paragraph: true,
@@ -61,6 +60,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     collapse: 'Collapse',
     dropdown: 'Dropdown',
     dropdown_menu: 'Dropdown Menu',
+    dropdown_item: 'Dropdown Item',
     // TYPOGRAPHY
     text: 'Text',
     header: 'Header',

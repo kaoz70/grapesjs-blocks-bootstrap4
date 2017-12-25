@@ -166,15 +166,20 @@ export default (editor, config = {}) => {
         type: 'dropdown'
       }
     });
-  }
-
-  if (blocks.dropdown_menu) {
     bm.add('dropdown_menu', {
       label: c.labels.dropdown_menu,
       category: 'Components',
       attributes: {class:'fa fa-caret-down'},
       content: {
         type: 'dropdown_menu'
+      }
+    });
+    bm.add('dropdown_item', {
+      label: c.labels.dropdown_item,
+      category: 'Components',
+      attributes: {class:'fa fa-link'},
+      content: {
+        type: 'dropdown_item'
       }
     });
   }

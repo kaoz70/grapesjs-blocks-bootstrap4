@@ -95,8 +95,20 @@ export default (editor, config = {}) => {
                 {value: 'rounded-0', name: 'Square'},
               ],
               label: 'Border radius'
+            },
+            {
+              type: 'text',
+              label: 'ID',
+              name: 'id',
+              placeholder: 'my_element'
+            },
+            {
+              type: 'text',
+              label: 'Title',
+              name: 'title',
+              placeholder: 'My Element'
             }
-          ].concat(defaultModel.prototype.defaults.traits)
+          ] //.concat(defaultModel.prototype.defaults.traits)
         }),
         init() {
           this.listenTo(this, 'change', this.afterChange);
@@ -200,11 +212,12 @@ export default (editor, config = {}) => {
         }),
         init() {
           textModel.prototype.init.call(this);
-          //this.listenTo(this, 'change:data-toggle', this.setupToggle);
-          this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
+          this.listenTo(this, 'change:data-toggle', this.setupToggle);
+          //this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
           window.asdf = this;
         },
-        setupToggle() {
+        setupToggle() { // this should be in the dropdown comp and not the link comp
+          console.log('setup toggle');
           const attrs = this.getAttributes();
           //const val = this.get('data-toggle');
           //var new_attrs = Object.assign({}, attrs, {'data-toggle': val});
@@ -216,24 +229,40 @@ export default (editor, config = {}) => {
           delete new_attrs['aria-controls'];
           delete new_attrs['aria-haspopup'];
           if(href && href.length > 0 && href.match(/^#/)) {
+            console.log('link has href');
             const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
             if(els.length > 0) {
-              var el = els[0]; // should only be one
+              console.log('referenced el found');
+              var el = els[0]; // should only be one el with this ID
               const el_attrs = el.getAttributes();
+              const el_new_attrs = el_attrs;
+              delete el_new_attrs['aria-labelledby'];
               const el_classes = el_attrs.class;
               if(el_classes) {
+                console.log('el has classes');
                 const el_classes_list = el_classes.split(' ');
-                const intersection = _.intersection(['collapse','dropdown'], el_classes_list);
+                const intersection = _.intersection(['collapse','dropdown-menu'], el_classes_list);
                 if(intersection.length) {
-                  new_attrs['data-toggle'] = intersection[0]; // 'collapse' or 'dropdown'
+                  console.log('link data-toggle matches el class');
+                  switch(intersection[0]) {
+                    case 'collapse':
+                      new_attrs['data-toggle'] = 'collapse';
+                    case 'dropdown-menu':
+                      new_attrs['data-toggle'] = 'dropdown';
+                  }
                   new_attrs['aria-expanded'] = el_classes_list.includes('show');
                   if(intersection[0] == 'collapse') new_attrs['aria-controls'] = href.substring(1);
-                  if(intersection[0] == 'dropdown') new_attrs['aria-haspopup'] = true;
+                  if(intersection[0] == 'dropdown-menu') {
+                    new_attrs['aria-haspopup'] = true;
+                    if(new_attrs.id) {
+                      el_new_attrs['aria-labelledby'] = new_attrs.id;
+                    }
+                  }
                 }
               }
+              el.setAttributes(el_new_attrs);
             }
           }
-          console.log(new_attrs);
           this.setAttributes(new_attrs);
         },
         afterChange(e) {
@@ -1128,7 +1157,7 @@ export default (editor, config = {}) => {
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Dropdown',
           classes: ['dropdown'],
-          //droppable: 'a, .dropdown-menu'
+          droppable: 'a, .dropdown-menu'
         }),
         init() {
           this.addClass('dropdown'); 
@@ -1143,18 +1172,38 @@ export default (editor, config = {}) => {
       }),
       view: defaultView
     });
-  }
-  // need aria-labelledby to equal dropdown-toggle id
-  // need to insert dropdown-item class on links when added
-  if (blocks.dropdown_menu) {
+
+    // need aria-labelledby to equal dropdown-toggle id
+    // need to insert dropdown-item class on links when added
     domc.addType('dropdown_menu', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Dropdown Menu',
           classes: ['dropdown-menu'],
           draggable: '.dropdown',
-          droppable: 'a'
-        })
+          droppable: true
+        }),
+        init() {
+          const header = {
+            type: 'header',
+            tagName: 'h6',
+            classes: ['dropdown-header'],
+            content: 'Dropdown header'
+          }
+          const link = {
+            type: 'link',
+            classes: ['dropdown-item'],
+            content: 'Dropdown item'
+          }
+          const divider = {
+            type: 'default',
+            classes: ['dropdown-divider']
+          }
+          this.append(header);
+          this.append(link);
+          this.append(divider);
+          this.append(link);
+        }
       }, {
         isComponent(el) {
           if(el && el.classList && el.classList.contains('dropdown-menu')) {
@@ -1164,6 +1213,7 @@ export default (editor, config = {}) => {
       }),
       view: defaultView
     });
+
   }
 
   // TYPOGRAPHY
