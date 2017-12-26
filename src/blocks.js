@@ -166,7 +166,7 @@ export default (editor, config = {}) => {
         type: 'dropdown'
       }
     });
-    bm.add('dropdown_menu', {
+    /*bm.add('dropdown_menu', {
       label: c.labels.dropdown_menu,
       category: 'Components',
       attributes: {class:'fa fa-caret-down'},
@@ -181,7 +181,7 @@ export default (editor, config = {}) => {
       content: {
         type: 'dropdown_item'
       }
-    });
+    });*/
   }
 
   // TYPOGRAPHY

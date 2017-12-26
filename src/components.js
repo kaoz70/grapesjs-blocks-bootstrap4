@@ -1,5 +1,7 @@
 import _ from 'underscore';
 import _s from 'underscore.string';
+import loadDropdown from './components/dropdown';
+
 export default (editor, config = {}) => {
 
   const img_src_default = 'https://dummyimage.com/450x250/999/222';
@@ -40,7 +42,7 @@ export default (editor, config = {}) => {
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (blocks.default) {
-    domc.addType('default', {
+    domc.addType('bs4_default', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           tagName: 'div',
@@ -138,7 +140,7 @@ export default (editor, config = {}) => {
       }),
       view: defaultView
     });
-    defaultType = domc.getType('default');
+    defaultType = domc.getType('bs4_default');
     defaultModel = defaultType.model;
     defaultView = defaultType.view;
   }
@@ -183,7 +185,12 @@ export default (editor, config = {}) => {
           droppable: true,
           editable: true,
           traits: [
-            'href',
+            {
+              type: 'text',
+              label: 'Href',
+              name: 'href',
+              placeholder: 'https://www.grapesjs.com'
+            },
             {
               type: 'select',
               options: [
@@ -191,7 +198,7 @@ export default (editor, config = {}) => {
                 {value: '_blank', name: 'New window'}
               ],
               label: 'Target',
-              name: 'target'
+              name: 'target',
             },
             {
               type: 'select',
@@ -209,7 +216,7 @@ export default (editor, config = {}) => {
         }),
         init2() {
           //textModel.prototype.init.call(this);
-          this.listenTo(this, 'change:data-toggle', this.setupToggle);
+          //this.listenTo(this, 'change:data-toggle', this.setupToggle);
           //this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
         },
         setupToggle() { // this should be in the dropdown comp and not the link comp
@@ -249,8 +256,10 @@ export default (editor, config = {}) => {
                   new_attrs['aria-expanded'] = el_classes_list.includes('show');
                   if(intersection[0] == 'collapse') new_attrs['aria-controls'] = href.substring(1);
                   if(intersection[0] == 'dropdown-menu') {
+                    console.log('dropdown');
                     new_attrs['aria-haspopup'] = true;
                     if(new_attrs.id) {
+                      console.log('setting aria-labelledby');
                       el_new_attrs['aria-labelledby'] = new_attrs.id;
                     }
                   }
@@ -1146,64 +1155,7 @@ export default (editor, config = {}) => {
   }
 
   if (blocks.dropdown) {
-    domc.addType('dropdown', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Dropdown',
-          classes: ['dropdown'],
-          droppable: 'a, .dropdown-menu'
-        }),
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('dropdown')) {
-            return {type: 'dropdown'};
-          }
-        }
-      }),
-      view: defaultView
-    });
-
-    // need aria-labelledby to equal dropdown-toggle id
-    // need to insert dropdown-item class on links when added
-    domc.addType('dropdown_menu', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Dropdown Menu',
-          classes: ['dropdown-menu'],
-          draggable: '.dropdown',
-          droppable: true
-        }),
-        init2() {
-          const header = {
-            type: 'header',
-            tagName: 'h6',
-            classes: ['dropdown-header'],
-            content: 'Dropdown header'
-          }
-          const link = {
-            type: 'link',
-            classes: ['dropdown-item'],
-            content: 'Dropdown item'
-          }
-          const divider = {
-            type: 'default',
-            classes: ['dropdown-divider']
-          }
-          this.append(header);
-          this.append(link);
-          this.append(divider);
-          this.append(link);
-        }
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('dropdown-menu')) {
-            return {type: 'dropdown_menu'};
-          }
-        }
-      }),
-      view: defaultView
-    });
-
+    loadDropdown(editor, config);
   }
 
   // TYPOGRAPHY
