@@ -1,5 +1,6 @@
 import _ from 'underscore';
 import _s from 'underscore.string';
+import loadCollapse from './components/collapse';
 import loadDropdown from './components/dropdown';
 
 export default (editor, config = {}) => {
@@ -152,9 +153,6 @@ export default (editor, config = {}) => {
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Text',
           tagName: 'div',
-          /*attributes: {
-            'data-bs-text': true
-          },*/
           droppable: true,
           editable: true
         })
@@ -179,9 +177,6 @@ export default (editor, config = {}) => {
         defaults: Object.assign({}, textModel.prototype.defaults, {
           'custom-name': 'Link',
           tagName: 'a',
-          attributes: {
-            'data-bs-text': true
-          },
           droppable: true,
           editable: true,
           traits: [
@@ -216,30 +211,30 @@ export default (editor, config = {}) => {
         }),
         init2() {
           //textModel.prototype.init.call(this);
-          //this.listenTo(this, 'change:data-toggle', this.setupToggle);
-          //this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
+          this.listenTo(this, 'change:data-toggle', this.setupToggle);
+          this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
         },
-        setupToggle() { // this should be in the dropdown comp and not the link comp
+        setupToggle(a, b, options = {}) { // this should be in the dropdown comp and not the link comp
+          if(options.ignore === true && options.force !== true) {
+            return;
+          }
           console.log('setup toggle');
           const attrs = this.getAttributes();
-          //const val = this.get('data-toggle');
-          //var new_attrs = Object.assign({}, attrs, {'data-toggle': val});
-          var new_attrs = attrs;
           const href = attrs.href;
           // old attributes are not removed from DOM even if deleted...
-          delete new_attrs['data-toggle'];
-          delete new_attrs['aria-expanded'];
-          delete new_attrs['aria-controls'];
-          delete new_attrs['aria-haspopup'];
+          delete attrs['data-toggle'];
+          delete attrs['aria-expanded'];
+          delete attrs['aria-controls'];
+          delete attrs['aria-haspopup'];
           if(href && href.length > 0 && href.match(/^#/)) {
             console.log('link has href');
+            // find the el where id == link href
             const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
             if(els.length > 0) {
               console.log('referenced el found');
               var el = els[0]; // should only be one el with this ID
               const el_attrs = el.getAttributes();
-              const el_new_attrs = el_attrs;
-              delete el_new_attrs['aria-labelledby'];
+              //delete el_attrs['aria-labelledby'];
               const el_classes = el_attrs.class;
               if(el_classes) {
                 console.log('el has classes');
@@ -249,26 +244,18 @@ export default (editor, config = {}) => {
                   console.log('link data-toggle matches el class');
                   switch(intersection[0]) {
                     case 'collapse':
-                      new_attrs['data-toggle'] = 'collapse';
-                    case 'dropdown-menu':
-                      new_attrs['data-toggle'] = 'dropdown';
+                      attrs['data-toggle'] = 'collapse';
+                      break;
                   }
-                  new_attrs['aria-expanded'] = el_classes_list.includes('show');
-                  if(intersection[0] == 'collapse') new_attrs['aria-controls'] = href.substring(1);
-                  if(intersection[0] == 'dropdown-menu') {
-                    console.log('dropdown');
-                    new_attrs['aria-haspopup'] = true;
-                    if(new_attrs.id) {
-                      console.log('setting aria-labelledby');
-                      el_new_attrs['aria-labelledby'] = new_attrs.id;
-                    }
+                  attrs['aria-expanded'] = el_classes_list.includes('show');
+                  if(intersection[0] == 'collapse') {
+                    attrs['aria-controls'] = href.substring(1);
                   }
                 }
               }
-              el.setAttributes(el_new_attrs);
             }
           }
-          this.setAttributes(new_attrs);
+          this.set('attributes', attrs, {ignore: true});
         },
         classesChanged(e) {
           console.log('classes changed');
@@ -281,7 +268,7 @@ export default (editor, config = {}) => {
       }, {
         isComponent(el) {
           if(el && el.tagName && el.tagName == 'A') {
-            return {type: 'text'};
+            return {type: 'link'};
           }
         }
       }),
@@ -610,8 +597,8 @@ export default (editor, config = {}) => {
 
   if (blocks.alert) {
     domc.addType('alert', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+      model: textModel.extend({
+        defaults: Object.assign({}, textModel.prototype.defaults, {
           'custom-name': 'Alert',
           tagName: 'div',
           classes: ['alert'],
@@ -624,7 +611,7 @@ export default (editor, config = {}) => {
               ],
               label: 'Context'
             }
-          ].concat(defaultModel.prototype.defaults.traits)
+          ].concat(textModel.prototype.defaults.traits)
         })
       }, {
         isComponent(el) {
@@ -633,7 +620,7 @@ export default (editor, config = {}) => {
           }
         }
       }),
-      view: defaultView
+      view: textView
     });
   }
 
@@ -641,8 +628,8 @@ export default (editor, config = {}) => {
 
   if (blocks.badge) {
     domc.addType('badge', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
+      model: textModel.extend({
+        defaults: Object.assign({}, textModel.prototype.defaults, {
           'custom-name': 'Badge',
           tagName: 'span',
           classes: ['badge'],
@@ -663,7 +650,7 @@ export default (editor, config = {}) => {
               ],
               label: 'Shape'
             }
-          ].concat(defaultModel.prototype.defaults.traits)
+          ].concat(textModel.prototype.defaults.traits)
         })
       }, {
         isComponent(el) {
@@ -672,7 +659,7 @@ export default (editor, config = {}) => {
           }
         }
       }),
-      view: defaultView
+      view: textView
     });
   }
 
@@ -1127,31 +1114,7 @@ export default (editor, config = {}) => {
   // Collapse
 
   if (blocks.collapse) {
-    domc.addType('collapse', {
-      model: defaultModel.extend({
-        defaults: Object.assign({}, defaultModel.prototype.defaults, {
-          'custom-name': 'Collapse',
-          classes: ['collapse'],
-          traits: [
-            {
-              type: 'class_select',
-              options: [
-                {value: '', name: 'Closed'},
-                {value: 'show', name: 'Open'}
-              ],
-              label: 'Initial state'
-            }
-          ].concat(defaultModel.prototype.defaults.traits)
-        })
-      }, {
-        isComponent(el) {
-          if(el && el.classList && el.classList.contains('collapse')) {
-            return {type: 'collapse'};
-          }
-        }
-      }),
-      view: defaultView
-    });
+    loadCollapse(editor, config);
   }
 
   if (blocks.dropdown) {

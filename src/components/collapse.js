@@ -1,6 +1,5 @@
 /*
 known issues:
-- BS dropdown JS isn't attached if you remove the existing toggle and add a new one
 */
 
 import _ from 'underscore';
@@ -12,12 +11,12 @@ export default (editor, config = {}) => {
   const defaultModel = defaultType.model;
   const defaultView = defaultType.view;
 
-  comps.addType('dropdown', {
+  comps.addType('collapse', {
     model: defaultModel.extend({
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Dropdown',
-        classes: ['dropdown'],
-        droppable: 'a, button, .dropdown-menu',
+        classes: ['collapse'],
+        droppable: true,
         traits: [
           {
             type: 'class_select',
@@ -29,7 +28,7 @@ export default (editor, config = {}) => {
           }
         ].concat(defaultModel.prototype.defaults.traits)
       }),
-      init2() {
+      /*init2() {
         window.asdf = this;
         const toggle = {
           type: 'button',
@@ -99,7 +98,7 @@ export default (editor, config = {}) => {
           }
           menu.set('attributes', menu_attrs, {ignore: true});
         }
-      }
+      }*/
     }, {
       isComponent(el) {
         if(el && el.classList && el.classList.contains('dropdown')) {
@@ -112,47 +111,6 @@ export default (editor, config = {}) => {
         this.model.setupToggle
       }*/
     })
-  });
-
-  // need aria-labelledby to equal dropdown-toggle id
-  // need to insert dropdown-item class on links when added
-  comps.addType('dropdown_menu', {
-    model: defaultModel.extend({
-      defaults: Object.assign({}, defaultModel.prototype.defaults, {
-        'custom-name': 'Dropdown Menu',
-        classes: ['dropdown-menu'],
-        draggable: '.dropdown',
-        droppable: true
-      }),
-      init2() {
-        const header = {
-          type: 'header',
-          tagName: 'h6',
-          classes: ['dropdown-header'],
-          content: 'Dropdown header'
-        }
-        const link = {
-          type: 'link',
-          classes: ['dropdown-item'],
-          content: 'Dropdown item'
-        }
-        const divider = {
-          type: 'default',
-          classes: ['dropdown-divider']
-        }
-        this.append(header);
-        this.append(link);
-        this.append(divider);
-        this.append(link);
-      }
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('dropdown-menu')) {
-          return {type: 'dropdown_menu'};
-        }
-      }
-    }),
-    view: defaultView
   });
 
 }
