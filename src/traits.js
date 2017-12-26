@@ -2,9 +2,11 @@ import _ from 'underscore';
 //import _s from 'underscore.string';
 export default (editor, config = {}) => {
 
+  const tm = editor.TraitManager;
+
   // Select trait that maps a class list to the select options.
   // The default select option is set if the input has a class, and class list is modified when select value changes.
-  editor.TraitManager.addType('class_select', {
+  tm.addType('class_select', {
     events:{
       'change': 'onChange',  // trigger parent onChange method on input change
     },

@@ -3,10 +3,9 @@ import _s from 'underscore.string';
 
 export default (editor, config = {}) => {
   const comps = editor.DomComponents;
-  const defaultType = comps.getType('bs4_default');
+  const defaultType = comps.getType('default');
   const defaultModel = defaultType.model;
   const defaultView = defaultType.view;
-
 
   comps.addType('dropdown', {
     model: defaultModel.extend({
@@ -16,25 +15,64 @@ export default (editor, config = {}) => {
         droppable: 'a, button, .dropdown-menu'
       }),
       init2() {
+        window.asdf = this;
         const toggle = {
           type: 'button',
           content: 'Click to toggle',
           classes: ['btn', 'dropdown-toggle']
         }
-        this.append(toggle);
+        const toggle_comp = this.append(toggle)[0];
         const menu = {
           type: 'dropdown_menu'
         }
-        this.append(menu);
+        const menu_comp = this.append(menu);
+        this.setupToggle(null, null, {force: true});
+        this.listenTo(toggle_comp, 'change:attributes', this.setupToggle); // for when id changes, can event name be more specific?
+        // also setup toggle on menu changed
+        // also setup toggle on children changed
       },
-      setup() {
-        const toggle = this.find('.dropdown-toggle');
+      setupToggle(a, b, options) {
+        const toggle = this.components().filter(c => c.getAttributes().class.split(' ').includes('dropdown-toggle'))[0];
         // raise error if toggle not found
-        const menu = this.find('.dropdown-menu');
+        const menu = this.components().filter(c => c.getAttributes().class.split(' ').includes('dropdown-menu'))[0];
         // raise error if menu not found
-        // toggle needs ID, get it or set if empty
-        var toggle_attrs = toggle.getAttributes();
-        var menu_attrs = menu.getAttributes();
+
+        /*var toggle_id_changed = false;
+        if(a && b) {
+          toggle_id_changed = a.previous('attributes').id != b.id;
+        }*/
+        //if(options.force !== true && (options.ignore === true || !toggle_id_changed)) {
+
+        if(options.force !== true && options.ignore === true) {
+          return;
+        }
+
+        if(toggle && menu) {
+          // setup toggle
+          var toggle_attrs = toggle.getAttributes();
+          toggle_attrs['role'] = 'button'; // if A
+          var menu_attrs = menu.getAttributes();
+          if(toggle_attrs.hasOwnProperty('data-toggle')) {
+            toggle_attrs['data-toggle'] = 'dropdown';
+          }
+          if(!toggle_attrs.hasOwnProperty('data-toggle')) {
+            toggle_attrs['data-toggle'] = 'dropdown';
+          }
+          if(!toggle_attrs.hasOwnProperty('aria-haspopup')) {
+            toggle_attrs['aria-haspopup'] = true;
+          }
+          const menu_classes = menu_attrs.class.split(' ');
+          toggle_attrs['aria-expanded'] = menu_classes.includes('show');
+          toggle.set('attributes', toggle_attrs, {ignore: true});
+          // setup menu
+          // toggle needs ID for aria-labelled on the menu, could alert here
+          if(toggle_attrs.hasOwnProperty('id')) {
+            menu_attrs['aria-labelledby'] = toggle_attrs.id;
+          } else {
+            delete menu_attrs['aria-labelledby'];
+          }
+          menu.setAttributes(menu_attrs);
+        }
       }
     }, {
       isComponent(el) {
@@ -43,7 +81,11 @@ export default (editor, config = {}) => {
         }
       }
     }),
-    view: defaultView
+    view: defaultView.extend({
+      /*init() {
+        this.model.setupToggle
+      }*/
+    })
   });
 
   // need aria-labelledby to equal dropdown-toggle id

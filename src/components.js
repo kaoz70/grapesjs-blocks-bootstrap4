@@ -42,7 +42,7 @@ export default (editor, config = {}) => {
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (blocks.default) {
-    domc.addType('bs4_default', {
+    domc.addType('default', {
       model: defaultModel.extend({
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           tagName: 'div',
@@ -140,7 +140,7 @@ export default (editor, config = {}) => {
       }),
       view: defaultView
     });
-    defaultType = domc.getType('bs4_default');
+    defaultType = domc.getType('default');
     defaultModel = defaultType.model;
     defaultView = defaultType.view;
   }
@@ -152,18 +152,18 @@ export default (editor, config = {}) => {
         defaults: Object.assign({}, defaultModel.prototype.defaults, {
           'custom-name': 'Text',
           tagName: 'div',
-          attributes: {
+          /*attributes: {
             'data-bs-text': true
-          },
+          },*/
           droppable: true,
           editable: true
         })
       }, {
-        isComponent(el) {
+        /*isComponent(el) {
           if(el && el.dataset && el.dataset.bsText) {
-            return {type: 'bs_text'};
+            return {type: 'text'};
           }
-        }
+        }*/
       }),
       view: textView
     });
