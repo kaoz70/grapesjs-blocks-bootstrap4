@@ -106,9 +106,9 @@ etc.
 ## Download
 
 <!--* CDN
-  * `https://unpkg.com/grapesjs-blocks-bootstrap4`
-* NPM
-  * `npm i grapesjs-blocks-bootstrap4`-->
+  * `https://unpkg.com/grapesjs-blocks-bootstrap4` -->
+ NPM
+  * `npm i grapesjs-blocks-bootstrap4`
 * GIT
   * `git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git`
 
