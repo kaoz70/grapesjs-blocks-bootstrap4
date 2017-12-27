@@ -1,5 +1,7 @@
 # GrapesJS Bootstrap v4 Blocks Plugin
 
+[![npm](https://img.shields.io/npm/v/grapesjs-blocks-bootstrap4.svg)](https://www.npmjs.com/package/grapesjs-blocks-bootstrap4)
+
 <!--<span><a href="https://david-dm.org/z1lk/grapesjs-plugin-boilerplate#info=devDependencies" title="View the status of this project's development dependencies on DavidDM"><img src="https://img.shields.io/david/dev/artf/grapesjs-plugin-boilerplate.svg" alt="Dev Dependency Status" /></a></span>-->
 
 <!--<a rel="nofollow" href="https://app.codesponsor.io/link/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate">
