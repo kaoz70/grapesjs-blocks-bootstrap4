@@ -9,7 +9,7 @@
 ## Summary
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
-* Blocks & Components
+* Components (see Options for list of Blocks)
   * Layout
     * `container`
     * `row`
@@ -79,14 +79,13 @@
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
 |`collapse`|Collapse component that can be toggled via link component|true|
-|`dropdown`|Dropdown container|true|
-|`dropdown_menu`|Dropdown menu|true|
+|`dropdown`|Dropdown|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
 
 ### Labels
 
-Same keys as blocks, but value is the label for the block.
+Same keys as Blocks, but value is the label for the block.
 
 |Option|Description|Default|
 |-|-|-
