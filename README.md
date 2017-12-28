@@ -94,10 +94,10 @@ These are the different categories of blocks as they are grouped in the Blocks s
 
 |Option|Description|Default|
 |-|-|-
-|`layout`|Container, row, col, col-break, media object|'Text'|
-|`components`|_Bootstrap_'s Components--alert, button, card, etc.|'Header'|
-|`typography`|Text, header, paragraph, etc.|'Text'|
-|`basic`|Link, image, etc.|'Text'|
+|`layout`|Container, row, col, col-break, media object|true|
+|`components`|_Bootstrap_'s Components--alert, button, card, etc.|true|
+|`typography`|Text, header, paragraph, etc.|true|
+|`basic`|Link, image, etc.|true|
 
 
 ### Labels
