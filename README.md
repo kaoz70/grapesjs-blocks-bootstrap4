@@ -54,6 +54,9 @@
   blocks: {
     ...
   }
+  blockCategories: {
+    ...
+  }
   labels: {
     ...
   }
@@ -84,6 +87,18 @@
 |`dropdown`|Dropdown|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
+
+### Block Categories
+
+These are the different categories of blocks as they are grouped in the Blocks sidebar panel. Set a value to false exclude entire groups of blocks (as well as the associated components).
+
+|Option|Description|Default|
+|-|-|-
+|`layout`|Container, row, col, col-break, media object|'Text'|
+|`components`|_Bootstrap_'s Components--alert, button, card, etc.|'Header'|
+|`typography`|Text, header, paragraph, etc.|'Text'|
+|`basic`|Link, image, etc.|'Text'|
+
 
 ### Labels
 
@@ -133,6 +148,9 @@ etc.
       pluginsOpts: {
         'grapesjs-blocks-bootstrap4': {
           blocks: {
+            // ...
+          },
+          blockCategories: {
             // ...
           },
           labels: {

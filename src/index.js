@@ -11,8 +11,10 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
 
   const opts_blocks = opts.blocks || {};
   const opts_labels = opts.labels || {};
+  const opts_categories = opts.blockCategories || {};
   delete opts['blocks'];
   delete opts['labels'];
+  delete opts['blockCategories'];
 
   const default_blocks = {
     default: true,
@@ -71,9 +73,17 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     list: 'Simple List'
   }
 
+  const default_categories = {
+    'layout': true,
+    'components': true,
+    'typography': true,
+    'basic': true
+  }
+
   let options = { ...{
     blocks: Object.assign(default_blocks, opts_blocks),
     labels: Object.assign(default_labels, opts_labels),
+    blockCategories: Object.assign(default_categories, opts_categories),
     gridDevices: true,
     gridDevicesPanel: false,
   },  ...opts };
