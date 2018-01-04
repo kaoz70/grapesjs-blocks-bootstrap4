@@ -17,7 +17,7 @@
     * `row`
     * `column`
     * `column_break`
-    * `media object`
+    * `media_object`
   * Components
     * `alert`
     * `badge`
@@ -76,6 +76,8 @@
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|
 |`column_break`|Column-break (`div.w-100`)|true|
+|`media_object`||true|
+|`media_body`|Media object body|true|
 |`alert`||true|
 |`badge`||true|
 |`button`||true|
