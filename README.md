@@ -22,9 +22,6 @@
   * Components
     * `alert`
     * `badge`
-    * `button`
-    * `button_group`
-    * `button_toolbar`
     * `card`
     * `card_container`
     * `collapse`
@@ -36,13 +33,17 @@
     * `paragraph`
   * Basic
     * `image`
-<!--* Blocks
-  * `container`
-  * `row`
-  * `column`
-  * `column_break`
-  * `text`
-  * `header`-->
+  * Forms
+    * `Basic form`
+    * `button`
+    * `button_group`
+    * `button_toolbar`
+    * `input`
+    * `input group`
+    * `form input group`
+    * `textarea`
+    * `checkbox`
+    * `radio`
 
 
 
