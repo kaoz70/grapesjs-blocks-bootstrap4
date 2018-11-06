@@ -34,13 +34,13 @@
   * Basic
     * `image`
   * Forms
-    * `Basic form`
+    * `form`
     * `button`
     * `button_group`
     * `button_toolbar`
     * `input`
-    * `input group`
-    * `form input group`
+    * `input_group`
+    * `form_group_input`
     * `textarea`
     * `checkbox`
     * `radio`
@@ -81,15 +81,22 @@
 |`media_object`|Media object|true|
 |`alert`||true|
 |`badge`||true|
-|`button`||true|
-|`button_group`||true|
-|`button_toolbar`||true|
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
 |`collapse`|Collapse component that can be toggled via link component|true|
 |`dropdown`|Dropdown|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
+|`form`||true|
+|`button`||true|
+|`button_group`||true|
+|`button_toolbar`||true|
+|`input`||true|
+|`input_group`||true|
+|`form_group_input`||true|
+|`textarea`||true|
+|`checkbox`||true|
+|`radio`||true|
 
 ### Block Categories
 
@@ -101,6 +108,7 @@ These are the different categories of blocks as they are grouped in the Blocks s
 |`components`|_Bootstrap_'s Components--alert, button, card, etc.|true|
 |`typography`|Text, header, paragraph, etc.|true|
 |`basic`|Link, image, etc.|true|
+|`forms`|Form, input, textarea, etc.|true|
 
 
 ### Labels
