@@ -21,6 +21,7 @@
     * `media_body`
   * Components
     * `alert`
+    * `tabs`
     * `badge`
     * `card`
     * `card_container`
@@ -80,6 +81,7 @@
 |`column_break`|Column-break (`div.w-100`)|true|
 |`media_object`|Media object|true|
 |`alert`||true|
+|`tabs`||true|
 |`badge`||true|
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
@@ -134,9 +136,9 @@ etc.
 <!--* CDN
   * `https://unpkg.com/grapesjs-blocks-bootstrap4` -->
 * NPM
-  * `npm i grapesjs-blocks-bootstrap4`
+  * `npm i kaoz70/grapesjs-blocks-bootstrap4`
 * GIT
-  * `git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git`
+  * `git clone https://github.com/kaoz70/grapesjs-blocks-bootstrap4.git`
 
 
 
@@ -193,7 +195,7 @@ etc.
 Clone the repository
 
 ```sh
-$ git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git
+$ git clone https://github.com/kaoz70/grapesjs-blocks-bootstrap4.git
 $ cd grapesjs-blocks-bootstrap4
 ```
 

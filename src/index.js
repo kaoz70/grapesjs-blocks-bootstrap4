@@ -29,6 +29,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     media_object: true,
     // COMPONENTS
     alert: true,
+    tabs: true,
     badge: true,
     button: true,
     button_group: true,
@@ -63,6 +64,9 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     media_object: 'Media Object',
     // COMPONENTS
     alert: 'Alert',
+    tabs: 'Tabs',
+    tab: 'Tab',
+    tabPane: 'Tab Pane',
     badge: 'Badge',
     button: 'Button',
     button_group: 'Button Group',
@@ -128,6 +132,10 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     blockCategories: Object.assign(default_categories, opts_categories),
     gridDevices: true,
     gridDevicesPanel: false,
+    classNavigation: 'nav',
+    classTabPanes: 'tab-content',
+    classTabPane: 'tab-pane',
+    classTab: 'nav-item',
   },  ...opts };
 
  editor.addComponents(`

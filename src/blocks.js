@@ -10,9 +10,11 @@ export default (editor, config = {}) => {
 
     if (blocks.container) {
       bm.add('container').set({
-        label: c.labels.container,
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="far" data-icon="window-maximize" class="svg-inline--fa fa-window-maximize fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 394c0 3.3-2.7 6-6 6H54c-3.3 0-6-2.7-6-6V192h416v234z"></path></svg>
+            <div class="gjs-block-label">${c.labels.container}</div>
+        `,
         category: 'Layout',
-        attributes: {class:'fa fa-columns'},
         content: {
           type: 'container',
           classes: ['container']
@@ -22,9 +24,11 @@ export default (editor, config = {}) => {
 
     if (blocks.row) {
       bm.add('row').set({
-        label: c.labels.row,
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="fas" data-icon="window-maximize" class="svg-inline--fa fa-window-maximize fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-16 160H64v-84c0-6.6 5.4-12 12-12h360c6.6 0 12 5.4 12 12v84z"></path></svg>
+            <div class="gjs-block-label">${c.labels.row}</div>
+        `,
         category: 'Layout',
-        attributes: {class:'fa fa-columns'},
         content: {
           type: 'row',
           classes: ['row']
@@ -34,9 +38,11 @@ export default (editor, config = {}) => {
 
     if (blocks.column) {
       bm.add('column').set({
-        label: c.labels.column,
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="fas" data-icon="columns" class="svg-inline--fa fa-columns fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM224 416H64V160h160v256zm224 0H288V160h160v256z"></path></svg>
+            <div class="gjs-block-label">${c.labels.column}</div>
+        `,
         category: 'Layout',
-        attributes: {class:'fa fa-columns'},
         content: {
           type: 'column',
           classes: ['col']
@@ -46,9 +52,11 @@ export default (editor, config = {}) => {
 
     if (blocks.column_break) {
       bm.add('column_break').set({
-        label: c.labels.column_break,
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="fas" data-icon="equals" class="svg-inline--fa fa-equals fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 304H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32zm0-192H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
+            <div class="gjs-block-label">${c.labels.column_break}</div>
+        `,
         category: 'Layout',
-        attributes: {class:'fa fa-columns'},
         content: {
           type: 'column_break'
         }
@@ -84,6 +92,39 @@ export default (editor, config = {}) => {
         content: {
           type: 'alert',
           content: 'This is an alert—check it out!'
+        }
+      });
+    }
+
+    if (blocks.tabs) {
+      bm.add('tabs', {
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="fas" data-icon="ellipsis-h" class="svg-inline--fa fa-ellipsis-h fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>
+            <div class="gjs-block-label">${c.labels.tabs}</div>
+        `,
+        category: 'Components',
+        content: {
+          type: 'tabs',
+        }
+      });
+      bm.add('tabs-tab', {
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="fas" data-icon="circle" class="svg-inline--fa fa-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-256 0 1024 1024"><path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path></svg>
+            <div class="gjs-block-label">${c.labels.tab}</div>
+        `,
+        category: 'Components',
+        content: {
+          type: 'tabs-tab',
+        }
+      });
+      bm.add('tabs-tab-pane', {
+        label: `
+            <svg aria-hidden="true" width="24" height="50" focusable="false" data-prefix="far" data-icon="window-maximize" class="svg-inline--fa fa-window-maximize fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 394c0 3.3-2.7 6-6 6H54c-3.3 0-6-2.7-6-6V192h416v234z"></path></svg>
+            <div class="gjs-block-label">${c.labels.tabPane}</div>
+        `,
+        category: 'Components',
+        content: {
+          type: 'tabs-tab-pane',
         }
       });
     }

@@ -2,6 +2,11 @@ import _ from 'underscore';
 import _s from 'underscore.string';
 import loadCollapse from './components/collapse';
 import loadDropdown from './components/dropdown';
+import Tabs from "./components/tabs/Tabs";
+import Navigation from "./components/tabs/Navigation";
+import Panes from "./components/tabs/Panes";
+import Tab from "./components/tabs/Tab";
+import TabPane from "./components/tabs/TabPane";
 
 export default (editor, config = {}) => {
 
@@ -681,6 +686,14 @@ export default (editor, config = {}) => {
         }),
         view: textView
       });
+    }
+
+    if (blocks.tabs) {
+      Tabs(domc, config);
+      Navigation(domc, config);
+      Tab(domc, config);
+      Panes(domc, config);
+      TabPane(domc, config);
     }
 
     // Badge
