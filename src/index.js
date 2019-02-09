@@ -144,6 +144,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
       /* Layout */
 
       .gjs-dashed .container, .gjs-dashed .container-fluid,
+      .gjs-dashed .tab-pane,
       .gjs-dashed .row,
       .gjs-dashed .col, .gjs-dashed [class^="col-"] {
         min-height: 1.5rem !important;

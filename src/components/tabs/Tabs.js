@@ -64,9 +64,9 @@ export default (dc, config = {}) => {
                           </li>
                         </ul>
                         <div data-gjs-type="${tabPanesName}" class="tab-content">
-                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Tab pane 1</div>
-                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Tab pane 2</div>
-                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Tab pane 3</div>
+                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"></div>
+                          <div data-gjs-type="${tabPaneName}" class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
                         </div>
                     `);
                 }
