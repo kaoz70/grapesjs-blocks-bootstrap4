@@ -3,36 +3,113 @@ export default (dc, traits, config = {}) => {
     const defaultModel = defaultType.model;
     const defaultView = defaultType.view;
 
-    dc.addType('input', {
+    dc.addType('form', {
         model: defaultModel.extend({
             defaults: {
                 ...defaultModel.prototype.defaults,
-                'custom-name': config.labels.input,
-                tagName: 'input',
-                draggable: 'form .form-group',
-                droppable: false,
+                droppable: ':not(form)',
+                draggable: ':not(form)',
                 traits: [
-                    traits.name,
-                    traits.placeholder, {
-                        label: config.labels.trait_type,
+                    {
                         type: 'select',
-                        name: 'type',
+                        label: config.labels.trait_method,
+                        name: 'method',
                         options: [
-                            {value: 'text', name: config.labels.type_text},
-                            {value: 'email', name: config.labels.type_email},
-                            {value: 'password', name: config.labels.type_password},
-                            {value: 'number', name: config.labels.type_number},
+                            {value: 'post', name: 'POST'},
+                            {value: 'get', name: 'GET'},
                         ]
-                    }, traits.require
+                    },
+                    {
+                        label: config.labels.trait_action,
+                        name: 'action',
+                    }
                 ],
+            },
+
+            init() {
+                this.listenTo(this, 'change:formState', this.updateFormState);
+            },
+
+            updateFormState() {
+                var state = this.get('formState');
+                switch (state) {
+                    case 'success':
+                        this.showState('success');
+                        break;
+                    case 'error':
+                        this.showState('error');
+                        break;
+                    default:
+                        this.showState('normal');
+                }
+            },
+
+            showState(state) {
+                var st = state || 'normal';
+                var failVis, successVis;
+                if (st === 'success') {
+                    failVis = 'none';
+                    successVis = 'block';
+                } else if (st === 'error') {
+                    failVis = 'block';
+                    successVis = 'none';
+                } else {
+                    failVis = 'none';
+                    successVis = 'none';
+                }
+                var successModel = this.getStateModel('success');
+                var failModel = this.getStateModel('error');
+                var successStyle = successModel.getStyle();
+                var failStyle = failModel.getStyle();
+                successStyle.display = successVis;
+                failStyle.display = failVis;
+                successModel.setStyle(successStyle);
+                failModel.setStyle(failStyle);
+            },
+
+            getStateModel(state) {
+                var st = state || 'success';
+                var stateName = 'form-state-' + st;
+                var stateModel;
+                var comps = this.get('components');
+                for (var i = 0; i < comps.length; i++) {
+                    var model = comps.models[i];
+                    if (model.get('form-state-type') === st) {
+                        stateModel = model;
+                        break;
+                    }
+                }
+                if (!stateModel) {
+                    var contentStr = formMsgSuccess;
+                    if (st === 'error') {
+                        contentStr = formMsgError;
+                    }
+                    stateModel = comps.add({
+                        'form-state-type': st,
+                        type: 'text',
+                        removable: false,
+                        copyable: false,
+                        draggable: false,
+                        attributes: {'data-form-state': st},
+                        content: contentStr,
+                    });
+                }
+                return stateModel;
             },
         }, {
             isComponent(el) {
-                if(el.tagName === 'INPUT') {
-                    return {type: 'input'};
+                if (el.tagName === 'FORM') {
+                    return {type: 'form'};
                 }
             },
         }),
-        view: defaultView,
+
+        view: defaultView.extend({
+            events: {
+                submit(e) {
+                    e.preventDefault();
+                }
+            }
+        }),
     });
 }
