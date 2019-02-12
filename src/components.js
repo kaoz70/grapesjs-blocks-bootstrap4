@@ -7,6 +7,18 @@ import Navigation from "./components/tabs/Navigation";
 import Panes from "./components/tabs/Panes";
 import Tab from "./components/tabs/Tab";
 import TabPane from "./components/tabs/TabPane";
+import Form from "./components/Form";
+import Input from "./components/Input";
+import FormGroupInput from "./components/FormGroupInput";
+import InputGroup from "./components/InputGroup";
+import Textarea from "./components/Textarea";
+import Select from "./components/Select";
+import Checkbox from "./components/Checkbox";
+import Radio from "./components/Radio";
+import Button from "./components/Button";
+import ButtonGroup from "./components/ButtonGroup";
+import ButtonToolbar from "./components/ButtonToolbar";
+import Label from "./components/Label";
 
 export default (editor, config = {}) => {
 
@@ -47,55 +59,42 @@ export default (editor, config = {}) => {
   var imageModel = imageType.model;
   var imageView = imageType.view;
 
-  const idTrait = {
-    name: 'id',
-    label: c.labels.trait_id,
+  const traits = {
+    id: {
+      name: 'id',
+      label: c.labels.trait_id,
+    },
+    for: {
+      name: 'for',
+      label: c.labels.trait_for,
+    },
+    name: {
+      name: 'name',
+      label: c.labels.trait_name,
+    },
+    placeholder: {
+      name: 'placeholder',
+      label: c.labels.trait_placeholder,
+    },
+    value: {
+      name: 'value',
+      label: c.labels.trait_value,
+    },
+    required: {
+      type: 'checkbox',
+      name: 'required',
+      label: c.labels.trait_required,
+    },
+    checked: {
+      label: c.labels.trait_checked,
+      type: 'checkbox',
+      name: 'checked',
+      changeProp: 1
+    }
   };
+  
 
-  const forTrait = {
-    name: 'for',
-    label: c.labels.trait_for,
-  };
 
-  const nameTrait = {
-    name: 'name',
-    label: c.labels.trait_name,
-  };
-
-  const placeholderTrait = {
-    name: 'placeholder',
-    label: c.labels.trait_placeholder,
-  };
-
-  const valueTrait = {
-    name: 'value',
-    label: c.labels.trait_value,
-  };
-
-  const requiredTrait = {
-    type: 'checkbox',
-    name: 'required',
-    label: c.labels.trait_required,
-  };
-
-  const checkedTrait = {
-    label: c.labels.trait_checked,
-    type: 'checkbox',
-    name: 'checked',
-    changeProp: 1
-  };
-
-  const preventDefaultClick = () => {
-    return defaultType.view.extend({
-      events: {
-        'mousedown': 'handleClick',
-      },
-
-      handleClick(e) {
-        e.preventDefault();
-      },
-    });
-  };
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (cats.basic) {
@@ -1141,509 +1140,28 @@ export default (editor, config = {}) => {
 
   if(cats.forms) {
 
-    domc.addType('form', {
-      model: defaultModel.extend({
-        defaults: {
-          ...defaultModel.prototype.defaults,
-          droppable: ':not(form)',
-          draggable: ':not(form)',
-          traits: [{
-            type: 'select',
-            label: c.labels.trait_method,
-            name: 'method',
-            options: [
-              {value: 'post', name: 'POST'},
-              {value: 'get', name: 'GET'},
-            ]
-          },{
-            label: c.labels.trait_action,
-            name: 'action',
-          }],
-        },
-
-        init() {
-          this.listenTo(this, 'change:formState', this.updateFormState);
-        },
-
-        updateFormState() {
-          var state = this.get('formState');
-          switch (state) {
-            case 'success':
-              this.showState('success');
-              break;
-            case 'error':
-              this.showState('error');
-              break;
-            default:
-              this.showState('normal');
-          }
-        },
-
-        showState(state) {
-          var st = state || 'normal';
-          var failVis, successVis;
-          if (st === 'success') {
-            failVis = 'none';
-            successVis = 'block';
-          } else if (st === 'error') {
-            failVis = 'block';
-            successVis = 'none';
-          } else {
-            failVis = 'none';
-            successVis = 'none';
-          }
-          var successModel = this.getStateModel('success');
-          var failModel = this.getStateModel('error');
-          var successStyle = successModel.getStyle();
-          var failStyle = failModel.getStyle();
-          successStyle.display = successVis;
-          failStyle.display = failVis;
-          successModel.setStyle(successStyle);
-          failModel.setStyle(failStyle);
-        },
-
-        getStateModel(state) {
-          var st = state || 'success';
-          var stateName = 'form-state-' + st;
-          var stateModel;
-          var comps = this.get('components');
-          for (var i = 0; i < comps.length; i++) {
-            var model = comps.models[i];
-            if(model.get('form-state-type') === st) {
-              stateModel = model;
-              break;
-            }
-          }
-          if (!stateModel) {
-            var contentStr = formMsgSuccess;
-            if(st === 'error') {
-              contentStr = formMsgError;
-            }
-            stateModel = comps.add({
-              'form-state-type': st,
-              type: 'text',
-              removable: false,
-              copyable: false,
-              draggable: false,
-              attributes: {'data-form-state': st},
-              content: contentStr,
-            });
-          }
-          return stateModel;
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'FORM'){
-            return {type: 'form'};
-          }
-        },
-      }),
-
-      view: defaultView.extend({
-        events: {
-          submit(e) {
-            e.preventDefault();
-          }
-        }
-      }),
-    });
-
-
-
-
-
-    // INPUT
-    domc.addType('input', {
-      model: defaultModel.extend({
-        defaults: {
-          ...defaultModel.prototype.defaults,
-          'custom-name': c.labels.input,
-          tagName: 'input',
-          draggable: 'form .form-group',
-          droppable: false,
-          traits: [
-            nameTrait,
-            placeholderTrait, {
-              label: c.labels.trait_type,
-              type: 'select',
-              name: 'type',
-              options: [
-                {value: 'text', name: c.labels.type_text},
-                {value: 'email', name: c.labels.type_email},
-                {value: 'password', name: c.labels.type_password},
-                {value: 'number', name: c.labels.type_number},
-              ]
-            }, requiredTrait
-          ],
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'INPUT') {
-            return {type: 'input'};
-          }
-        },
-      }),
-      view: defaultView,
-    });
-
-    const inputType = domc.getType('input');
-    const inputModel = inputType.model;
-
-
-
-
-    // FROM GROUP INPUT
-    domc.addType('form_group_input', {
-      model: defaultModel.extend({
-        defaults: {
-          ...defaultModel.prototype.defaults,
-          'custom-name': c.labels.form_group_input,
-          tagName: 'div',
-          traits: [],
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'DIV') {
-            return {type: 'div'};
-          }
-        },
-      }),
-      view: defaultView,
-    });
-
-
-
-
-    // INPUT GROUP
-    domc.addType('input_group', {
-      model: defaultModel.extend({
-        defaults: {
-          ...defaultModel.prototype.defaults,
-          'custom-name': c.labels.input_group,
-          tagName: 'div',
-          traits: [],
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'DIV') {
-            return {type: 'div'};
-          }
-        },
-      }),
-      view: defaultView,
-    });
-
-
-
-
-
-    // TEXTAREA
-    domc.addType('textarea', {
-      model: inputModel.extend({
-        defaults: {
-          ...inputModel.prototype.defaults,
-          'custom-name': c.labels.textarea,
-          tagName: 'textarea',
-          traits: [
-            nameTrait,
-            placeholderTrait,
-            requiredTrait
-          ]
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'TEXTAREA'){
-            return {type: 'textarea'};
-          }
-        },
-      }),
-      view: defaultView,
-    });
-
-
-
-
-
-    // SELECT
-    domc.addType('select', {
-      model: defaultModel.extend({
-        defaults: {
-          ...inputModel.prototype.defaults,
-          'custom-name': c.labels.select,
-          tagName: 'select',
-          traits: [
-            nameTrait, {
-              label: c.labels.trait_options,
-              type: 'select-options'
-            },
-            requiredTrait
-          ],
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'SELECT'){
-            return {type: 'select'};
-          }
-        },
-      }),
-      view: preventDefaultClick(),
-    });
-
-
-
-
-
-    // CHECKBOX
-    domc.addType('checkbox', {
-      model: defaultModel.extend({
-        defaults: {
-          ...inputModel.prototype.defaults,
-          'custom-name': c.labels.checkbox_name,
-          copyable: false,
-          droppable: false,
-          attributes: {type: 'checkbox'},
-          traits: [
-            idTrait,
-            nameTrait,
-            valueTrait,
-            requiredTrait,
-            checkedTrait
-          ],
-        },
-
-        init() {
-          this.listenTo(this, 'change:checked', this.handleChecked);
-        },
-
-        handleChecked() {
-          let checked = this.get('checked');
-          let attrs = this.get('attributes');
-          const view = this.view;
-
-          if (checked) {
-            attrs.checked = true;
-          } else {
-            delete attrs.checked;
-          }
-
-          if (view) {
-            view.el.checked = checked
-          }
-
-          this.set('attributes', { ...attrs });
-        }
-      }, {
-        isComponent(el) {
-          if (el.tagName === 'INPUT' && el.type === 'checkbox') {
-            return {type: 'checkbox'};
-          }
-        },
-      }),
-      view: defaultView.extend({
-        events: {
-          'click': 'handleClick',
-        },
-
-        handleClick(e) {
-          e.preventDefault();
-        },
-      }),
-    });
-
-    var checkType = domc.getType('checkbox');
-
-
-
-
-
-    // RADIO
-    domc.addType('radio', {
-      model: checkType.model.extend({
-        defaults: {
-          ...checkType.model.prototype.defaults,
-          'custom-name': c.labels.radio,
-          attributes: {type: 'radio'},
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName === 'INPUT' && el.type === 'radio'){
-            return {type: 'radio'};
-          }
-        },
-      }),
-      view: checkType.view,
-    });
-
-
-
-
-
-
-    // Button
+    Form(domc, traits, config);
+    Input(domc, traits, config);
+    FormGroupInput(domc, traits, config);
+    InputGroup(domc, traits, config);
+    Textarea(domc, traits, config);
+    Select(domc, traits, config);
+    Checkbox(domc, traits, config);
+    Radio(domc, traits, config);
+    Label(domc, traits, config);
 
     if (blocks.button) {
-
-      domc.addType('button', {
-        model: linkModel.extend({
-          defaults: Object.assign({}, linkModel.prototype.defaults, {
-            'custom-name': 'Button',
-            droppable: false,
-            attributes: {
-              role: 'button'
-            },
-            classes: ['btn'],
-            traits: [
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'None'},
-                  ... contexts.map(function(v) { return {value: 'btn-'+v, name: _s.capitalize(v)} }),
-                  ... contexts.map(function(v) { return {value: 'btn-outline-'+v, name: _s.capitalize(v) + ' (Outline)'} })
-                ],
-                label: 'Context'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Default'},
-                  ... Object.keys(sizes).map(function(k) { return {value: 'btn-'+k, name: sizes[k]} })
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Inline'},
-                  {value: 'btn-block', name: 'Block'}
-                ],
-                label: 'Width'
-              }
-            ].concat(linkModel.prototype.defaults.traits)
-          }),
-          /*init2() {
-            linkModel.prototype.init2.call(this); // call parent init in this context.
-          },*/
-          afterChange(e) {
-            if(this.attributes.type == 'button') {
-              if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length == 0) {
-                this.changeType('link');
-              }
-            }
-          }
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn')) {
-              return {type: 'button'};
-            }
-          }
-        }),
-        view: linkView
-      });
+      Button(domc, traits, contexts, sizes, config);
     }
-
-    // Button group
 
     if (blocks.button_group) {
-      domc.addType('button_group', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
-            'custom-name': 'Button Group',
-            tagName: 'div',
-            classes: ['btn-group'],
-            droppable: '.btn',
-            attributes: {
-              role: 'group'
-            },
-            traits: [
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Default'},
-                  ... Object.keys(sizes).map(function(k) { return {value: 'btn-group-'+k, name: sizes[k]} })
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Horizontal'},
-                  {value: 'btn-group-vertical', name: 'Vertical'},
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'Text',
-                label: 'ARIA Label',
-                name: 'aria-label',
-                placeholder: 'A group of buttons'
-              }
-            ].concat(defaultModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn-group')) {
-              return {type: 'button_group'};
-            }
-          }
-        }),
-        view: defaultView
-      });
+      ButtonGroup(domc, traits, contexts, sizes, config);
     }
-
-    // Button toolbar
 
     if (blocks.button_toolbar) {
-      domc.addType('button_toolbar', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
-            'custom-name': 'Button Toolbar',
-            tagName: 'div',
-            classes: ['btn-toolbar'],
-            droppable: '.btn-group',
-            attributes: {
-              role: 'toolbar'
-            },
-            traits: [
-              {
-                type: 'Text',
-                label: 'ARIA Label',
-                name: 'aria-label',
-                placeholder: 'A toolbar of button groups'
-              }
-            ].concat(defaultModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn-toolbar')) {
-              return {type: 'button_toolbar'};
-            }
-          }
-        }),
-        view: defaultView
-      });
+      ButtonToolbar(domc, config);
     }
 
-
-
-
-    // LABEL
-    domc.addType('label', {
-      model: textModel.extend({
-        defaults: {
-          ...textModel.prototype.defaults,
-          'custom-name': c.labels.label,
-          tagName: 'label',
-          traits: [forTrait],
-        },
-      }, {
-        isComponent(el) {
-          if(el.tagName == 'LABEL'){
-            return {type: 'label'};
-          }
-        },
-      }),
-      view: textView,
-    });
   }
 
 }
