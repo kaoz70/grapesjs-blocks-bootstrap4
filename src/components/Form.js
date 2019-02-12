@@ -2,6 +2,25 @@ export default (dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;
     const defaultView = defaultType.view;
+    let actionTrait;
+
+    // If the formPredefinedActions is set in the config you can add a dropdown menu to the actions trait
+    if(config.formPredefinedActions && config.formPredefinedActions.length) {
+        actionTrait = {
+            type: 'select',
+            label: config.labels.trait_action,
+            name: 'action',
+            options: [],
+        };
+        config.formPredefinedActions.forEach((action) => {
+            actionTrait.options.push({value: action.value, name: action.name})
+        });
+    } else {
+        actionTrait = {
+            label: config.labels.trait_action,
+            name: 'action',
+        }
+    }
 
     dc.addType('form', {
         model: defaultModel.extend({
@@ -19,10 +38,7 @@ export default (dc, traits, config = {}) => {
                             {value: 'get', name: 'GET'},
                         ]
                     },
-                    {
-                        label: config.labels.trait_action,
-                        name: 'action',
-                    }
+                    actionTrait
                 ],
             },
 

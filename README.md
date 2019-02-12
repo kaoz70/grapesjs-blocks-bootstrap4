@@ -130,6 +130,8 @@ etc.
 |-|-|-
 |`gridDevices`|Add devices based on BS grid breakpoints|true|
 |`gridDevicesPanel`|Build a panel in the top-left corner with device buttons (use with editor `showDevices`=`false`)|false|
+|`formPredefinedActions`|Pass a list of predefined form actions to generate a select menu: [{name: 'Contact', value: '/contact'}, ...], if no list is passed an input box to add the action is shown|null|
+
 
 ## Download
 
