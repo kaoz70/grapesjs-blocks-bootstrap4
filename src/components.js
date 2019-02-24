@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import _s from 'underscore.string';
 import loadCollapse from './components/collapse';
-import loadDropdown from './components/dropdown';
+import Dropdown from './components/Dropdown';
 import Tabs from "./components/tabs/Tabs";
 import Navigation from "./components/tabs/Navigation";
 import Panes from "./components/tabs/Panes";
@@ -19,6 +19,7 @@ import Button from "./components/Button";
 import ButtonGroup from "./components/ButtonGroup";
 import ButtonToolbar from "./components/ButtonToolbar";
 import Label from "./components/Label";
+import Link from "./components/Link";
 
 export default (editor, config = {}) => {
 
@@ -50,10 +51,6 @@ export default (editor, config = {}) => {
   var textType = domc.getType('text');
   var textModel = textType.model;
   var textView = textType.view;
-
-  var linkType = domc.getType('link');
-  var linkModel = linkType.model;
-  var linkView = linkType.view;
 
   var imageType = domc.getType('image');
   var imageModel = imageType.model;
@@ -228,111 +225,7 @@ export default (editor, config = {}) => {
 
     // Rebuild the link component with settings for collapse-control
     if (blocks.link) {
-      domc.addType('link', {
-        model: textModel.extend({
-          defaults: Object.assign({}, textModel.prototype.defaults, {
-            'custom-name': 'Link',
-            tagName: 'a',
-            droppable: true,
-            editable: true,
-            traits: [
-              {
-                type: 'text',
-                label: 'Href',
-                name: 'href',
-                placeholder: 'https://www.grapesjs.com'
-              },
-              {
-                type: 'select',
-                options: [
-                  {value: '', name: 'This window'},
-                  {value: '_blank', name: 'New window'}
-                ],
-                label: 'Target',
-                name: 'target',
-              },
-              {
-                type: 'select',
-                options: [
-                  {value: '', name: 'None'},
-                  {value: 'button', name: 'Self'},
-                  {value: 'collapse', name: 'Collapse'},
-                  {value: 'dropdown', name: 'Dropdown'}
-                ],
-                label: 'Toggles',
-                name: 'data-toggle',
-                changeProp: 1
-              }
-            ].concat(textModel.prototype.defaults.traits)
-          }),
-          init2() {
-            //textModel.prototype.init.call(this);
-            this.listenTo(this, 'change:data-toggle', this.setupToggle);
-            this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
-          },
-          setupToggle(a, b, options = {}) { // this should be in the dropdown comp and not the link comp
-            if(options.ignore === true && options.force !== true) {
-              return;
-            }
-            console.log('setup toggle');
-            const attrs = this.getAttributes();
-            const href = attrs.href;
-            // old attributes are not removed from DOM even if deleted...
-            delete attrs['data-toggle'];
-            delete attrs['aria-expanded'];
-            delete attrs['aria-controls'];
-            delete attrs['aria-haspopup'];
-            if(href && href.length > 0 && href.match(/^#/)) {
-              console.log('link has href');
-              // find the el where id == link href
-              const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
-              if(els.length > 0) {
-                console.log('referenced el found');
-                var el = els[0]; // should only be one el with this ID
-                const el_attrs = el.getAttributes();
-                //delete el_attrs['aria-labelledby'];
-                const el_classes = el_attrs.class;
-                if(el_classes) {
-                  console.log('el has classes');
-                  const el_classes_list = el_classes.split(' ');
-                  const intersection = _.intersection(['collapse','dropdown-menu'], el_classes_list);
-                  if(intersection.length) {
-                    console.log('link data-toggle matches el class');
-                    switch(intersection[0]) {
-                      case 'collapse':
-                        attrs['data-toggle'] = 'collapse';
-                        break;
-                    }
-                    attrs['aria-expanded'] = el_classes_list.includes('show');
-                    if(intersection[0] == 'collapse') {
-                      attrs['aria-controls'] = href.substring(1);
-                    }
-                  }
-                }
-              }
-            }
-            this.set('attributes', attrs, {ignore: true});
-          },
-          classesChanged(e) {
-            console.log('classes changed');
-            if(this.attributes.type == 'link') {
-              if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length > 0) {
-                this.changeType('button');
-              }
-            }
-          }
-        }, {
-          isComponent(el) {
-            if(el && el.tagName && el.tagName == 'A') {
-              return {type: 'link'};
-            }
-          }
-        }),
-        view: linkView
-      });
-      linkType = domc.getType('link');
-      linkModel = linkType.model;
-      linkView = linkType.view;
+      Link(editor, config);
     }
 
     if (blocks.image) {
@@ -1051,7 +944,7 @@ export default (editor, config = {}) => {
     // Dropdown
 
     if (blocks.dropdown) {
-      loadDropdown(editor, config);
+      Dropdown(editor, config);
     }
 
   }

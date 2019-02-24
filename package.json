@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-blocks-bootstrap4",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "GrapesJS Bootstrap v4 Blocks Plugin",
   "main": "dist/grapesjs-blocks-bootstrap4.min.js",
   "scripts": {
@@ -42,6 +42,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "npm": "^6.8.0",
     "underscore": "^1.8.3",
     "underscore.string": "^3.3.4"
   }
