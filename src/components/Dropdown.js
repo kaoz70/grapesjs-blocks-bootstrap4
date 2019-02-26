@@ -17,21 +17,24 @@ export default (editor, config = {}) => {
 
     comps.addType('dropdown', {
         model: defaultModel.extend({
-            defaults: Object.assign({}, defaultModel.prototype.defaults, {
+            defaults: {
+                ...defaultModel.prototype.defaults,
                 'custom-name': 'Dropdown',
                 classes: ['dropdown'],
                 droppable: 'a, button, .dropdown-menu',
                 traits: [
                     {
-                        type: 'class_select',
+                        type: 'select',
+                        label: 'Initial state',
+                        name: 'initial_state',
                         options: [
                             {value: '', name: 'Closed'},
                             {value: 'show', name: 'Open'}
                         ],
-                        label: 'Initial state'
                     }
-                ].concat(defaultModel.prototype.defaults.traits)
-            }),
+                ].concat(defaultModel.prototype.defaults.traits),
+            },
+
             init2() {
                 const toggle = {
                     type: 'button',
@@ -46,7 +49,6 @@ export default (editor, config = {}) => {
                 this.setupToggle(null, null, {force: true});
                 const comps = this.components();
                 comps.bind('add', this.setupToggle.bind(this));
-                //comps.bind('change', this.setupToggle.bind(this)); //FIXME commented out because it was crashing the page, why do wee need this here?
                 comps.bind('remove', this.setupToggle.bind(this));
                 const classes = this.get('classes');
                 classes.bind('add', this.setupToggle.bind(this));
@@ -56,9 +58,7 @@ export default (editor, config = {}) => {
 
             setupToggle(a, b, options = {}) {
                 const toggle = this.components().filter(c => c.getAttributes().class.split(' ').includes('dropdown-toggle'))[0];
-                // raise error if toggle not found
                 const menu = this.components().filter(c => c.getAttributes().class.split(' ').includes('dropdown-menu'))[0];
-                // raise error if menu not found
 
                 if (options.force !== true && options.ignore === true) {
                     return;
@@ -75,9 +75,9 @@ export default (editor, config = {}) => {
                     }
 
                     // setup toggle
-                    var toggle_attrs = toggle.getAttributes();
-                    toggle_attrs['role'] = 'button'; // if A
-                    var menu_attrs = menu.getAttributes();
+                    const toggle_attrs = toggle.getAttributes();
+                    toggle_attrs['role'] = 'button';
+                    const menu_attrs = menu.getAttributes();
                     if (!toggle_attrs.hasOwnProperty('data-toggle')) {
                         toggle_attrs['data-toggle'] = 'dropdown';
                     }
@@ -85,9 +85,8 @@ export default (editor, config = {}) => {
                         toggle_attrs['aria-haspopup'] = true;
                     }
 
-                    const dropdown_classes = this.getAttributes().class.split(' ');
-                    toggle_attrs['aria-expanded'] = dropdown_classes.includes('show');
                     toggle.set('attributes', toggle_attrs, {ignore: true});
+
                     // setup menu
                     // toggle needs ID for aria-labelled on the menu, could alert here
                     if (toggle_attrs.hasOwnProperty('id')) {
@@ -97,7 +96,26 @@ export default (editor, config = {}) => {
                     }
                     menu.set('attributes', menu_attrs, {ignore: true});
                 }
-            }
+            },
+
+            updated(property, value) {
+                if(value.hasOwnProperty('initial_state')) {
+                    const menu = this.components().filter(c => c.getAttributes().class.split(' ').includes('dropdown-menu'))[0];
+                    const attrs = menu.getAttributes();
+                    const classes = attrs.class.split(' ');
+
+                    if(classes.includes('show')) {
+                        // Close the menu
+                        attrs['aria-expanded'] = false;
+                        menu.removeClass('show');
+                    } else {
+                        // Open the menu
+                        attrs['aria-expanded'] = true;
+                        menu.addClass('show');
+                    }
+                }
+            },
+
         }, {
             isComponent(el) {
                 if (el && el.classList && el.classList.contains('dropdown')) {
@@ -105,11 +123,7 @@ export default (editor, config = {}) => {
                 }
             }
         }),
-        view: defaultView.extend({
-            /*init() {
-              this.model.setupToggle
-            }*/
-        })
+        view: defaultView
     });
 
     // need aria-labelledby to equal dropdown-toggle id
@@ -150,7 +164,7 @@ export default (editor, config = {}) => {
                 }
             }
         }),
-        view: defaultView
+        view: defaultView,
     });
 
 }
