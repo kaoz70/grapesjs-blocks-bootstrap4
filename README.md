@@ -63,7 +63,8 @@
   labels: {
     ...
   }
-  ...
+  formPredefinedActions: null,
+  optionsStringSeparator: '::'
 }
 ```
 
@@ -131,6 +132,7 @@ etc.
 |`gridDevices`|Add devices based on BS grid breakpoints|true|
 |`gridDevicesPanel`|Build a panel in the top-left corner with device buttons (use with editor `showDevices`=`false`)|false|
 |`formPredefinedActions`|Pass a list of predefined form actions to generate a select menu: [{name: 'Contact', value: '/contact'}, ...], if no list is passed an input box to add the action is shown|null|
+|`optionsStringSeparator`|Pass a string to identify the separator of values and labels of the select options: optionValue::optionLabel. This setting WILL BE overridden by the gjs-preset-webpage plugin if enabled|'::'|
 
 
 ## Download

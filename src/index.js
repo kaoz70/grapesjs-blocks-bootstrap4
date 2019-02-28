@@ -130,6 +130,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     blocks: Object.assign(default_blocks, opts_blocks),
     labels: Object.assign(default_labels, opts_labels),
     blockCategories: Object.assign(default_categories, opts_categories),
+    optionsStringSeparator: '::',
     gridDevices: true,
     gridDevicesPanel: false,
     classNavigation: 'nav',

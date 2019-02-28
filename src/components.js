@@ -1038,7 +1038,7 @@ export default (editor, config = {}) => {
     FormGroupInput(domc, traits, config);
     InputGroup(domc, traits, config);
     Textarea(domc, traits, config);
-    Select(domc, traits, config);
+    Select(editor, domc, traits, config);
     Checkbox(domc, traits, config);
     Radio(domc, traits, config);
     Label(domc, traits, config);
