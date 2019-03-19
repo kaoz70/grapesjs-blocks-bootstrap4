@@ -22,6 +22,7 @@ export default (dc, traits, config = {}) => {
                             {value: 'email', name: config.labels.type_email},
                             {value: 'password', name: config.labels.type_password},
                             {value: 'number', name: config.labels.type_number},
+                            {value: 'date', name: config.labels.type_date},
                         ]
                     }, traits.required
                 ],
