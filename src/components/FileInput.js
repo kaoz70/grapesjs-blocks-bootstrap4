@@ -17,6 +17,11 @@ export default (dc, traits, config = {}) => {
                 traits: [
                     traits.name,
                     traits.required,
+                    {
+                        type: 'checkbox',
+                        label: config.labels.trait_multiple,
+                        name: 'multiple',
+                    },
                 ],
             },
         }, {
