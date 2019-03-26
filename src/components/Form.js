@@ -31,6 +31,16 @@ export default (dc, traits, config = {}) => {
                 traits: [
                     {
                         type: 'select',
+                        label: config.labels.trait_enctype,
+                        name: 'enctype',
+                        options: [
+                            {value: 'application/x-www-form-urlencoded', name: 'application/x-www-form-urlencoded (default)'},
+                            {value: 'multipart/form-data', name: 'multipart/form-data'},
+                            {value: 'text/plain', name: 'text/plain'},
+                        ]
+                    },
+                    {
+                        type: 'select',
                         label: config.labels.trait_method,
                         name: 'method',
                         options: [

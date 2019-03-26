@@ -99,6 +99,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     checkbox: 'Checkbox',
     radio: 'Radio',
     trait_method: 'Method',
+    trait_enctype: 'Encoding Type',
     trait_action: 'Action',
     trait_state: 'State',
     trait_id: 'ID',
