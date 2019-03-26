@@ -20,6 +20,7 @@ import ButtonGroup from "./components/ButtonGroup";
 import ButtonToolbar from "./components/ButtonToolbar";
 import Label from "./components/Label";
 import Link from "./components/Link";
+import FileInput from "./components/FileInput";
 
 export default (editor, config = {}) => {
 
@@ -1035,6 +1036,7 @@ export default (editor, config = {}) => {
 
     Form(domc, traits, config);
     Input(domc, traits, config);
+    FileInput(domc, traits, config);
     FormGroupInput(domc, traits, config);
     InputGroup(domc, traits, config);
     Textarea(domc, traits, config);
