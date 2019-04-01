@@ -140,7 +140,7 @@ etc.
 <!--* CDN
   * `https://unpkg.com/grapesjs-blocks-bootstrap4` -->
 * NPM
-  * `npm i kaoz70/grapesjs-blocks-bootstrap4`
+  * `npm i grapesjs-blocks-bootstrap4`
 * GIT
   * `git clone https://github.com/kaoz70/grapesjs-blocks-bootstrap4.git`
 
