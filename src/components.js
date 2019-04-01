@@ -231,8 +231,8 @@ export default (editor, config = {}) => {
 
     if (blocks.image) {
       domc.addType('image', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
+        model: imageModel.extend({
+          defaults: Object.assign({}, imageModel.prototype.defaults, {
             'custom-name': 'Image',
             tagName: 'img',
             resizable: 1,
@@ -250,7 +250,7 @@ export default (editor, config = {}) => {
                 label: 'Alternate text',
                 name: 'alt'
               }
-            ].concat(defaultModel.prototype.defaults.traits)
+            ].concat(imageModel.prototype.defaults.traits)
           })
         }, {
           isComponent: function(el) {
@@ -259,7 +259,7 @@ export default (editor, config = {}) => {
             }
           }
         }),
-        view: defaultView
+        view: imageView
       });
       imageType = domc.getType('image');
       imageModel = imageType.model;
