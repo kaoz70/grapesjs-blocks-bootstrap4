@@ -103,9 +103,24 @@ export default (editor, config = {}) => {
             <div class="gjs-block-label">${c.labels.tabs}</div>
         `,
         category: 'Components',
-        content: {
-          type: 'tabs',
-        }
+        content: `
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tab 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tab 2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Tab 3</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"></div>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
+            </div>
+        `
       });
       bm.add('tabs-tab', {
         label: `

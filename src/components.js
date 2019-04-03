@@ -2,14 +2,12 @@ import _ from 'underscore';
 import _s from 'underscore.string';
 import loadCollapse from './components/collapse';
 import Dropdown from './components/Dropdown';
-import Tabs from "./components/tabs/Tabs";
-import Navigation from "./components/tabs/Navigation";
-import Panes from "./components/tabs/Panes";
+import TabsNavigation from "./components/tabs/TabsNavigation";
+import TabsPanes from "./components/tabs/TabsPanes";
 import Tab from "./components/tabs/Tab";
 import TabPane from "./components/tabs/TabPane";
 import Form from "./components/Form";
 import Input from "./components/Input";
-import FormGroupInput from "./components/FormGroupInput";
 import InputGroup from "./components/InputGroup";
 import Textarea from "./components/Textarea";
 import Select from "./components/Select";
@@ -582,10 +580,9 @@ export default (editor, config = {}) => {
     }
 
     if (blocks.tabs) {
-      Tabs(domc, config);
-      Navigation(domc, config);
+      TabsNavigation(domc, config);
       Tab(domc, config);
-      Panes(domc, config);
+      TabsPanes(domc, config);
       TabPane(domc, config);
     }
 
@@ -1037,7 +1034,6 @@ export default (editor, config = {}) => {
     Form(domc, traits, config);
     Input(domc, traits, config);
     FileInput(domc, traits, config);
-    FormGroupInput(domc, traits, config);
     InputGroup(domc, traits, config);
     Textarea(domc, traits, config);
     Select(editor, domc, traits, config);

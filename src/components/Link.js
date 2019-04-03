@@ -55,7 +55,7 @@ export default (editor, config = {}) => {
                 this.listenTo(this, 'change:data-toggle', this.setupToggle);
                 this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
             },
-            setupToggle(a, b, options = {}) { // this should be in the dropdown comp and not the link comp
+            setupToggle(a, b, options = {}) { // TODO this should be in the dropdown comp and not the link comp
                 if (options.ignore === true && options.force !== true) {
                     return;
                 }

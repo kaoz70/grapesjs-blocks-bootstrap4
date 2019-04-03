@@ -13,8 +13,8 @@ export default (dc, traits, config = {}) => {
             },
         }, {
             isComponent(el) {
-                if(el.tagName === 'DIV') {
-                    return {type: 'div'};
+                if(el && el.classList && el.classList.contains('form_group_input')) {
+                    return {type: 'form_group_input'};
                 }
             },
         }),
