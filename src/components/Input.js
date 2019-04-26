@@ -12,6 +12,7 @@ export default (dc, traits, config = {}) => {
                 draggable: 'form .form-group',
                 droppable: false,
                 traits: [
+                    traits.value,
                     traits.name,
                     traits.placeholder, {
                         label: config.labels.trait_type,
@@ -23,6 +24,7 @@ export default (dc, traits, config = {}) => {
                             {value: 'password', name: config.labels.type_password},
                             {value: 'number', name: config.labels.type_number},
                             {value: 'date', name: config.labels.type_date},
+                            {value: 'hidden', name: config.labels.type_hidden},
                         ]
                     }, traits.required
                 ],

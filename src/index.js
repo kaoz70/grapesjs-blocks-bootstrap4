@@ -116,6 +116,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     type_password: 'Password',
     type_number: 'Number',
     type_date: 'Date',
+    type_hidden: 'Hidden',
     type_submit: 'Submit',
     type_reset: 'Reset',
     type_button: 'Button',
