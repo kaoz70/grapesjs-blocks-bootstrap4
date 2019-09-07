@@ -89,6 +89,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     form: 'Form',
     input: 'Input',
     file_input: 'File',
+    form_group_input: 'Form Group',
     input_group: 'Input group',
     textarea: 'Textarea',
     select: 'Select',
