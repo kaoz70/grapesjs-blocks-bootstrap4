@@ -55,7 +55,7 @@ export default (editor, config = {}) => {
           this.target.addClass(value_a[i]);
         }
       }
-      this.target.em.trigger('change:selectedComponent');
+      this.target.em.trigger('component:toggled');
     }
   });
 
