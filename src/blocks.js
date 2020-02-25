@@ -274,14 +274,12 @@ export default (editor, config = {}) => {
     }
 
     if (blocks.image) {
-      // example of how we might include encoded image as default src. i like the idea but it mucks up the settings src field
-      //let default_src = 'data:image/png;base64,iVB\ORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEU\AAAD///+l2Z/dAAAAM0lEQVR4nGP4/5/h/1+G/58ZDrAz3D/McH8\yw83NDDeNGe4Ug9C9zwz3gVLMDA/A6P9/AFGGFyjOXZtQAAAAAEl\FTkSuQmCC'
-      bm.add('image', {
+      bm.add('bs-image', {
         label: c.labels.image,
         category: 'Basic',
         attributes: {class:'fa fa-picture-o'},
         content: {
-          type: 'image'
+          type: 'bs-image'
         }
       });
     }

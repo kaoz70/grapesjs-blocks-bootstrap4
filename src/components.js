@@ -19,11 +19,9 @@ import ButtonToolbar from "./components/ButtonToolbar";
 import Label from "./components/Label";
 import Link from "./components/Link";
 import FileInput from "./components/FileInput";
+import Image from "./components/Image";
 
 export default (editor, config = {}) => {
-
-  const img_src_default = 'https://dummyimage.com/450x250/999/222';
-
   const contexts = [
     'primary', 'secondary',
     'success', 'info',
@@ -39,21 +37,21 @@ export default (editor, config = {}) => {
   };
 
   const c = config;
-  let domc = editor.DomComponents;
-  let blocks = c.blocks;
-  let cats = c.blockCategories;
+  const domc = editor.DomComponents;
+  const blocks = c.blocks;
+  const cats = c.blockCategories;
 
-  var defaultType = domc.getType('default');
-  var defaultModel = defaultType.model;
-  var defaultView = defaultType.view;
+  const defaultType = domc.getType('default');
+  const defaultModel = defaultType.model;
+  const defaultView = defaultType.view;
 
-  var textType = domc.getType('text');
-  var textModel = textType.model;
-  var textView = textType.view;
+  const textType = domc.getType('text');
+  const textModel = textType.model;
+  const textView = textType.view;
 
-  var imageType = domc.getType('image');
-  var imageModel = imageType.model;
-  var imageView = imageType.view;
+  const imageType = domc.getType('image');
+  const imageModel = imageType.model;
+  const imageView = imageType.view;
 
   const traits = {
     id: {
@@ -88,9 +86,6 @@ export default (editor, config = {}) => {
       changeProp: 1
     }
   };
-  
-
-
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (cats.basic) {
@@ -193,9 +188,6 @@ export default (editor, config = {}) => {
         }),
         view: defaultView
       });
-      defaultType = domc.getType('default');
-      defaultModel = defaultType.model;
-      defaultView = defaultType.view;
     }
 
     // Rebuild the text component and add display utility setting
@@ -217,9 +209,6 @@ export default (editor, config = {}) => {
         }),
         view: textView
       });
-      textType = domc.getType('text');
-      textModel = textType.model;
-      textView = textType.view;
     }
 
     // Rebuild the link component with settings for collapse-control
@@ -228,40 +217,7 @@ export default (editor, config = {}) => {
     }
 
     if (blocks.image) {
-      domc.addType('image', {
-        model: imageModel.extend({
-          defaults: Object.assign({}, imageModel.prototype.defaults, {
-            'custom-name': 'Image',
-            tagName: 'img',
-            resizable: 1,
-            attributes: {
-              src: img_src_default
-            },
-            traits: [
-              {
-                type: 'text',
-                label: 'Source (URL)',
-                name: 'src'
-              },
-              {
-                type: 'text',
-                label: 'Alternate text',
-                name: 'alt'
-              }
-            ].concat(imageModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent: function(el) {
-            if(el && el.tagName == 'IMG') {
-              return {type: 'image'};
-            }
-          }
-        }),
-        view: imageView
-      });
-      imageType = domc.getType('image');
-      imageModel = imageType.model;
-      imageView = imageType.view;
+      Image(domc);
     }
 
 
@@ -772,7 +728,7 @@ export default (editor, config = {}) => {
             }
           },
           order() {
-            
+
           }
         }, {
           isComponent(el) {
