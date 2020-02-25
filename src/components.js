@@ -1,12 +1,29 @@
 import _ from 'underscore';
 import _s from 'underscore.string';
 import loadCollapse from './components/collapse';
-import loadDropdown from './components/dropdown';
+import Dropdown from './components/Dropdown';
+import TabsNavigation from "./components/tabs/TabsNavigation";
+import TabsPanes from "./components/tabs/TabsPanes";
+import Tab from "./components/tabs/Tab";
+import TabPane from "./components/tabs/TabPane";
+import Form from "./components/Form";
+import Input from "./components/Input";
+import InputGroup from "./components/InputGroup";
+import Textarea from "./components/Textarea";
+import Select from "./components/Select";
+import Checkbox from "./components/Checkbox";
+import Radio from "./components/Radio";
+import Button from "./components/Button";
+import ButtonGroup from "./components/ButtonGroup";
+import ButtonToolbar from "./components/ButtonToolbar";
+import Label from "./components/Label";
+import Link from "./components/Link";
+import FileInput from "./components/FileInput";
+import Image from "./components/Image";
+import Video from "./components/video/Video";
+import Embed from "./components/video/Embed";
 
 export default (editor, config = {}) => {
-
-  const img_src_default = 'https://dummyimage.com/450x250/999/222';
-
   const contexts = [
     'primary', 'secondary',
     'success', 'info',
@@ -22,25 +39,66 @@ export default (editor, config = {}) => {
   };
 
   const c = config;
-  let domc = editor.DomComponents;
-  let blocks = c.blocks;
-  let cats = c.blockCategories;
+  const domc = editor.DomComponents;
+  const blocks = c.blocks;
+  const cats = c.blockCategories;
 
-  var defaultType = domc.getType('default');
-  var defaultModel = defaultType.model;
-  var defaultView = defaultType.view;
+  const defaultType = domc.getType('default');
+  const defaultModel = defaultType.model;
+  const defaultView = defaultType.view;
 
-  var textType = domc.getType('text');
-  var textModel = textType.model;
-  var textView = textType.view;
+  const textType = domc.getType('text');
+  const textModel = textType.model;
+  const textView = textType.view;
 
-  var linkType = domc.getType('link');
-  var linkModel = linkType.model;
-  var linkView = linkType.view;
+  const imageType = domc.getType('image');
+  const imageModel = imageType.model;
+  const imageView = imageType.view;
 
-  var imageType = domc.getType('image');
-  var imageModel = imageType.model;
-  var imageView = imageType.view;
+  const traits = {
+    id: {
+      name: 'id',
+      label: c.labels.trait_id,
+    },
+    for: {
+      name: 'for',
+      label: c.labels.trait_for,
+    },
+    name: {
+      name: 'name',
+      label: c.labels.trait_name,
+    },
+    placeholder: {
+      name: 'placeholder',
+      label: c.labels.trait_placeholder,
+    },
+    value: {
+      name: 'value',
+      label: c.labels.trait_value,
+    },
+    required: {
+      type: 'checkbox',
+      name: 'required',
+      label: c.labels.trait_required,
+    },
+    checked: {
+      label: c.labels.trait_checked,
+      type: 'checkbox',
+      name: 'checked',
+      changeProp: 1
+    }
+  };
+
+  if (cats.media) {
+    if (blocks.image) {
+      Image(domc);
+    }
+
+    if (blocks.video) {
+      Embed(domc);
+      Video(domc);
+    }
+  }
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (cats.basic) {
@@ -143,9 +201,6 @@ export default (editor, config = {}) => {
         }),
         view: defaultView
       });
-      defaultType = domc.getType('default');
-      defaultModel = defaultType.model;
-      defaultView = defaultType.view;
     }
 
     // Rebuild the text component and add display utility setting
@@ -167,155 +222,11 @@ export default (editor, config = {}) => {
         }),
         view: textView
       });
-      textType = domc.getType('text');
-      textModel = textType.model;
-      textView = textType.view;
     }
 
     // Rebuild the link component with settings for collapse-control
     if (blocks.link) {
-      domc.addType('link', {
-        model: textModel.extend({
-          defaults: Object.assign({}, textModel.prototype.defaults, {
-            'custom-name': 'Link',
-            tagName: 'a',
-            droppable: true,
-            editable: true,
-            traits: [
-              {
-                type: 'text',
-                label: 'Href',
-                name: 'href',
-                placeholder: 'https://www.grapesjs.com'
-              },
-              {
-                type: 'select',
-                options: [
-                  {value: '', name: 'This window'},
-                  {value: '_blank', name: 'New window'}
-                ],
-                label: 'Target',
-                name: 'target',
-              },
-              {
-                type: 'select',
-                options: [
-                  {value: '', name: 'None'},
-                  {value: 'button', name: 'Self'},
-                  {value: 'collapse', name: 'Collapse'},
-                  {value: 'dropdown', name: 'Dropdown'}
-                ],
-                label: 'Toggles',
-                name: 'data-toggle',
-                changeProp: 1
-              }
-            ].concat(textModel.prototype.defaults.traits)
-          }),
-          init2() {
-            //textModel.prototype.init.call(this);
-            this.listenTo(this, 'change:data-toggle', this.setupToggle);
-            this.listenTo(this, 'change:attributes', this.setupToggle); // for when href changes
-          },
-          setupToggle(a, b, options = {}) { // this should be in the dropdown comp and not the link comp
-            if(options.ignore === true && options.force !== true) {
-              return;
-            }
-            console.log('setup toggle');
-            const attrs = this.getAttributes();
-            const href = attrs.href;
-            // old attributes are not removed from DOM even if deleted...
-            delete attrs['data-toggle'];
-            delete attrs['aria-expanded'];
-            delete attrs['aria-controls'];
-            delete attrs['aria-haspopup'];
-            if(href && href.length > 0 && href.match(/^#/)) {
-              console.log('link has href');
-              // find the el where id == link href
-              const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
-              if(els.length > 0) {
-                console.log('referenced el found');
-                var el = els[0]; // should only be one el with this ID
-                const el_attrs = el.getAttributes();
-                //delete el_attrs['aria-labelledby'];
-                const el_classes = el_attrs.class;
-                if(el_classes) {
-                  console.log('el has classes');
-                  const el_classes_list = el_classes.split(' ');
-                  const intersection = _.intersection(['collapse','dropdown-menu'], el_classes_list);
-                  if(intersection.length) {
-                    console.log('link data-toggle matches el class');
-                    switch(intersection[0]) {
-                      case 'collapse':
-                        attrs['data-toggle'] = 'collapse';
-                        break;
-                    }
-                    attrs['aria-expanded'] = el_classes_list.includes('show');
-                    if(intersection[0] == 'collapse') {
-                      attrs['aria-controls'] = href.substring(1);
-                    }
-                  }
-                }
-              }
-            }
-            this.set('attributes', attrs, {ignore: true});
-          },
-          classesChanged(e) {
-            console.log('classes changed');
-            if(this.attributes.type == 'link') {
-              if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length > 0) {
-                this.changeType('button');
-              }
-            }
-          }
-        }, {
-          isComponent(el) {
-            if(el && el.tagName && el.tagName == 'A') {
-              return {type: 'link'};
-            }
-          }
-        }),
-        view: linkView
-      });
-      linkType = domc.getType('link');
-      linkModel = linkType.model;
-      linkView = linkType.view;
-    }
-
-    if (blocks.image) {
-      domc.addType('image', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
-            'custom-name': 'Image',
-            tagName: 'img',
-            resizable: 1,
-            attributes: {
-              src: img_src_default
-            },
-            traits: [
-              {
-                type: 'text',
-                label: 'Source (URL)',
-                name: 'src'
-              },
-              {
-                type: 'text',
-                label: 'Alternate text',
-                name: 'alt'
-              }
-            ].concat(defaultModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent: function(el) {
-            if(el && el.tagName == 'IMG') {
-              return {type: 'image'};
-            }
-          }
-        }),
-        view: defaultView
-      });
-      imageType = domc.getType('image');
-      imageModel = imageType.model;
-      imageView = imageType.view;
+      Link(editor, config);
     }
 
 
@@ -633,6 +544,13 @@ export default (editor, config = {}) => {
       });
     }
 
+    if (blocks.tabs) {
+      TabsNavigation(domc, config);
+      Tab(domc, config);
+      TabsPanes(domc, config);
+      TabPane(domc, config);
+    }
+
     // Badge
 
     if (blocks.badge) {
@@ -672,147 +590,7 @@ export default (editor, config = {}) => {
       });
     }
 
-    // Button
 
-    if (blocks.button) {
-      domc.addType('button', {
-        model: linkModel.extend({
-          defaults: Object.assign({}, linkModel.prototype.defaults, {
-            'custom-name': 'Button',
-            attributes: {
-              role: 'button'
-            },
-            classes: ['btn'],
-            traits: [
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'None'},
-                  ... contexts.map(function(v) { return {value: 'btn-'+v, name: _s.capitalize(v)} }),
-                  ... contexts.map(function(v) { return {value: 'btn-outline-'+v, name: _s.capitalize(v) + ' (Outline)'} })
-                ],
-                label: 'Context'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Default'},
-                  ... Object.keys(sizes).map(function(k) { return {value: 'btn-'+k, name: sizes[k]} })
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Inline'},
-                  {value: 'btn-block', name: 'Block'}
-                ],
-                label: 'Width'
-              }
-            ].concat(linkModel.prototype.defaults.traits)
-          }),
-          /*init2() {
-            linkModel.prototype.init2.call(this); // call parent init in this context.
-          },*/
-          afterChange(e) {
-            if(this.attributes.type == 'button') {
-              if (this.attributes.classes.filter(function(klass) { return klass.id=='btn' }).length == 0) {
-                this.changeType('link');
-              }
-            }
-          }
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn')) {
-              return {type: 'button'};
-            }
-          }
-        }),
-        view: linkView
-      });
-    }
-
-    // Button group
-
-    if (blocks.button_group) {
-      domc.addType('button_group', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
-            'custom-name': 'Button Group',
-            tagName: 'div',
-            classes: ['btn-group'],
-            droppable: '.btn',
-            attributes: {
-              role: 'group'
-            },
-            traits: [
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Default'},
-                  ... Object.keys(sizes).map(function(k) { return {value: 'btn-group-'+k, name: sizes[k]} })
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'class_select',
-                options: [
-                  {value: '', name: 'Horizontal'},
-                  {value: 'btn-group-vertical', name: 'Vertical'},
-                ],
-                label: 'Size'
-              },
-              {
-                type: 'Text',
-                label: 'ARIA Label',
-                name: 'aria-label',
-                placeholder: 'A group of buttons'
-              }
-            ].concat(defaultModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn-group')) {
-              return {type: 'button_group'};
-            }
-          }
-        }),
-        view: defaultView
-      });
-    }
-
-    // Button toolbar
-
-    if (blocks.button_toolbar) {
-      domc.addType('button_toolbar', {
-        model: defaultModel.extend({
-          defaults: Object.assign({}, defaultModel.prototype.defaults, {
-            'custom-name': 'Button Toolbar',
-            tagName: 'div',
-            classes: ['btn-toolbar'],
-            droppable: '.btn-group',
-            attributes: {
-              role: 'toolbar'
-            },
-            traits: [
-              {
-                type: 'Text',
-                label: 'ARIA Label',
-                name: 'aria-label',
-                placeholder: 'A toolbar of button groups'
-              }
-            ].concat(defaultModel.prototype.defaults.traits)
-          })
-        }, {
-          isComponent(el) {
-            if(el && el.classList && el.classList.contains('btn-toolbar')) {
-              return {type: 'button_toolbar'};
-            }
-          }
-        }),
-        view: defaultView
-      });
-    }
 
     // Card
 
@@ -959,7 +737,7 @@ export default (editor, config = {}) => {
             }
           },
           order() {
-            
+
           }
         }, {
           isComponent(el) {
@@ -1129,7 +907,7 @@ export default (editor, config = {}) => {
     // Dropdown
 
     if (blocks.dropdown) {
-      loadDropdown(editor, config);
+      Dropdown(editor, config);
     }
 
   }
@@ -1205,13 +983,39 @@ export default (editor, config = {}) => {
           })
         }, {
           isComponent(el) {
-            if(el && el.tagName && el.tagName == 'P') {
+            if(el && el.tagName && el.tagName === 'P') {
               return {type: 'paragraph'};
             }
           }
         }),
         view: textView
       });
+    }
+
+  }
+
+  if(cats.forms) {
+
+    Form(domc, traits, config);
+    Input(domc, traits, config);
+    FileInput(domc, traits, config);
+    InputGroup(domc, traits, config);
+    Textarea(domc, traits, config);
+    Select(editor, domc, traits, config);
+    Checkbox(domc, traits, config);
+    Radio(domc, traits, config);
+    Label(domc, traits, config);
+
+    if (blocks.button) {
+      Button(domc, traits, contexts, sizes, config);
+    }
+
+    if (blocks.button_group) {
+      ButtonGroup(domc, traits, contexts, sizes, config);
+    }
+
+    if (blocks.button_toolbar) {
+      ButtonToolbar(domc, config);
     }
 
   }

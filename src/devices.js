@@ -6,7 +6,7 @@ export default (editor, config = {}) => {
     deviceManager.add('Small', '767px');
     deviceManager.add('Medium', '991px');
     deviceManager.add('Large', '1199px');
-    deviceManager.add('Extra Large', '100%');
+    deviceManager.add('Extra Large');
 
 
     if(c.gridDevicesPanel) {

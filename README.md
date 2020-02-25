@@ -21,10 +21,8 @@
     * `media_body`
   * Components
     * `alert`
+    * `tabs`
     * `badge`
-    * `button`
-    * `button_group`
-    * `button_toolbar`
     * `card`
     * `card_container`
     * `collapse`
@@ -34,15 +32,20 @@
     * `text`
     * `header`
     * `paragraph`
-  * Basic
+  * Media
     * `image`
-<!--* Blocks
-  * `container`
-  * `row`
-  * `column`
-  * `column_break`
-  * `text`
-  * `header`-->
+    * `video`
+  * Forms
+    * `form`
+    * `button`
+    * `button_group`
+    * `button_toolbar`
+    * `input`
+    * `input_group`
+    * `form_group_input`
+    * `textarea`
+    * `checkbox`
+    * `radio`
 
 
 
@@ -61,7 +64,8 @@
   labels: {
     ...
   }
-  ...
+  formPredefinedActions: null,
+  optionsStringSeparator: '::'
 }
 ```
 
@@ -73,22 +77,31 @@
 |`text`|Rebuild text component to re-inherit from default|true|
 |`link`|Rebuild link component to re-inherit from default and give toggle setting|true|
 |`image`|Rebuild image component to re-inherit from default|true|
+|`video`|Rebuild video component to re-inherit from default|true|
 |`container`|Container (fixed/fluid)|true|
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|
 |`column_break`|Column-break (`div.w-100`)|true|
 |`media_object`|Media object|true|
 |`alert`||true|
+|`tabs`||true|
 |`badge`||true|
-|`button`||true|
-|`button_group`||true|
-|`button_toolbar`||true|
 |`card`|Card with settings for images, image overlay, header, body, & footer components|true|
 |`card_container`|Layouts: group, deck, columns|true|
 |`collapse`|Collapse component that can be toggled via link component|true|
 |`dropdown`|Dropdown|true|
 |`header`|H1-H6|true|
 |`paragraph`|P tag with "lead" setting|true|
+|`form`||true|
+|`button`||true|
+|`button_group`||true|
+|`button_toolbar`||true|
+|`input`||true|
+|`input_group`||true|
+|`form_group_input`||true|
+|`textarea`||true|
+|`checkbox`||true|
+|`radio`||true|
 
 ### Block Categories
 
@@ -100,6 +113,7 @@ These are the different categories of blocks as they are grouped in the Blocks s
 |`components`|_Bootstrap_'s Components--alert, button, card, etc.|true|
 |`typography`|Text, header, paragraph, etc.|true|
 |`basic`|Link, image, etc.|true|
+|`forms`|Form, input, textarea, etc.|true|
 
 
 ### Labels
@@ -119,6 +133,9 @@ etc.
 |-|-|-
 |`gridDevices`|Add devices based on BS grid breakpoints|true|
 |`gridDevicesPanel`|Build a panel in the top-left corner with device buttons (use with editor `showDevices`=`false`)|false|
+|`formPredefinedActions`|Pass a list of predefined form actions to generate a select menu: [{name: 'Contact', value: '/contact'}, ...], if no list is passed an input box to add the action is shown|null|
+|`optionsStringSeparator`|Pass a string to identify the separator of values and labels of the select options: optionValue::optionLabel. This setting WILL BE overridden by the gjs-preset-webpage plugin if enabled|'::'|
+
 
 ## Download
 
@@ -127,7 +144,7 @@ etc.
 * NPM
   * `npm i grapesjs-blocks-bootstrap4`
 * GIT
-  * `git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git`
+  * `git clone https://github.com/kaoz70/grapesjs-blocks-bootstrap4.git`
 
 
 
@@ -163,12 +180,12 @@ etc.
       },
       canvas: {
         styles: [
-          'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css'
+          'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
         ],
         scripts: [
-          'https://code.jquery.com/jquery-3.2.1.slim.min.js',
-          'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js',
-          'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js'
+          'https://code.jquery.com/jquery-3.3.1.slim.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
+          'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'
         ],
       }
   });
@@ -184,7 +201,7 @@ etc.
 Clone the repository
 
 ```sh
-$ git clone https://github.com/z1lk/grapesjs-blocks-bootstrap4.git
+$ git clone https://github.com/kaoz70/grapesjs-blocks-bootstrap4.git
 $ cd grapesjs-blocks-bootstrap4
 ```
 
