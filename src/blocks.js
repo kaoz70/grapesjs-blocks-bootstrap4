@@ -80,6 +80,31 @@ export default (editor, config = {}) => {
 
   }
 
+  // MEDIA
+  if (cats.media) {
+    if (blocks.video) {
+      bm.add('bs-video', {
+        label: c.labels.video,
+        category: 'Media',
+        attributes: {class:'fa fa-youtube-play'},
+        content: {
+          type: 'bs-video'
+        }
+      });
+    }
+
+    if (blocks.image) {
+      bm.add('bs-image', {
+        label: c.labels.image,
+        category: 'Media',
+        attributes: {class:'fa fa-picture-o'},
+        content: {
+          type: 'bs-image'
+        }
+      });
+    }
+  }
+
   // COMPONENTS
 
   if (cats.components) {
@@ -269,17 +294,6 @@ export default (editor, config = {}) => {
         content: {
           type: 'link',
           content: 'Link text'
-        }
-      });
-    }
-
-    if (blocks.image) {
-      bm.add('bs-image', {
-        label: c.labels.image,
-        category: 'Basic',
-        attributes: {class:'fa fa-picture-o'},
-        content: {
-          type: 'bs-image'
         }
       });
     }

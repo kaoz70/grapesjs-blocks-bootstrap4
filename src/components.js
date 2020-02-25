@@ -20,6 +20,8 @@ import Label from "./components/Label";
 import Link from "./components/Link";
 import FileInput from "./components/FileInput";
 import Image from "./components/Image";
+import Video from "./components/video/Video";
+import Embed from "./components/video/Embed";
 
 export default (editor, config = {}) => {
   const contexts = [
@@ -86,6 +88,17 @@ export default (editor, config = {}) => {
       changeProp: 1
     }
   };
+
+  if (cats.media) {
+    if (blocks.image) {
+      Image(domc);
+    }
+
+    if (blocks.video) {
+      Embed(domc);
+      Video(domc);
+    }
+  }
 
   // Rebuild the default component and add utility settings to it (border, bg, color, etc)
   if (cats.basic) {
@@ -214,10 +227,6 @@ export default (editor, config = {}) => {
     // Rebuild the link component with settings for collapse-control
     if (blocks.link) {
       Link(editor, config);
-    }
-
-    if (blocks.image) {
-      Image(domc);
     }
 
 

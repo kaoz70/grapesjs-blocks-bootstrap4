@@ -32,8 +32,9 @@
     * `text`
     * `header`
     * `paragraph`
-  * Basic
+  * Media
     * `image`
+    * `video`
   * Forms
     * `form`
     * `button`
@@ -76,6 +77,7 @@
 |`text`|Rebuild text component to re-inherit from default|true|
 |`link`|Rebuild link component to re-inherit from default and give toggle setting|true|
 |`image`|Rebuild image component to re-inherit from default|true|
+|`video`|Rebuild video component to re-inherit from default|true|
 |`container`|Container (fixed/fluid)|true|
 |`row`|Row|true|
 |`column`|Columns of all sizes|true|

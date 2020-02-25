@@ -1,13 +1,13 @@
 export default (domComponent) => {
     const img_src_default = 'https://dummyimage.com/800x500/999/222';
     const imageType = domComponent.getType('image');
-    const imageModel = imageType.model;
-    const imageView = imageType.view;
+    const model = imageType.model;
+    const view = imageType.view;
     const type = 'bs-image';
 
     domComponent.addType(type, {
-        model: imageModel.extend({
-            defaults: Object.assign({}, imageModel.prototype.defaults, {
+        model: model.extend({
+            defaults: Object.assign({}, model.prototype.defaults, {
                 'custom-name': 'Image',
                 tagName: 'img',
                 resizable: 1,
@@ -26,7 +26,7 @@ export default (domComponent) => {
                         label: 'Alternate text',
                         name: 'alt'
                     }
-                ].concat(imageModel.prototype.defaults.traits)
+                ].concat(model.prototype.defaults.traits)
             })
         }, {
             isComponent: function(el) {
@@ -35,6 +35,6 @@ export default (domComponent) => {
                 }
             }
         }),
-        view: imageView
+        view: view
     });
 }

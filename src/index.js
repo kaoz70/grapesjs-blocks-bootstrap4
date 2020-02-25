@@ -38,6 +38,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     card_container: true,
     collapse: true,
     dropdown: true,
+    video: true,
     // TYPOGRAPHY
     header: true,
     paragraph: true,
@@ -62,6 +63,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     column: 'Column',
     column_break: 'Column Break',
     media_object: 'Media Object',
+
     // COMPONENTS
     alert: 'Alert',
     tabs: 'Tabs',
@@ -77,14 +79,20 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
     dropdown: 'Dropdown',
     dropdown_menu: 'Dropdown Menu',
     dropdown_item: 'Dropdown Item',
+
+    // MEDIA
+    image: 'Image',
+    video: 'Video',
+
     // TYPOGRAPHY
     text: 'Text',
+
+    // BASIC
     header: 'Header',
     paragraph: 'Paragraph',
-    // BASIC
-    image: 'Image',
     link: 'Link',
     list: 'Simple List',
+
     // FORMS
     form: 'Form',
     input: 'Input',
@@ -125,6 +133,7 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
 
   const default_categories = {
     'layout': true,
+    'media': true,
     'components': true,
     'typography': true,
     'basic': true,
