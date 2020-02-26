@@ -377,23 +377,23 @@ export default (editor, config = {}) => {
         <form>
           <div class="form-group">
             <label>Name</label>
-            <input placeholder="Type here your name" class="form-control"/>
+            <input name="name" placeholder="Type here your name" class="form-control"/>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="Type here your email" class="form-control"/>
+            <input name="email" type="email" placeholder="Type here your email" class="form-control"/>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" value="M">
+            <input name="sex" type="checkbox" class="form-check-input" value="M">
             <label class="form-check-label">M</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" value="F">
+            <input name="sex" type="checkbox" class="form-check-input" value="F">
             <label class="form-check-label">F</label>
           </div>
           <div class="form-group">
             <label>Message</label>
-            <textarea class="form-control"></textarea>
+            <textarea name="message" class="form-control"></textarea>
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary">Send</button>
@@ -409,7 +409,7 @@ export default (editor, config = {}) => {
       ${inputIcon}
       <span>${c.labels.input}</span>`,
       category: 'Forms',
-      content: '<input class="form-control"/>',
+      content: '<input name="input1" class="form-control"/>',
     });
     bm.add('file-input', {
       label: `
@@ -417,7 +417,7 @@ export default (editor, config = {}) => {
             <span>${c.labels.file_input}</span>
         `,
       category: 'Forms',
-      content: `<input type="file" class="form-control-file" id="exampleFormControlFile1">`
+      content: `<input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">`
     });
   }
 
@@ -430,7 +430,7 @@ export default (editor, config = {}) => {
       content: `
       <div class="form-group">
         <label>Name</label>
-        <input placeholder="Type here your name" class="form-control"/>
+        <input name="name" placeholder="Type here your name" class="form-control"/>
       </div>
       `,
     });
@@ -447,7 +447,7 @@ export default (editor, config = {}) => {
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
         </div>
-        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+        <input name="input1" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
         <div class="input-group-append">
           <span class="input-group-text">.00</span>
         </div>
@@ -462,7 +462,7 @@ export default (editor, config = {}) => {
       ${textareaIcon}
       <span>${c.labels.textarea}</span>`,
       category: 'Forms',
-      content: '<textarea class="form-control"></textarea>',
+      content: '<textarea name="textarea1" class="form-control"></textarea>',
     });
   }
 
@@ -472,7 +472,7 @@ export default (editor, config = {}) => {
       ${selectIcon}
       <span>${c.labels.select}</span>`,
       category: 'Forms',
-      content: `<select class="form-control">
+      content: `<select class="form-control" name="select1">
         ${c.labels.select_option ? `<option value="">${c.labels.select_option}</option>` : ''}
         <option value="1">${c.labels.option} 1</option>
         </select>`,
