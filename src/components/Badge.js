@@ -1,5 +1,20 @@
 import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
+import certificateIcon from "raw-loader!../icons/certificate-solid.svg";
+
+export const BadgeBlock = (bm, label) => {
+    bm.add('badge', {
+        label: `
+            ${certificateIcon}
+            <div>${label}</div>
+        `,
+        category: 'Components',
+        content: {
+            type: 'badge',
+            content: 'New!'
+        }
+    });
+};
 
 export default (domc) => {
     const textType = domc.getType('text');

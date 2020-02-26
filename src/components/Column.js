@@ -1,3 +1,20 @@
+import windowIcon from "../icons/window-maximize-solid.svg";
+import columnsIcon from "../icons/columns-solid.svg";
+
+export const ColumnBlock = (bm, label) => {
+    bm.add('column').set({
+        label: `
+            ${columnsIcon}
+            <div>${label}</div>
+        `,
+        category: 'Layout',
+        content: {
+            type: 'column',
+            classes: ['col']
+        }
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

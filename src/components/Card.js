@@ -3,7 +3,30 @@ known issues:
 */
 
 import _ from 'underscore';
-import _s from 'underscore.string';
+import cardIcon from "raw-loader!../icons/credit-card-solid.svg";
+
+export const CardBlock = (bm, c) => {
+  bm.add('card', {
+    label: `
+            ${cardIcon}
+            <div>${c.labels.card}</div>
+        `,
+    category: 'Components',
+    content: {
+      type: 'card'
+    }
+  });
+  bm.add('card_container', {
+    label: `
+            ${cardIcon}
+            <div>${c.labels.card_container}</div>
+        `,
+    category: 'Components',
+    content: {
+      type: 'card_container'
+    }
+  });
+};
 
 export default (domc, editor) => {
   const comps = editor.DomComponents;

@@ -1,3 +1,19 @@
+import windowIcon from "raw-loader!../icons/window-maximize-solid.svg";
+
+export const ContainerBlock = (bm, label) => {
+    bm.add('container').set({
+        label: `
+            ${windowIcon}
+            <div>${label}</div>
+        `,
+        category: 'Layout',
+        content: {
+            type: 'container',
+            classes: ['container']
+        }
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

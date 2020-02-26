@@ -1,3 +1,22 @@
+import columnsIcon from 'raw-loader!../icons/columns-solid.svg';
+
+export const MediaObjectBlock = (bm, label) => {
+    bm.add('media_object').set({
+        label: `
+            ${columnsIcon}
+            <div>${label}</div>
+        `,
+        category: 'Layout',
+        content: `<div class="media">
+                 <img class="mr-3" src="">
+                 <div class="media-body">
+                 <h5>Media heading</h5>
+                 <div>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</div>
+                 </div>
+                 </div>`
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

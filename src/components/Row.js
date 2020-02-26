@@ -1,3 +1,19 @@
+import windowIcon from "../icons/window-maximize-solid.svg";
+
+export const RowBlock = (bm, label) => {
+    bm.add('row').set({
+        label: `
+            ${windowIcon}
+            <div>${label}</div>
+        `,
+        category: 'Layout',
+        content: {
+            type: 'row',
+            classes: ['row']
+        }
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

@@ -1,3 +1,18 @@
+import equalsIcon from "raw-loader!../icons/equals-solid.svg";
+
+export const ColumnBreakBlock = (bm, label) => {
+    bm.add('column_break').set({
+        label: `
+            ${equalsIcon}
+            <div>${label}</div>
+        `,
+        category: 'Layout',
+        content: {
+            type: 'column_break'
+        }
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

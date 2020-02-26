@@ -2,8 +2,20 @@
 known issues:
 */
 
-import _ from 'underscore';
-import _s from 'underscore.string';
+import compressIcon from "raw-loader!../icons/compress-solid.svg";
+
+export const CollapseBlock = (bm, label) => {
+  bm.add('collapse', {
+    label: `
+            ${compressIcon}
+            <div>${label}</div>
+        `,
+    category: 'Components',
+    content: {
+      type: 'collapse'
+    }
+  });
+};
 
 export default (editor) => {
   const comps = editor.DomComponents;

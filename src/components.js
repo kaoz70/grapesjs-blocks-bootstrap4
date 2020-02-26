@@ -1,6 +1,6 @@
-import Collapse from './components/Collapse';
-import Dropdown from './components/Dropdown';
-import TabsNavigation from "./components/tabs/TabsNavigation";
+import Collapse, {CollapseBlock} from './components/Collapse';
+import Dropdown, {DropDownBlock} from './components/Dropdown';
+import TabsNavigation, {TabsBlock} from "./components/tabs/TabsNavigation";
 import TabsPanes from "./components/tabs/TabsPanes";
 import Tab from "./components/tabs/Tab";
 import TabPane from "./components/tabs/TabPane";
@@ -17,19 +17,19 @@ import ButtonToolbar from "./components/ButtonToolbar";
 import Label from "./components/Label";
 import Link from "./components/Link";
 import FileInput from "./components/FileInput";
-import Image from "./components/Image";
-import Video from "./components/video/Video";
+import Image, {ImageBlock} from "./components/Image";
+import Video, {VideoBlock} from "./components/video/Video";
 import Embed from "./components/video/Embed";
 import Paragraph from "./components/Paragraph";
 import Header from "./components/Header";
-import Card from "./components/Card";
-import Badge from "./components/Badge";
-import Alert from "./components/Alert";
-import MediaObject from "./components/MediaObject";
-import ColumnBreak from "./components/ColumnBreak";
-import Column from "./components/Column";
-import Row from "./components/Row";
-import Container from "./components/Container";
+import Card, {CardBlock} from "./components/Card";
+import Badge, {BadgeBlock} from "./components/Badge";
+import Alert, {AlertBlock} from "./components/Alert";
+import MediaObject, {MediaObjectBlock} from "./components/MediaObject";
+import ColumnBreak, {ColumnBreakBlock} from "./components/ColumnBreak";
+import Column, {ColumnBlock} from "./components/Column";
+import Row, {RowBlock} from "./components/Row";
+import Container, {ContainerBlock} from "./components/Container";
 import Text from "./components/Text";
 import Default from "./components/Default";
 
@@ -38,6 +38,7 @@ export default (editor, config = {}) => {
   const c = config;
   const domc = editor.DomComponents;
   const blocks = c.blocks;
+  const bm = editor.BlockManager;
   const cats = c.blockCategories;
 
   const traits = {
@@ -76,11 +77,13 @@ export default (editor, config = {}) => {
 
   if (cats.media) {
     if (blocks.image) {
+      ImageBlock(bm, c.labels.image);
       Image(domc);
     }
 
     if (blocks.video) {
       Embed(domc);
+      VideoBlock(bm, c.labels.video);
       Video(domc);
     }
   }
@@ -114,17 +117,22 @@ export default (editor, config = {}) => {
   // LAYOUT
   if (cats.layout) {
     if (blocks.container) {
+      ContainerBlock(bm, c.labels.container);
       Container(domc);
     }
     if (blocks.row) {
+      RowBlock(bm, c.labels.row);
       Row(domc);
     }
     if (blocks.column) {
+      ColumnBlock(bm, c.labels.column);
       Column(domc);
+      ColumnBreakBlock(bm, c.labels.column_break);
       ColumnBreak(domc);
     }
     // Media object
     if (blocks.media_object) {
+      MediaObjectBlock(bm, c.labels.media_object);
       MediaObject(domc);
     }
   }
@@ -133,10 +141,12 @@ export default (editor, config = {}) => {
   if (cats.components) {
     // Alert
     if (blocks.alert) {
+      AlertBlock(bm, c.labels.alert);
       Alert(domc);
     }
 
     if (blocks.tabs) {
+      TabsBlock(bm, c);
       TabsNavigation(domc, config);
       Tab(domc, config);
       TabsPanes(domc, config);
@@ -145,21 +155,25 @@ export default (editor, config = {}) => {
 
     // Badge
     if (blocks.badge) {
+      BadgeBlock(bm, c.labels.badge);
       Badge(domc);
     }
 
     // Card
     if (blocks.card) {
+      CardBlock(bm, c);
       Card(domc, editor);
     }
 
     // Collapse
     if (blocks.collapse) {
+      CollapseBlock(bm, c.labels.collapse);
       Collapse(editor);
     }
 
     // Dropdown
     if (blocks.dropdown) {
+      DropDownBlock(bm, c.labels.dropdown);
       Dropdown(editor);
     }
 

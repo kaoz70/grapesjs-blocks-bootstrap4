@@ -1,3 +1,18 @@
+import videoIcon from "raw-loader!../../icons/youtube-brands.svg";
+
+export const VideoBlock = (bm, label) => {
+    bm.add('bs-video', {
+        label: `
+            ${videoIcon}
+            <div>${label}</div>
+        `,
+        category: 'Media',
+        content: {
+            type: 'bs-video'
+        }
+    });
+};
+
 export default (domComponent) => {
     const videoType = domComponent.getType('video');
     const model = videoType.model;

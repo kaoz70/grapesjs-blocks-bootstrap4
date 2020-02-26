@@ -1,3 +1,5 @@
+
+
 export default (domComponent) => {
     const src_default = 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4';
     const defaultType = domComponent.getType('default');
