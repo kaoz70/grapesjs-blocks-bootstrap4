@@ -3,7 +3,7 @@ known issues:
 - BS dropdown JS isn't attached if you remove the existing toggle and add a new one
 */
 
-export default (editor, config = {}) => {
+export default (editor) => {
     const comps = editor.DomComponents;
     const defaultType = comps.getType('default');
     const defaultModel = defaultType.model;

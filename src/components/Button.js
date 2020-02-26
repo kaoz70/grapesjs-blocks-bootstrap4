@@ -1,6 +1,8 @@
 import _s from "underscore.string";
+import contexts from '../bootstrap-contexts';
+import sizes from '../bootstrap-btn-sizes';
 
-export default (dc, traits, contexts, sizes, config = {}) => {
+export default (dc) => {
 
     const linkType = dc.getType('link');
     const linkModel = linkType.model;

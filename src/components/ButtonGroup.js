@@ -1,4 +1,6 @@
-export default (dc, traits, contexts, sizes, config = {}) => {
+import sizes from '../bootstrap-btn-sizes';
+
+export default (dc) => {
 
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;

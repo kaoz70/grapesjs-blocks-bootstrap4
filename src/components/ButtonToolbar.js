@@ -1,4 +1,4 @@
-export default (dc, config = {}) => {
+export default (dc) => {
 
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;

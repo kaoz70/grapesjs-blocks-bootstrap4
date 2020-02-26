@@ -5,7 +5,7 @@ known issues:
 import _ from 'underscore';
 import _s from 'underscore.string';
 
-export default (editor, config = {}) => {
+export default (editor) => {
   const comps = editor.DomComponents;
   const defaultType = comps.getType('default');
   const defaultModel = defaultType.model;
