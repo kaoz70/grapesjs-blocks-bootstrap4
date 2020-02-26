@@ -44,11 +44,11 @@ module.exports = (env = {}) => {
                     use: {
                         loader: 'babel-loader',
                     }
-                }
+                },
             ],
         },
         externals: {'grapesjs': 'grapesjs'},
         optimization: optimization,
         plugins: plugins,
     };
-}
+};
