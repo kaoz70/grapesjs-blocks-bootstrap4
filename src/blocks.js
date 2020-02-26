@@ -40,7 +40,7 @@ export default (editor, config = {}) => {
       bm.add('container').set({
         label: `
             ${windowIcon}
-            <span>${c.labels.container}</span>
+            <div>${c.labels.container}</div>
         `,
         category: 'Layout',
         content: {
@@ -54,7 +54,7 @@ export default (editor, config = {}) => {
       bm.add('row').set({
         label: `
             ${windowIcon}
-            <span>${c.labels.row}</span>
+            <div>${c.labels.row}</div>
         `,
         category: 'Layout',
         content: {
@@ -68,7 +68,7 @@ export default (editor, config = {}) => {
       bm.add('column').set({
         label: `
             ${columnsIcon}
-            <span>${c.labels.column}</span>
+            <div>${c.labels.column}</div>
         `,
         category: 'Layout',
         content: {
@@ -82,7 +82,7 @@ export default (editor, config = {}) => {
       bm.add('column_break').set({
         label: `
             ${equalsIcon}
-            <span>${c.labels.column_break}</span>
+            <div>${c.labels.column_break}</div>
         `,
         category: 'Layout',
         content: {
@@ -95,7 +95,7 @@ export default (editor, config = {}) => {
       bm.add('media_object').set({
         label: `
             ${columnsIcon}
-            <span>${c.labels.media_object}</span>
+            <div>${c.labels.media_object}</div>
         `,
         category: 'Layout',
         content: `<div class="media">
@@ -116,7 +116,7 @@ export default (editor, config = {}) => {
       bm.add('bs-video', {
         label: `
             ${videoIcon}
-            <span>${c.labels.video}</span>
+            <div>${c.labels.video}</div>
         `,
         category: 'Media',
         content: {
@@ -129,7 +129,7 @@ export default (editor, config = {}) => {
       bm.add('bs-image', {
         label: `
             ${imageIcon}
-            <span>${c.labels.image}</span>
+            <div>${c.labels.image}</div>
         `,
         category: 'Media',
         content: {
@@ -147,7 +147,7 @@ export default (editor, config = {}) => {
       bm.add('alert', {
         label: `
             ${exclamationIcon}
-            <span>${c.labels.alert}</span>
+            <div>${c.labels.alert}</div>
         `,
         category: 'Components',
         content: {
@@ -161,7 +161,7 @@ export default (editor, config = {}) => {
       bm.add('tabs', {
         label: `
             ${ellipsisIcon}
-            <span>${c.labels.tabs}</span>
+            <div>${c.labels.tabs}</div>
         `,
         category: 'Components',
         content: `
@@ -186,7 +186,7 @@ export default (editor, config = {}) => {
       bm.add('tabs-tab', {
         label: `
             ${circleIcon}
-            <span>${c.labels.tab}</span>
+            <div>${c.labels.tab}</div>
         `,
         category: 'Components',
         content: {
@@ -196,7 +196,7 @@ export default (editor, config = {}) => {
       bm.add('tabs-tab-pane', {
         label: `
             ${windowIcon}
-            <span>${c.labels.tabPane}</span>
+            <div>${c.labels.tabPane}</div>
         `,
         category: 'Components',
         content: {
@@ -209,7 +209,7 @@ export default (editor, config = {}) => {
       bm.add('badge', {
         label: `
             ${certificateIcon}
-            <span>${c.labels.badge}</span>
+            <div>${c.labels.badge}</div>
         `,
         category: 'Components',
         content: {
@@ -223,7 +223,7 @@ export default (editor, config = {}) => {
       bm.add('card', {
         label: `
             ${cardIcon}
-            <span>${c.labels.card}</span>
+            <div>${c.labels.card}</div>
         `,
         category: 'Components',
         content: {
@@ -233,7 +233,7 @@ export default (editor, config = {}) => {
       bm.add('card_container', {
         label: `
             ${cardIcon}
-            <span>${c.labels.card_container}</span>
+            <div>${c.labels.card_container}</div>
         `,
         category: 'Components',
         content: {
@@ -246,7 +246,7 @@ export default (editor, config = {}) => {
       bm.add('collapse', {
         label: `
             ${compressIcon}
-            <span>${c.labels.collapse}</span>
+            <div>${c.labels.collapse}</div>
         `,
         category: 'Components',
         content: {
@@ -259,7 +259,7 @@ export default (editor, config = {}) => {
       bm.add('dropdown', {
         label: `
             ${caretIcon}
-            <span>${c.labels.dropdown}</span>
+            <div>${c.labels.dropdown}</div>
         `,
         category: 'Components',
         content: {
@@ -294,7 +294,7 @@ export default (editor, config = {}) => {
       bm.add('text', {
         label: `
             ${fontIcon}
-            <span>${c.labels.text}</span>
+            <div>${c.labels.text}</div>
         `,
         category: 'Typography',
         content: {
@@ -308,7 +308,7 @@ export default (editor, config = {}) => {
       bm.add('header', {
         label: `
             ${headingIcon}
-            <span>${c.labels.header}</span>
+            <div>${c.labels.header}</div>
         `,
         category: 'Typography',
         content: {
@@ -322,7 +322,7 @@ export default (editor, config = {}) => {
       bm.add('paragraph', {
         label: `
             ${paragraphIcon}
-            <span>${c.labels.paragraph}</span>
+            <div>${c.labels.paragraph}</div>
         `,
         category: 'Typography',
         content: {
@@ -342,7 +342,7 @@ export default (editor, config = {}) => {
       bm.add('link', {
         label: `
             ${linkIcon}
-            <span>${c.labels.link}</span>
+            <div>${c.labels.link}</div>
         `,
         category: 'Basic',
         content: {
@@ -371,7 +371,7 @@ export default (editor, config = {}) => {
     bm.add('form', {
       label: `
       ${formIcon}
-      <span>${c.labels.form}</span>`,
+      <div>${c.labels.form}</div>`,
       category: 'Forms',
       content: `
         <form>
@@ -407,14 +407,14 @@ export default (editor, config = {}) => {
     bm.add('input', {
       label: `
       ${inputIcon}
-      <span>${c.labels.input}</span>`,
+      <div>${c.labels.input}</div>`,
       category: 'Forms',
       content: '<input name="input1" class="form-control"/>',
     });
     bm.add('file-input', {
       label: `
             ${fileInputIcon}
-            <span>${c.labels.file_input}</span>
+            <div>${c.labels.file_input}</div>
         `,
       category: 'Forms',
       content: `<input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">`
@@ -425,7 +425,7 @@ export default (editor, config = {}) => {
     bm.add('form_group_input', {
       label: `
       ${formGroupIcon}
-      <span>${c.labels.form_group_input}</span>`,
+      <div>${c.labels.form_group_input}</div>`,
       category: 'Forms',
       content: `
       <div class="form-group">
@@ -440,7 +440,7 @@ export default (editor, config = {}) => {
     bm.add('input_group', {
       label: `
       ${inputGroupIcon}
-      <span>${c.labels.input_group}</span>`,
+      <div>${c.labels.input_group}</div>`,
       category: 'Forms',
       content: `
       <div class="input-group">
@@ -460,7 +460,7 @@ export default (editor, config = {}) => {
     bm.add('textarea', {
       label: `
       ${textareaIcon}
-      <span>${c.labels.textarea}</span>`,
+      <div>${c.labels.textarea}</div>`,
       category: 'Forms',
       content: '<textarea name="textarea1" class="form-control"></textarea>',
     });
@@ -470,7 +470,7 @@ export default (editor, config = {}) => {
     bm.add('select', {
       label: `
       ${selectIcon}
-      <span>${c.labels.select}</span>`,
+      <div>${c.labels.select}</div>`,
       category: 'Forms',
       content: `<select class="form-control" name="select1">
         ${c.labels.select_option ? `<option value="">${c.labels.select_option}</option>` : ''}
@@ -483,7 +483,7 @@ export default (editor, config = {}) => {
     bm.add('button', {
       label: `
       ${buttonIcon}
-      <span>${c.labels.button}</span>`,
+      <div>${c.labels.button}</div>`,
       category: 'Forms',
       content: '<button class="btn btn-primary">Send</button>',
     });
@@ -493,7 +493,7 @@ export default (editor, config = {}) => {
     bm.add('button_group', {
       label: `
             ${buttonIcon}
-            <span>${c.labels.button_group}</span>
+            <div>${c.labels.button_group}</div>
         `,
       category: 'Forms',
       content: {
@@ -506,7 +506,7 @@ export default (editor, config = {}) => {
     bm.add('button_toolbar', {
       label: `
             ${buttonIcon}
-            <span>${c.labels.button_toolbar}</span>
+            <div>${c.labels.button_toolbar}</div>
         `,
       category: 'Forms',
       content: {
@@ -519,7 +519,7 @@ export default (editor, config = {}) => {
     bm.add('label', {
       label: `
       ${labelIcon}
-      <span>${c.labels.label}</span>`,
+      <div>${c.labels.label}</div>`,
       category: 'Forms',
       content: '<label>Label</label>',
     });
@@ -529,7 +529,7 @@ export default (editor, config = {}) => {
     bm.add('checkbox', {
       label: `
             ${checkIcon}
-            <span>${c.labels.checkbox}</span>
+            <div>${c.labels.checkbox}</div>
         `,
       category: 'Forms',
       content: `
@@ -547,7 +547,7 @@ export default (editor, config = {}) => {
     bm.add('radio', {
       label: `
             ${radioIcon}
-            <span>${c.labels.radio}</span>
+            <div>${c.labels.radio}</div>
         `,
       category: 'Forms',
       content: `
