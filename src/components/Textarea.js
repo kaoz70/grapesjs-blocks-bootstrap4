@@ -1,3 +1,15 @@
+import textareaIcon from "raw-loader!../icons/textarea.svg";
+
+export const TextareaBlock = (bm, label) => {
+    bm.add('textarea', {
+        label: `
+      ${textareaIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: '<textarea name="textarea1" class="form-control"></textarea>',
+    });
+};
+
 export default (dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultView = defaultType.view;

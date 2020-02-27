@@ -1,3 +1,19 @@
+import paragraphIcon from "raw-loader!../icons/paragraph-solid.svg";
+
+export const ParagraphBlock = (bm, label) => {
+    bm.add('paragraph', {
+        label: `
+            ${paragraphIcon}
+            <div>${label}</div>
+        `,
+        category: 'Typography',
+        content: {
+            type: 'paragraph',
+            content: 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.'
+        }
+    });
+};
+
 export default (domc) => {
     const textType = domc.getType('text');
     const textModel = textType.model;

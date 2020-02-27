@@ -1,3 +1,15 @@
+import labelIcon from "raw-loader!../icons/label.svg";
+
+export const LabelBlock = (bm, label) => {
+    bm.add('label', {
+        label: `
+      ${labelIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: '<label>Label</label>',
+    });
+};
+
 export default (dc, traits, config = {}) => {
 
     const textType = dc.getType('text');

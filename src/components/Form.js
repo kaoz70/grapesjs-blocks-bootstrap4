@@ -1,3 +1,41 @@
+import formIcon from "raw-loader!../icons/form.svg";
+
+export const FormBlock = (bm, label) => {
+    bm.add('form', {
+        label: `
+      ${formIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: `
+        <form>
+          <div class="form-group">
+            <label>Name</label>
+            <input name="name" placeholder="Type here your name" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input name="email" type="email" placeholder="Type here your email" class="form-control"/>
+          </div>
+          <div class="form-check">
+            <input name="sex" type="checkbox" class="form-check-input" value="M">
+            <label class="form-check-label">M</label>
+          </div>
+          <div class="form-check">
+            <input name="sex" type="checkbox" class="form-check-input" value="F">
+            <label class="form-check-label">F</label>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" class="form-control"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
+      `,
+    });
+};
+
 export default (dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;

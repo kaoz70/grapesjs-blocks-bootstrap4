@@ -1,3 +1,15 @@
+import inputIcon from "raw-loader!../icons/input.svg";
+
+export const InputBlock = (bm, label) => {
+    bm.add('input', {
+        label: `
+      ${inputIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: '<input name="input1" class="form-control"/>',
+    });
+};
+
 export default (dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;

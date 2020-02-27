@@ -4,24 +4,24 @@ import TabsNavigation, {TabsBlock} from "./components/tabs/TabsNavigation";
 import TabsPanes from "./components/tabs/TabsPanes";
 import Tab from "./components/tabs/Tab";
 import TabPane from "./components/tabs/TabPane";
-import Form from "./components/Form";
-import Input from "./components/Input";
-import InputGroup from "./components/InputGroup";
-import Textarea from "./components/Textarea";
-import Select from "./components/Select";
-import Checkbox from "./components/Checkbox";
-import Radio from "./components/Radio";
-import Button from "./components/Button";
-import ButtonGroup from "./components/ButtonGroup";
-import ButtonToolbar from "./components/ButtonToolbar";
-import Label from "./components/Label";
-import Link from "./components/Link";
-import FileInput from "./components/FileInput";
+import Form, {FormBlock} from "./components/Form";
+import Input, {InputBlock} from "./components/Input";
+import InputGroup, {InputGroupBlock} from "./components/InputGroup";
+import Textarea, {TextareaBlock} from "./components/Textarea";
+import Select, {SelectBlock} from "./components/Select";
+import Checkbox, {CheckboxBlock} from "./components/Checkbox";
+import Radio, {RadioBlock} from "./components/Radio";
+import Button, {ButtonBlock} from "./components/Button";
+import ButtonGroup, {ButtonGroupBlock} from "./components/ButtonGroup";
+import ButtonToolbar, {ButtonToolbarBlock} from "./components/ButtonToolbar";
+import Label, {LabelBlock} from "./components/Label";
+import Link, {LinkBlock} from "./components/Link";
+import FileInput, {FileInputBlock} from "./components/FileInput";
 import Image, {ImageBlock} from "./components/Image";
 import Video, {VideoBlock} from "./components/video/Video";
 import Embed from "./components/video/Embed";
-import Paragraph from "./components/Paragraph";
-import Header from "./components/Header";
+import Paragraph, {ParagraphBlock} from "./components/Paragraph";
+import Header, {HeaderBlock} from "./components/Header";
 import Card, {CardBlock} from "./components/Card";
 import Badge, {BadgeBlock} from "./components/Badge";
 import Alert, {AlertBlock} from "./components/Alert";
@@ -30,7 +30,7 @@ import ColumnBreak, {ColumnBreakBlock} from "./components/ColumnBreak";
 import Column, {ColumnBlock} from "./components/Column";
 import Row, {RowBlock} from "./components/Row";
 import Container, {ContainerBlock} from "./components/Container";
-import Text from "./components/Text";
+import Text, {TextBlock} from "./components/Text";
 import Default from "./components/Default";
 
 
@@ -96,16 +96,19 @@ export default (editor, config = {}) => {
 
     // Rebuild the text component and add display utility setting
     if (blocks.text) {
+      TextBlock(bm, c.labels.text);
       Text(domc);
     }
 
     // Rebuild the link component with settings for collapse-control
     if (blocks.link) {
+      LinkBlock(bm, c.labels.link);
       Link(editor);
     }
 
     // Basic
     /*if (blocks.list) {
+      ListBlock(bm, c.labels.list)
       List(domc);
     }*/
 
@@ -127,6 +130,7 @@ export default (editor, config = {}) => {
     if (blocks.column) {
       ColumnBlock(bm, c.labels.column);
       Column(domc);
+
       ColumnBreakBlock(bm, c.labels.column_break);
       ColumnBreak(domc);
     }
@@ -182,33 +186,71 @@ export default (editor, config = {}) => {
   // TYPOGRAPHY
   if (cats.typography) {
     if (blocks.header) {
+      HeaderBlock(bm, c.labels.header);
       Header(domc);
     }
     if (blocks.paragraph) {
+      ParagraphBlock(bm, c.labels.paragraph);
       Paragraph(domc);
     }
   }
 
   if(cats.forms) {
-    Form(domc, traits, config);
-    Input(domc, traits, config);
-    FileInput(domc, traits, config);
-    InputGroup(domc, traits, config);
-    Textarea(domc, traits, config);
-    Select(editor, domc, traits, config);
-    Checkbox(domc, traits, config);
-    Radio(domc, traits, config);
-    Label(domc, traits, config);
+    if (blocks.form) {
+      FormBlock(bm, c.labels.form);
+      Form(domc, traits, config);
+    }
+
+    if (blocks.input) {
+      InputBlock(bm, c.labels.input);
+      Input(domc, traits, config);
+
+      FileInputBlock(bm, c.labels.file_input);
+      FileInput(domc, traits, config);
+    }
+
+    if (blocks.form_group_input) {
+      InputGroupBlock(bm, c.labels.form_group_input);
+      InputGroup(domc, traits, config);
+    }
+
+    if (blocks.textarea) {
+      TextareaBlock(bm, c.labels.textarea);
+      Textarea(domc, traits, config);
+    }
+
+    if (blocks.select) {
+      SelectBlock(bm, c.labels.select);
+      Select(editor, domc, traits, config);
+    }
+
+    if (blocks.checkbox) {
+      CheckboxBlock(bm, c.labels.checkbox);
+      Checkbox(domc, traits, config);
+    }
+
+    if (blocks.radio) {
+      RadioBlock(bm, c.labels.radio);
+      Radio(domc, traits, config);
+    }
+
+    if (blocks.label) {
+      LabelBlock(bm, c.labels.label);
+      Label(domc, traits, config);
+    }
 
     if (blocks.button) {
+      ButtonBlock(bm, c.labels.button);
       Button(domc);
     }
 
     if (blocks.button_group) {
+      ButtonGroupBlock(bm, c.labels.button_group);
       ButtonGroup(domc);
     }
 
     if (blocks.button_toolbar) {
+      ButtonToolbarBlock(bm, c.labels.button_toolbar);
       ButtonToolbar(domc);
     }
   }

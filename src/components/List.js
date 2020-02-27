@@ -1,3 +1,14 @@
+export const ListBlock = (bm, label) => {
+    bm.add('list', {
+        label: label,
+        category: 'Basic',
+        attributes: {class:'fa fa-list'},
+        content: {
+            type: 'list'
+        }
+    });
+};
+
 export default (domc) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;

@@ -4,6 +4,21 @@ known issues:
 */
 
 import _ from "underscore";
+import linkIcon from "raw-loader!../icons/link-solid.svg";
+
+export const LinkBlock = (bm, label) => {
+    bm.add('link', {
+        label: `
+            ${linkIcon}
+            <div>${label}</div>
+        `,
+        category: 'Basic',
+        content: {
+            type: 'link',
+            content: 'Link text'
+        }
+    });
+};
 
 export default (editor) => {
     const comps = editor.DomComponents;

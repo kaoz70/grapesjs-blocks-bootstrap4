@@ -2,7 +2,6 @@ import grapesjs from 'grapesjs';
 import loadCommands from './commands';
 import loadTraits from './traits';
 import loadComponents from './components';
-import loadBlocks from './blocks';
 import loadDevices from './devices';
 
 const loadCss = editor => {
@@ -48,7 +47,7 @@ const loadCss = editor => {
       display: block !important;
     }
   `
-}
+};
 
 export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts = {}) => {
 
@@ -202,10 +201,6 @@ export default grapesjs.plugins.add('grapesjs-blocks-bootstrap4', (editor, opts 
   loadCommands(editor, options);
   loadTraits(editor, options);
   loadComponents(editor, options);
-  loadBlocks(editor, options);
   loadDevices(editor, options);
   loadCss(editor, options);
-
-  // TODO Remove
-  //editor.on('load', () => editor.addComponents(`<div style="margin:0 100px; padding:25px;">Content loaded from the plugin</div>`))
 });

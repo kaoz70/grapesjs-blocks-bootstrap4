@@ -1,3 +1,23 @@
+import checkIcon from "raw-loader!../icons/check-square-solid.svg";
+
+export const CheckboxBlock = (bm, label) => {
+    bm.add('checkbox', {
+        label: `
+            ${checkIcon}
+            <div>${label}</div>
+        `,
+        category: 'Forms',
+        content: `
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">
+            Default checkbox
+          </label>
+        </div>
+      `,
+    });
+};
+
 export default (dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;

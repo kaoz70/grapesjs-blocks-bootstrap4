@@ -1,3 +1,18 @@
+import buttonIcon from "raw-loader!../icons/button.svg";
+
+export const ButtonToolbarBlock = (bm, label) => {
+    bm.add('button_toolbar', {
+        label: `
+            ${buttonIcon}
+            <div>${label}</div>
+        `,
+        category: 'Forms',
+        content: {
+            type: 'button_toolbar'
+        }
+    });
+};
+
 export default (dc) => {
 
     const defaultType = dc.getType('default');

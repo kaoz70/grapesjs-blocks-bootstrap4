@@ -1,3 +1,19 @@
+import headingIcon from "raw-loader!../icons/heading-solid.svg";
+
+export const HeaderBlock = (bm, label) => {
+    bm.add('header', {
+        label: `
+            ${headingIcon}
+            <div>${label}</div>
+        `,
+        category: 'Typography',
+        content: {
+            type: 'header',
+            content: 'Bootstrap heading'
+        }
+    });
+};
+
 export default (domc) => {
     const textType = domc.getType('text');
     const textModel = textType.model;

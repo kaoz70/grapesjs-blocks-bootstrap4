@@ -1,5 +1,4 @@
-import windowIcon from "../icons/window-maximize-solid.svg";
-import columnsIcon from "../icons/columns-solid.svg";
+import columnsIcon from "raw-loader!../icons/columns-solid.svg";
 
 export const ColumnBlock = (bm, label) => {
     bm.add('column').set({

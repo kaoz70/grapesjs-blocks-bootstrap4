@@ -5,8 +5,6 @@ export default (domc) => {
     const contexts_w_white = contexts.concat(['white']);
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;
-    const textType = domc.getType('text');
-    const textView = textType.view;
     const defaultView = defaultType.view;
 
     domc.addType('default', {

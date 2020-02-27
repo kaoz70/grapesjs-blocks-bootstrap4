@@ -1,6 +1,17 @@
 import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
 import sizes from '../bootstrap-btn-sizes';
+import buttonIcon from "raw-loader!../icons/button.svg";
+
+export const ButtonBlock = (bm, label) => {
+    bm.add('button', {
+        label: `
+      ${buttonIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: '<button class="btn btn-primary">Send</button>',
+    });
+};
 
 export default (dc) => {
 

@@ -1,3 +1,18 @@
+import selectIcon from "raw-loader!../icons/select-input.svg";
+
+export const SelectBlock = (bm, label) => {
+    bm.add('select', {
+        label: `
+      ${selectIcon}
+      <div>${label}</div>`,
+        category: 'Forms',
+        content: `<select class="form-control" name="select1">
+        ${c.labels.select_option ? `<option value="">${c.labels.select_option}</option>` : ''}
+        <option value="1">${c.labels.option} 1</option>
+        </select>`,
+    });
+};
+
 export default (editor, dc, traits, config = {}) => {
     const defaultType = dc.getType('default');
     const defaultModel = defaultType.model;
