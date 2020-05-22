@@ -58,34 +58,60 @@ export default (domc, c, editor) => {
                             if(!currentSize){
                                 testRegexp = new RegExp("^col-\\d{1,2}$") ;
                             }
-                            
+                            let found = false;
+                            let sizesSpans = {} ;
+                            let oldSpan = 0;
+                            let oldClass = null;
                             for(let cl of el.classList){
-                                if(testRegexp.test(cl)){
-                                    //found the col-XX-99 class
-                                    let [c,s,span] = cl.split("-") ;
+                                if(cl.indexOf("col-") === 0){
+                                    let [c,size,span] = cl.split("-") ;
                                     if(!currentSize){
-                                        span = s;
+                                        span = size;
+                                        size = "" ;
                                     }
-                                    if(grow){
-                                        span = Number(span)+1 ;
-                                    }else{
-                                        span = Number(span)-1 ;
+                                    sizesSpans[size] = span ;
+                                    if(size === currentSize){
+                                        //found the col-XX-99 class
+                                        oldClass = cl;
+                                        oldSpan = span ;
+                                        found = true;
                                     }
-                                    if(span > 12){ span = 12 ; }
-                                    if(span < 1){ span = 1 ; }
-
-                                    let newClass = "col-"+currentSize+"-"+span ;
-                                    if(!currentSize){
-                                        newClass = "col-"+span ;
-                                    }
-                                    //update the class
-                                    selected.addClass(newClass) ;
-                                    selected.removeClass(cl) ;
-                                    //notify the corresponding trait to update its value accordingly
-                                    selected.getTrait((currentSize||"xs")+"_width").view.postUpdate() ;;
-                                    break;
                                 }
                             }
+
+                            if(!found){
+                                const sizeOrder = ["", "xs", "sm", "md", "lg", "xl"] ;
+                                for(let s of sizeOrder){
+                                    if(sizesSpans[s]){
+                                        oldSpan = sizesSpans[s];
+                                        found = true ;
+                                    }
+                                    if(s === currentSize){
+                                        break;
+                                    }
+                                }
+                            }
+
+                            let newSpan = Number(oldSpan) ;
+                            if(grow){
+                                newSpan++ ;
+                            }else{
+                                newSpan-- ;
+                            }
+                            if(newSpan > 12){ newSpan = 12 ; }
+                            if(newSpan < 1){ newSpan = 1 ; }
+
+                            let newClass = "col-"+currentSize+"-"+newSpan ;
+                            if(!currentSize){
+                                newClass = "col-"+newSpan ;
+                            }
+                            //update the class
+                            selected.addClass(newClass) ;
+                            if(oldClass && oldClass !== newClass){
+                                selected.removeClass(oldClass) ;
+                            }
+                            //notify the corresponding trait to update its value accordingly
+                            selected.getTrait((currentSize||"xs")+"_width").view.postUpdate() ;
                         }
                     },
                     tl: 0, 
