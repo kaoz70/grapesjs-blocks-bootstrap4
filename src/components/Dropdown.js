@@ -5,7 +5,7 @@ known issues:
 
 import caretIcon from "raw-loader!../icons/caret-square-down-regular.svg";
 
-export const DropDownBlock = (bm, label) => {
+export const DropDownBlock = (bm, label, c) => {
     bm.add('dropdown', {
         label: `
             ${caretIcon}
