@@ -65,7 +65,7 @@ export default (domc, c, editor) => {
                             for(let cl of el.classList){
                                 if(cl.indexOf("col-") === 0){
                                     let [c,size,span] = cl.split("-") ;
-                                    if(!currentSize){
+                                    if(!span){
                                         span = size;
                                         size = "" ;
                                     }
