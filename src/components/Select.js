@@ -7,8 +7,8 @@ export const SelectBlock = (bm, label) => {
       <div>${label}</div>`,
         category: 'Forms',
         content: `<select class="form-control" name="select1">
-        ${c.labels.select_option ? `<option value="">${c.labels.select_option}</option>` : ''}
-        <option value="1">${c.labels.option} 1</option>
+        ${label ? `<option value="">${label}</option>` : ''}
+        <option value="1">${label} 1</option>
         </select>`,
     });
 };

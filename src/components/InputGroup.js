@@ -18,7 +18,7 @@ export const InputGroupBlock = (bm, label) => {
     bm.add('input_group', {
         label: `
       ${inputGroupIcon}
-      <div>${c.labels.input_group}</div>`,
+      <div>${label}</div>`,
         category: 'Forms',
         content: `
       <div class="input-group">
