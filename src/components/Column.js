@@ -14,7 +14,7 @@ export const ColumnBlock = (bm, label) => {
     });
 };
 
-export default (domc) => {
+export default (domc, editor) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;
     const defaultView = defaultType.view;
@@ -26,8 +26,106 @@ export default (domc) => {
                 'custom-name': 'Column',
                 draggable: '.row',
                 droppable: true,
+                resizable: {
+                    updateTarget: (el, rect, opt)=>{
+                        const selected =  editor.getSelected() ;
+                        if(!selected){ return ; }
+                        
+                        //compute the current screen size (bootstrap semantic)
+                        const docWidth = el.getRootNode().body.offsetWidth ;
+                        let currentSize = "" ;
+                        if(docWidth >= 1200){
+                            currentSize = "xl" ;
+                        } else if(docWidth >= 992){
+                            currentSize = "lg" ;
+                        } else if(docWidth >= 768){
+                            currentSize = "md" ;
+                        } else if(docWidth >= 576){
+                            currentSize = "sm" ;
+                        }
+
+                        //compute the threshold when add on remove 1 col span to the element
+                        const row = el.parentElement ;
+                        const oneColWidth = row.offsetWidth / 12 ;
+                        //the threshold is half one column width
+                        const threshold = oneColWidth*0.5 ;
+
+                        //check if we are growing or shrinking the column
+                        const grow = rect.w > el.offsetWidth + threshold;
+                        const shrink = rect.w < el.offsetWidth - threshold;
+                        if(grow || shrink){
+                            let testRegexp = new RegExp("^col-"+currentSize+"-\\d{1,2}$") ;
+                            if(!currentSize){
+                                testRegexp = new RegExp("^col-\\d{1,2}$") ;
+                            }
+                            let found = false;
+                            let sizesSpans = {} ;
+                            let oldSpan = 0;
+                            let oldClass = null;
+                            for(let cl of el.classList){
+                                if(cl.indexOf("col-") === 0){
+                                    let [c,size,span] = cl.split("-") ;
+                                    if(!span){
+                                        span = size;
+                                        size = "" ;
+                                    }
+                                    sizesSpans[size] = span ;
+                                    if(size === currentSize){
+                                        //found the col-XX-99 class
+                                        oldClass = cl;
+                                        oldSpan = span ;
+                                        found = true;
+                                    }
+                                }
+                            }
+
+                            if(!found){
+                                const sizeOrder = ["", "xs", "sm", "md", "lg", "xl"] ;
+                                for(let s of sizeOrder){
+                                    if(sizesSpans[s]){
+                                        oldSpan = sizesSpans[s];
+                                        found = true ;
+                                    }
+                                    if(s === currentSize){
+                                        break;
+                                    }
+                                }
+                            }
+
+                            let newSpan = Number(oldSpan) ;
+                            if(grow){
+                                newSpan++ ;
+                            }else{
+                                newSpan-- ;
+                            }
+                            if(newSpan > 12){ newSpan = 12 ; }
+                            if(newSpan < 1){ newSpan = 1 ; }
+
+                            let newClass = "col-"+currentSize+"-"+newSpan ;
+                            if(!currentSize){
+                                newClass = "col-"+newSpan ;
+                            }
+                            //update the class
+                            selected.addClass(newClass) ;
+                            if(oldClass && oldClass !== newClass){
+                                selected.removeClass(oldClass) ;
+                            }
+                            //notify the corresponding trait to update its value accordingly
+                            selected.getTrait((currentSize||"xs")+"_width").view.postUpdate() ;
+                        }
+                    },
+                    tl: 0, 
+                    tc: 0, 
+                    tr: 0, 
+                    cl: 0, 
+                    cr: 1, 
+                    bl: 0, 
+                    bc: 0, 
+                    br: 0 
+                },
                 traits: [
                     {
+                        id: "xs_width",
                         type: 'class_select',
                         options: [
                             {value: 'col', name: 'Equal'},
@@ -37,6 +135,7 @@ export default (domc) => {
                         label: 'XS Width',
                     },
                     {
+                        id: "sm_width",
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
@@ -47,6 +146,7 @@ export default (domc) => {
                         label: 'SM Width',
                     },
                     {
+                        id: "md_width",
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
@@ -57,6 +157,7 @@ export default (domc) => {
                         label: 'MD Width',
                     },
                     {
+                        id: "lg_width",
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
@@ -67,6 +168,7 @@ export default (domc) => {
                         label: 'LG Width',
                     },
                     {
+                        id: "xl_width",
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},

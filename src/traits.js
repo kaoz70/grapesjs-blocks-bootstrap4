@@ -10,8 +10,7 @@ export default (editor, config = {}) => {
     events:{
       'change': 'onChange',  // trigger parent onChange method on input change
     },
-    getInputEl: function() {
-      if (!this.inputEl) {
+    createInput({ trait }) {
         var md = this.model;
         var opts = md.get('options') || [];
         var input = document.createElement('select');
@@ -31,19 +30,30 @@ export default (editor, config = {}) => {
           }
           input.append(option);
         }
-        this.inputEl = input;
+        return input;
+    },
+    onUpdate({ elInput, component }) {
+      const classes = component.getClasses() ;
+      var opts = this.model.get('options') || [];
+      for(let i = 0; i < opts.length; i++) {
+        let name = opts[i].name;
+        let value = opts[i].value;
+        if(value && classes.includes(value)){
+          elInput.value = value;
+          return;
+        }
       }
-      return this.inputEl;
+      elInput.value = "GJS_NO_CLASS";
     },
 
-    onValueChange: function () {
+    onEvent({ elInput, component, event }) {
       var classes = this.model.get('options').map(opt => opt.value);
       for(let i = 0; i < classes.length; i++) {
         if(classes[i].length > 0) {
           var classes_i_a = classes[i].split(' ');
           for(let j = 0; j < classes_i_a.length; j++) {
             if(classes_i_a[j].length > 0) {
-              this.target.removeClass(classes_i_a[j]);
+              component.removeClass(classes_i_a[j]);
             }
           }
         }
@@ -52,10 +62,33 @@ export default (editor, config = {}) => {
       if(value.length > 0 && value != 'GJS_NO_CLASS') {
         const value_a = value.split(' ');
         for(let i = 0; i < value_a.length; i++) {
-          this.target.addClass(value_a[i]);
+          component.addClass(value_a[i]);
         }
       }
-      this.target.em.trigger('component:toggled');
+      component.em.trigger('component:toggled');
+
+    },
+  });
+
+  const textTrait = tm.getType('text');
+
+  tm.addType('content', {
+    events:{
+      'keyup': 'onChange',
+    },
+
+    onValueChange: function () {
+      var md = this.model;
+      var target = md.target;
+      target.set('content', md.get('value'));
+    },
+
+    getInputEl: function() {
+      if(!this.inputEl) {
+        this.inputEl = textTrait.prototype.getInputEl.bind(this)();
+        this.inputEl.value = this.target.get('content');
+      }
+      return this.inputEl;
     }
   });
 

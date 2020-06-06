@@ -7,7 +7,9 @@ const name = pkg.name;
 let plugins = [];
 let optimization = {};
 
+
 module.exports = (env = {}) => {
+    // env.production = false;
 
     if (env.production) {
         optimization.minimizer = [

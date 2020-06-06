@@ -129,7 +129,7 @@ export default (editor, config = {}) => {
     }
     if (blocks.column) {
       ColumnBlock(bm, c.labels.column);
-      Column(domc);
+      Column(domc, editor);
 
       ColumnBreakBlock(bm, c.labels.column_break);
       ColumnBreak(domc);
@@ -250,7 +250,7 @@ export default (editor, config = {}) => {
     }
 
     if (blocks.button_toolbar) {
-      ButtonToolbarBlock(bm, c.labels.button_toolbar);
+      ButtonToolbarBlock(bm, c.labels.button_toolbar, c);
       ButtonToolbar(domc);
     }
   }
