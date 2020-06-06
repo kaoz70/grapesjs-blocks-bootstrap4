@@ -14,7 +14,7 @@ export const ColumnBlock = (bm, label) => {
     });
 };
 
-export default (domc, c, editor) => {
+export default (domc, editor) => {
     const defaultType = domc.getType('default');
     const defaultModel = defaultType.model;
     const defaultView = defaultType.view;
