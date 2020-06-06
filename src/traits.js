@@ -92,8 +92,6 @@ export default (editor, config = {}) => {
     }
   });
 
-  const textTrait = tm.getType('text');
-
   tm.addType('content', {
     events:{
       'keyup': 'onChange',

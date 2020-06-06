@@ -1,11 +1,12 @@
 {
   "name": "grapesjs-blocks-bootstrap4",
-  "version": "0.1.22",
+  "version": "0.2.0",
   "description": "GrapesJS Bootstrap v4 Blocks Plugin",
   "main": "dist/grapesjs-blocks-bootstrap4.min.js",
   "scripts": {
     "lint": "eslint src",
     "v:patch": "npm version --no-git-tag-version patch",
+    "v:minor": "npm version --no-git-tag-version minor",
     "build": "npm run v:patch && webpack --env.production",
     "build-dev": "npm run && webpack --env.production",
     "start": "webpack-dev-server --open --progress --colors"
