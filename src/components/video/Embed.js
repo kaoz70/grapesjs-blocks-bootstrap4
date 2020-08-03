@@ -43,7 +43,6 @@ export default (domComponent) => {
                 const reactTo = props.map(prop => `change:${prop}`).join(' ');
                 this.listenTo(this.model, reactTo, this.render);
                 const comps = this.model.components();
-
                 // Add a basic template if it's not yet initialized
                 if (!comps.length) {
                     comps.add(`<iframe class="embed-responsive-item" src="${src_default}"></iframe>`);
