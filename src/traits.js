@@ -8,7 +8,7 @@ export default (editor, config = {}) => {
   // The default select option is set if the input has a class, and class list is modified when select value changes.
   tm.addType('class_select', {
     events:{
-      'change': 'onChange',  // trigger parent onChange method on input change
+      'change':      'onChange'  // trigger parent onChange method on input change
     },
     createInput({ trait }) {
         var md = this.model;
@@ -59,6 +59,11 @@ export default (editor, config = {}) => {
         }
       }
       const value = this.model.get('value');
+
+      // This piece of code removes the empty attribute name from attributes list
+      const elAttributes = component.attributes.attributes;
+      delete elAttributes[""];
+      
       if(value.length > 0 && value != 'GJS_NO_CLASS') {
         const value_a = value.split(' ');
         for(let i = 0; i < value_a.length; i++) {
@@ -66,7 +71,6 @@ export default (editor, config = {}) => {
         }
       }
       component.em.trigger('component:toggled');
-
     },
   });
 
