@@ -27,18 +27,21 @@ export default (domComponent) => {
                 droppable: false,
                 draggable: false,
                 copyable: false,
+                provider: 'so',
                 classes: ['embed-responsive-item'],
             })
         }, {
             isComponent: function(el) {
                 if(el && el.className === 'embed-responsive-item') {
-                    var result = '';
+                    var result = {
+                        provider: 'so',
+                        type: type
+                    };
                     var isYtProv = /youtube\.com\/embed/.test(el.src);
                     var isYtncProv = /youtube-nocookie\.com\/embed/.test(el.src);
                     var isViProv = /player\.vimeo\.com\/video/.test(el.src);
                     var isExtProv = isYtProv || isYtncProv || isViProv;
                     if (el.tagName == 'VIDEO' || (el.tagName == 'IFRAME' && isExtProv)) {
-                      result = { type: type };
                       if (el.src) result.src = el.src;
                       if (isExtProv) {
                         if (isYtProv) result.provider = 'yt';
