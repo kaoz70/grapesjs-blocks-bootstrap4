@@ -1,4 +1,4 @@
-//import grapesjs from 'grapesjs';
+import grapesjs from 'grapesjs';
 import loadCommands from './commands';
 import loadTraits from './traits';
 import loadComponents from './components';
