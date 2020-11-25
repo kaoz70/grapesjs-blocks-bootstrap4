@@ -1,5 +1,5 @@
-import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
+import {capitalize} from "../utils";
 
 export default (domc) => {
     const contexts_w_white = contexts.concat(['white']);
@@ -16,7 +16,7 @@ export default (domc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'text-'+v, name: _s.capitalize(v)} })
+                            ... contexts_w_white.map(function(v) { return {value: 'text-'+v, name: capitalize(v)} })
                         ],
                         label: 'Text color'
                     },
@@ -24,7 +24,7 @@ export default (domc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'bg-'+v, name: _s.capitalize(v)} })
+                            ... contexts_w_white.map(function(v) { return {value: 'bg-'+v, name: capitalize(v)} })
                         ],
                         label: 'Background color'
                     },
@@ -45,7 +45,7 @@ export default (domc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'border border-'+v, name: _s.capitalize(v)} })
+                            ... contexts_w_white.map(function(v) { return {value: 'border border-'+v, name: capitalize(v)} })
                         ],
                         label: 'Border color'
                     },

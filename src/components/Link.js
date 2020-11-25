@@ -3,7 +3,6 @@ known issues:
 - BS dropdown JS isn't attached if you remove the existing toggle and add a new one
 */
 
-import _ from "underscore";
 import linkIcon from "raw-loader!../icons/link-solid.svg";
 
 export const LinkBlock = (bm, label) => {
@@ -88,14 +87,16 @@ export default (editor) => {
                     const els = this.em.get('Editor').DomComponents.getWrapper().find(href);
                     if (els.length > 0) {
                         console.log('referenced el found');
-                        var el = els[0]; // should only be one el with this ID
+                        const el = els[0]; // should only be one el with this ID
                         const el_attrs = el.getAttributes();
                         //delete el_attrs['aria-labelledby'];
                         const el_classes = el_attrs.class;
                         if (el_classes) {
                             console.log('el has classes');
                             const el_classes_list = el_classes.split(' ');
-                            const intersection = _.intersection(['collapse', 'dropdown-menu'], el_classes_list);
+                            const includes = ['collapse', 'dropdown-menu'];
+                            const intersection = el_classes_list.filter(x => includes.includes(x));
+
                             if (intersection.length) {
                                 console.log('link data-toggle matches el class');
                                 switch (intersection[0]) {

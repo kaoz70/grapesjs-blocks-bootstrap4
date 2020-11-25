@@ -1,7 +1,3 @@
-/*
-known issues:
-*/
-
 import compressIcon from "raw-loader!../icons/compress-solid.svg";
 
 export const CollapseBlock = (bm, label) => {

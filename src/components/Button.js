@@ -1,7 +1,7 @@
-import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
 import sizes from '../bootstrap-btn-sizes';
 import buttonIcon from "raw-loader!../icons/button.svg";
+import {capitalize} from "../utils";
 
 export const ButtonBlock = (bm, label) => {
     bm.add('button', {
@@ -45,8 +45,8 @@ export default (dc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
-                            ... contexts.map((v) => { return {value: `btn-${v}`, name: _s.capitalize(v)} }),
-                            ... contexts.map((v) => { return {value: `btn-outline-${v}`, name: _s.capitalize(v) + ' (Outline)'} })
+                            ... contexts.map((v) => { return {value: `btn-${v}`, name: capitalize(v)} }),
+                            ... contexts.map((v) => { return {value: `btn-outline-${v}`, name: capitalize(v) + ' (Outline)'} })
                         ],
                         label: 'Context'
                     },

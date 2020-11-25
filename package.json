@@ -39,8 +39,6 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "npm": "^6.14.5",
-    "underscore": "^1.11.0",
-    "underscore.string": "^3.3.5"
+    "npm": "^6.14.5"
   }
 }

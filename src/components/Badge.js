@@ -1,6 +1,6 @@
-import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
 import certificateIcon from "raw-loader!../icons/certificate-solid.svg";
+import {capitalize} from "../utils";
 
 export const BadgeBlock = (bm, label) => {
     bm.add('badge', {
@@ -32,7 +32,7 @@ export default (domc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
-                            ... contexts.map(function(v) { return {value: 'badge-'+v, name: _s.capitalize(v)} })
+                            ... contexts.map(function(v) { return {value: 'badge-'+v, name: capitalize(v)} })
                         ],
                         label: 'Context'
                     },

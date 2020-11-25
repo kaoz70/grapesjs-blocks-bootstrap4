@@ -1,8 +1,3 @@
-/*
-known issues:
-*/
-
-import _ from 'underscore';
 import cardIcon from "raw-loader!../icons/credit-card-solid.svg";
 
 export const CardBlock = (bm, c) => {
@@ -330,7 +325,11 @@ export default (domc, editor) => {
       })
     }, {
       isComponent(el) {
-        if(el && el.classList && _.intersection(el.classList, ['card-group','card-deck','card-columns']).length) {
+        const css = Array.from(el.classList || []);
+        const includes = ['card-group','card-deck','card-columns'];
+        const intersection = css.filter(x => includes.includes(x));
+
+        if(el && el.classList && intersection.length) {
           return {type: 'card_container'};
         }
       }

@@ -1,6 +1,6 @@
-import _s from "underscore.string";
 import contexts from '../bootstrap-contexts';
 import exclamationIcon from "raw-loader!../icons/exclamation-triangle-solid.svg";
+import {capitalize} from "../utils";
 
 export const AlertBlock = (bm, label) => {
     bm.add('alert', {
@@ -32,7 +32,7 @@ export default (domc) => {
                         type: 'class_select',
                         options: [
                             {value: '', name: 'None'},
-                            ... contexts.map(function(v) { return {value: 'alert-'+v, name: _s.capitalize(v)} })
+                            ... contexts.map(function(v) { return {value: 'alert-'+v, name: capitalize(v)} })
                         ],
                         label: 'Context'
                     }
