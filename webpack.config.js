@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 const pkg = require('./package.json');
 const webpack = require('webpack');
 const fs = require('fs');
@@ -9,14 +9,10 @@ let optimization = {};
 
 
 module.exports = (env = {}) => {
-    // env.production = false;
-
     if (env.production) {
         optimization.minimizer = [
-            new UglifyJsPlugin({
-                cache: true,
+            new TerserPlugin({
                 parallel: true,
-                sourceMap: true
             })
         ];
         plugins = [
@@ -52,5 +48,9 @@ module.exports = (env = {}) => {
         externals: {'grapesjs': 'grapesjs'},
         optimization: optimization,
         plugins: plugins,
+        watch: true,
+        watchOptions: {
+            ignored: /node_modules/
+        }
     };
 };
