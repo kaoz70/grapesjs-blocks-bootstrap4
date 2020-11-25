@@ -48,7 +48,6 @@ module.exports = (env = {}) => {
         externals: {'grapesjs': 'grapesjs'},
         optimization: optimization,
         plugins: plugins,
-        watch: true,
         watchOptions: {
             ignored: /node_modules/
         }
