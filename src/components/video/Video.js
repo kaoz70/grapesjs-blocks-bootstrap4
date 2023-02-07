@@ -20,7 +20,8 @@ export default (domComponent) => {
     const type = 'bs-embed-responsive';
 
     domComponent.addType(type, {
-        model: model.extend({
+        extend: 'video',
+        model: {
             defaults: Object.assign({}, model.prototype.defaults, {
                 'custom-name': 'Video',
                 resizable: false,
@@ -30,30 +31,29 @@ export default (domComponent) => {
                 provider: 'so',
                 classes: ['embed-responsive-item'],
             })
-        }, {
-            isComponent: function(el) {
-                if(el && el.className === 'embed-responsive-item') {
-                    var result = {
-                        provider: 'so',
-                        type: type
-                    };
-                    var isYtProv = /youtube\.com\/embed/.test(el.src);
-                    var isYtncProv = /youtube-nocookie\.com\/embed/.test(el.src);
-                    var isViProv = /player\.vimeo\.com\/video/.test(el.src);
-                    var isExtProv = isYtProv || isYtncProv || isViProv;
-                    if (el.tagName == 'VIDEO' || (el.tagName == 'IFRAME' && isExtProv)) {
-                      if (el.src) result.src = el.src;
-                      if (isExtProv) {
+        },
+        isComponent: function (el) {
+            if (el && el.className === 'embed-responsive-item') {
+                var result = {
+                    provider: 'so',
+                    type: type
+                };
+                var isYtProv = /youtube\.com\/embed/.test(el.src);
+                var isYtncProv = /youtube-nocookie\.com\/embed/.test(el.src);
+                var isViProv = /player\.vimeo\.com\/video/.test(el.src);
+                var isExtProv = isYtProv || isYtncProv || isViProv;
+                if (el.tagName == 'VIDEO' || (el.tagName == 'IFRAME' && isExtProv)) {
+                    if (el.src) result.src = el.src;
+                    if (isExtProv) {
                         if (isYtProv) result.provider = 'yt';
                         else if (isYtncProv) result.provider = 'ytnc';
                         else if (isViProv) result.provider = 'vi';
-                      }
                     }
-                    return result;
-
                 }
+                return result;
+
             }
-        }),
+        },
         view: view
     });
 }
