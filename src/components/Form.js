@@ -43,7 +43,7 @@ export default (dc, traits, config = {}) => {
     let actionTrait;
 
     // If the formPredefinedActions is set in the config you can add a dropdown menu to the actions trait
-    if(config.formPredefinedActions && config.formPredefinedActions.length) {
+    if (config.formPredefinedActions && config.formPredefinedActions.length) {
         actionTrait = {
             type: 'select',
             label: config.labels.trait_action,
@@ -51,7 +51,7 @@ export default (dc, traits, config = {}) => {
             options: [],
         };
         config.formPredefinedActions.forEach((action) => {
-            actionTrait.options.push({value: action.value, name: action.name})
+            actionTrait.options.push({ value: action.value, name: action.name })
         });
     } else {
         actionTrait = {
@@ -61,7 +61,7 @@ export default (dc, traits, config = {}) => {
     }
 
     dc.addType('form', {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...defaultModel.prototype.defaults,
                 droppable: ':not(form)',
@@ -72,9 +72,9 @@ export default (dc, traits, config = {}) => {
                         label: config.labels.trait_enctype,
                         name: 'enctype',
                         options: [
-                            {value: 'application/x-www-form-urlencoded', name: 'application/x-www-form-urlencoded (default)'},
-                            {value: 'multipart/form-data', name: 'multipart/form-data'},
-                            {value: 'text/plain', name: 'text/plain'},
+                            { value: 'application/x-www-form-urlencoded', name: 'application/x-www-form-urlencoded (default)' },
+                            { value: 'multipart/form-data', name: 'multipart/form-data' },
+                            { value: 'text/plain', name: 'text/plain' },
                         ]
                     },
                     {
@@ -82,8 +82,8 @@ export default (dc, traits, config = {}) => {
                         label: config.labels.trait_method,
                         name: 'method',
                         options: [
-                            {value: 'post', name: 'POST'},
-                            {value: 'get', name: 'GET'},
+                            { value: 'post', name: 'POST' },
+                            { value: 'get', name: 'GET' },
                         ]
                     },
                     actionTrait
@@ -154,26 +154,25 @@ export default (dc, traits, config = {}) => {
                         removable: false,
                         copyable: false,
                         draggable: false,
-                        attributes: {'data-form-state': st},
+                        attributes: { 'data-form-state': st },
                         content: contentStr,
                     });
                 }
                 return stateModel;
             },
-        }, {
-            isComponent(el) {
-                if (el.tagName === 'FORM') {
-                    return {type: 'form'};
-                }
-            },
-        }),
+        },
+        isComponent(el) {
+            if (el.tagName === 'FORM') {
+                return { type: 'form' };
+            }
+        },
 
-        view: defaultView.extend({
+        view: {
             events: {
                 submit(e) {
                     e.preventDefault();
                 }
             }
-        }),
+        },
     });
 }

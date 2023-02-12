@@ -2,25 +2,25 @@ import formGroupIcon from "raw-loader!../icons/form-group.svg";
 import inputGroupIcon from "raw-loader!../icons/input-group.svg";
 
 export const InputGroupBlock = (bm, label, c) => {
-    bm.add('form_group_input', {
-        label: `
+  bm.add('form_group_input', {
+    label: `
       ${formGroupIcon}
       <div>${label}</div>`,
-        category: 'Forms',
-        content: `
+    category: 'Forms',
+    content: `
       <div class="form-group">
         <label>Name</label>
         <input name="name" placeholder="Type here your name" class="form-control"/>
       </div>
       `,
-    });
+  });
 
-    bm.add('input_group', {
-        label: `
+  bm.add('input_group', {
+    label: `
       ${inputGroupIcon}
       <div>${label}</div>`,
-        category: 'Forms',
-        content: `
+    category: 'Forms',
+    content: `
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
@@ -31,29 +31,28 @@ export const InputGroupBlock = (bm, label, c) => {
         </div>
       </div>
       `,
-    });
+  });
 };
 
 export default (dc, traits, config = {}) => {
-    const defaultType = dc.getType('default');
-    const defaultModel = defaultType.model;
-    const defaultView = defaultType.view;
+  const defaultType = dc.getType('default');
+  const defaultModel = defaultType.model;
+  const defaultView = defaultType.view;
 
-    dc.addType('input_group', {
-        model: defaultModel.extend({
-            defaults: {
-                ...defaultModel.prototype.defaults,
-                'custom-name': config.labels.input_group,
-                tagName: 'div',
-                traits: [],
-            },
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('form_group_input')) {
-                    return {type: 'form_group_input'};
-                }
-            },
-        }),
-        view: defaultView,
-    });
+  dc.addType('input_group', {
+    model: {
+      defaults: {
+        ...defaultModel.prototype.defaults,
+        'custom-name': config.labels.input_group,
+        tagName: 'div',
+        traits: [],
+      },
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('form_group_input')) {
+        return { type: 'form_group_input' };
+      }
+    },
+    view: defaultView,
+  });
 }

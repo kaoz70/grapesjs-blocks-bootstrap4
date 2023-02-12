@@ -1,5 +1,5 @@
 import contexts from '../bootstrap-contexts';
-import {capitalize} from "../utils";
+import { capitalize } from "../utils";
 
 export default (domc) => {
     const contexts_w_white = contexts.concat(['white']);
@@ -8,58 +8,58 @@ export default (domc) => {
     const defaultView = defaultType.view;
 
     domc.addType('default', {
-        model: defaultModel.extend({
+        model: {
             defaults: Object.assign({}, defaultModel.prototype.defaults, {
                 tagName: 'div',
                 traits: [
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'text-'+v, name: capitalize(v)} })
+                            { value: '', name: 'Default' },
+                            ...contexts_w_white.map(function (v) { return { value: 'text-' + v, name: capitalize(v) } })
                         ],
                         label: 'Text color'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'bg-'+v, name: capitalize(v)} })
+                            { value: '', name: 'Default' },
+                            ...contexts_w_white.map(function (v) { return { value: 'bg-' + v, name: capitalize(v) } })
                         ],
                         label: 'Background color'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            {value: 'border', name: 'Full'},
-                            {value: 'border-top-0', name: 'No top'},
-                            {value: 'border-right-0', name: 'No right'},
-                            {value: 'border-bottom-0', name: 'No bottom'},
-                            {value: 'border-left-0', name: 'No left'},
-                            {value: 'border-0', name: 'None'}
+                            { value: '', name: 'Default' },
+                            { value: 'border', name: 'Full' },
+                            { value: 'border-top-0', name: 'No top' },
+                            { value: 'border-right-0', name: 'No right' },
+                            { value: 'border-bottom-0', name: 'No bottom' },
+                            { value: 'border-left-0', name: 'No left' },
+                            { value: 'border-0', name: 'None' }
                         ],
                         label: 'Border width'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            ... contexts_w_white.map(function(v) { return {value: 'border border-'+v, name: capitalize(v)} })
+                            { value: '', name: 'Default' },
+                            ...contexts_w_white.map(function (v) { return { value: 'border border-' + v, name: capitalize(v) } })
                         ],
                         label: 'Border color'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            {value: 'rounded', name: 'Rounded'},
-                            {value: 'rounded-top', name: 'Rounded top'},
-                            {value: 'rounded-right', name: 'Rounded right'},
-                            {value: 'rounded-bottom', name: 'Rounded bottom'},
-                            {value: 'rounded-left', name: 'Rounded left'},
-                            {value: 'rounded-circle', name: 'Circle'},
-                            {value: 'rounded-0', name: 'Square'},
+                            { value: '', name: 'Default' },
+                            { value: 'rounded', name: 'Rounded' },
+                            { value: 'rounded-top', name: 'Rounded top' },
+                            { value: 'rounded-right', name: 'Rounded right' },
+                            { value: 'rounded-bottom', name: 'Rounded bottom' },
+                            { value: 'rounded-left', name: 'Rounded left' },
+                            { value: 'rounded-circle', name: 'Circle' },
+                            { value: 'rounded-0', name: 'Square' },
                         ],
                         label: 'Border radius'
                     },
@@ -85,9 +85,9 @@ export default (domc) => {
                 this.init2();
             },
             /* BS comps use init2, not init */
-            init2() {},
+            init2() { },
             /* method where we can check if we should changeType */
-            classesChanged() {},
+            classesChanged() { },
             /* replace the comp with a copy of a different type */
             changeType(new_type) {
                 const coll = this.collection;
@@ -102,7 +102,7 @@ export default (domc) => {
                 coll.add(button_opts, { at });
                 this.destroy();
             }
-        }),
+        },
         view: defaultView
     });
 }

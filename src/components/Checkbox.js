@@ -26,13 +26,13 @@ export default (dc, traits, config = {}) => {
     const inputModel = inputType.model;
 
     dc.addType('checkbox', {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...inputModel.prototype.defaults,
                 'custom-name': config.labels.checkbox_name,
                 copyable: false,
                 droppable: false,
-                attributes: {type: 'checkbox'},
+                attributes: { type: 'checkbox' },
                 traits: [
                     traits.id,
                     traits.name,
@@ -63,14 +63,13 @@ export default (dc, traits, config = {}) => {
 
                 this.set('attributes', { ...attrs });
             }
-        }, {
-            isComponent(el) {
-                if (el.tagName === 'INPUT' && el.type === 'checkbox') {
-                    return {type: 'checkbox'};
-                }
-            },
-        }),
-        view: defaultView.extend({
+        },
+        isComponent(el) {
+            if (el.tagName === 'INPUT' && el.type === 'checkbox') {
+                return { type: 'checkbox' };
+            }
+        },
+        view: {
             events: {
                 'click': 'handleClick',
             },
@@ -78,6 +77,6 @@ export default (dc, traits, config = {}) => {
             handleClick(e) {
                 e.preventDefault();
             },
-        }),
+        },
     });
 }

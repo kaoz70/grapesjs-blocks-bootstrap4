@@ -33,7 +33,7 @@ export default (editor, dc, traits, config = {}) => {
 
     // SELECT
     dc.addType('select', {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...inputModel.prototype.defaults,
                 'custom-name': config.labels.select,
@@ -46,19 +46,18 @@ export default (editor, dc, traits, config = {}) => {
                     traits.required
                 ],
             },
-        }, {
-            isComponent(el) {
-                if(el.tagName === 'SELECT'){
-                    return {type: 'select'};
-                }
-            },
-        }),
+        },
+        isComponent(el) {
+            if (el.tagName === 'SELECT') {
+                return { type: 'select' };
+            }
+        },
         view: preventDefaultClick(),
     });
 
     const traitManager = editor.TraitManager;
     traitManager.addType('select-options', {
-        events:{
+        events: {
             'keyup': 'onChange',
         },
 
@@ -74,7 +73,7 @@ export default (editor, dc, traits, config = {}) => {
                     tagName: 'option',
                     attributes: {}
                 };
-                if(option[1]) {
+                if (option[1]) {
                     opt.content = option[1];
                     opt.attributes.value = option[0];
                 } else {
@@ -89,7 +88,7 @@ export default (editor, dc, traits, config = {}) => {
             this.target.view.render();
         },
 
-        getInputEl: function() {
+        getInputEl: function () {
             if (!this.$input) {
                 const target = this.target;
                 let optionsStr = '';

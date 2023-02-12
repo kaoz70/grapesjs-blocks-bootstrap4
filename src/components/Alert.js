@@ -1,6 +1,6 @@
 import contexts from '../bootstrap-contexts';
 import exclamationIcon from "raw-loader!../icons/exclamation-triangle-solid.svg";
-import {capitalize} from "../utils";
+import { capitalize } from "../utils";
 
 export const AlertBlock = (bm, label) => {
     bm.add('alert', {
@@ -22,7 +22,8 @@ export default (domc) => {
     const textView = textType.view;
 
     domc.addType('alert', {
-        model: textModel.extend({
+        extend: 'text',
+        model: {
             defaults: Object.assign({}, textModel.prototype.defaults, {
                 'custom-name': 'Alert',
                 tagName: 'div',
@@ -31,20 +32,19 @@ export default (domc) => {
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'None'},
-                            ... contexts.map(function(v) { return {value: 'alert-'+v, name: capitalize(v)} })
+                            { value: '', name: 'None' },
+                            ...contexts.map(function (v) { return { value: 'alert-' + v, name: capitalize(v) } })
                         ],
                         label: 'Context'
                     }
                 ].concat(textModel.prototype.defaults.traits)
             })
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('alert')) {
-                    return {type: 'alert'};
-                }
+        },
+        isComponent(el) {
+            if (el && el.classList && el.classList.contains('alert')) {
+                return { type: 'alert' };
             }
-        }),
+        },
         view: textView
     });
 }

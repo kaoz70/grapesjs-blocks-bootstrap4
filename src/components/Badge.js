@@ -1,6 +1,6 @@
 import contexts from '../bootstrap-contexts';
 import certificateIcon from "raw-loader!../icons/certificate-solid.svg";
-import {capitalize} from "../utils";
+import { capitalize } from "../utils";
 
 export const BadgeBlock = (bm, label) => {
     bm.add('badge', {
@@ -22,7 +22,8 @@ export default (domc) => {
     const textView = textType.view;
 
     domc.addType('badge', {
-        model: textModel.extend({
+        extend: 'text',
+        model: {
             defaults: Object.assign({}, textModel.prototype.defaults, {
                 'custom-name': 'Badge',
                 tagName: 'span',
@@ -31,28 +32,27 @@ export default (domc) => {
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'None'},
-                            ... contexts.map(function(v) { return {value: 'badge-'+v, name: capitalize(v)} })
+                            { value: '', name: 'None' },
+                            ...contexts.map(function (v) { return { value: 'badge-' + v, name: capitalize(v) } })
                         ],
                         label: 'Context'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            {value: 'badge-pill', name: 'Pill'},
+                            { value: '', name: 'Default' },
+                            { value: 'badge-pill', name: 'Pill' },
                         ],
                         label: 'Shape'
                     }
                 ].concat(textModel.prototype.defaults.traits)
             })
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('badge')) {
-                    return {type: 'badge'};
-                }
+        },
+        isComponent(el) {
+            if (el && el.classList && el.classList.contains('badge')) {
+                return { type: 'badge' };
             }
-        }),
+        },
         view: textView
     });
 }

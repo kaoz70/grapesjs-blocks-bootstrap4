@@ -3,6 +3,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const pkg = require('./package.json');
 const webpack = require('webpack');
 const fs = require('fs');
+const path = require('path')
 const name = pkg.name;
 let plugins = [];
 let optimization = {};
@@ -33,6 +34,13 @@ module.exports = (env = {}) => {
             filename: `./${name}.min.js`,
             library: name,
             libraryTarget: 'umd',
+            path: path.resolve(__dirname, 'dist'),
+            publicPath: '/dist/',
+        },
+        devServer: {
+            contentBase: path.join(__dirname, 'dist'),
+            port: 9000,
+            hot: true,
         },
         module: {
             rules: [

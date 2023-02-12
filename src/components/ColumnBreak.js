@@ -19,19 +19,18 @@ export default (domc) => {
     const defaultView = defaultType.view;
 
     domc.addType('column_break', {
-        model: defaultModel.extend({
+        model: {
             defaults: Object.assign({}, defaultModel.prototype.defaults, {
                 'custom-name': 'Column Break',
                 tagName: 'div',
                 classes: ['w-100']
             })
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('w-100')) { // also check if parent is `.row`
-                    return {type: 'column_break'};
-                }
+        },
+        isComponent(el) {
+            if (el && el.classList && el.classList.contains('w-100')) { // also check if parent is `.row`
+                return { type: 'column_break' };
             }
-        }),
+        },
         view: defaultView
     });
 }

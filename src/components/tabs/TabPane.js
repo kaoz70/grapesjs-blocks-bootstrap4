@@ -11,7 +11,7 @@ export default (dc, config = {}) => {
 
   dc.addType(type, {
 
-    model: defaultModel.extend({
+    model: {
       defaults: {
         ...defaultModel.prototype.defaults,
         name: 'Tab Pane',
@@ -23,16 +23,16 @@ export default (dc, config = {}) => {
           {
             type: 'class_select',
             options: [
-              {value: 'fade', name: 'Fade'},
-              {value: '', name: 'None'},
+              { value: 'fade', name: 'Fade' },
+              { value: '', name: 'None' },
             ],
             label: 'Animation',
           },
           {
             type: 'class_select',
             options: [
-              {value: '', name: 'Inactive'},
-              {value: 'active', name: 'Active'},
+              { value: '', name: 'Inactive' },
+              { value: 'active', name: 'Active' },
             ],
             label: 'Is Active',
           },
@@ -42,11 +42,10 @@ export default (dc, config = {}) => {
       init() {
         this.get('classes').pluck('name').indexOf(classId) < 0 && this.addClass(classId);
       }
-    }, {
-      isComponent(el) {
-        if (elHasClass(el, classId)) return { type };
-      },
-    }),
+    },
+    isComponent(el) {
+      if (elHasClass(el, classId)) return { type };
+    },
 
     view: defaultView,
   });
