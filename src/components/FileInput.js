@@ -1,4 +1,4 @@
-import {elHasClass} from "../utils";
+import { elHasClass } from "../utils";
 import fileInputIcon from "raw-loader!../icons/file-input.svg";
 
 export const FileInputBlock = (bm, label) => {
@@ -19,7 +19,7 @@ export default (dc, traits, config = {}) => {
     const type = 'file-input';
 
     dc.addType(type, {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...defaultModel.prototype.defaults,
                 'custom-name': config.labels.input,
@@ -36,13 +36,12 @@ export default (dc, traits, config = {}) => {
                     },
                 ],
             },
-        }, {
-            isComponent(el) {
-                if(el.tagName === 'INPUT' && elHasClass(el, 'form-control-file')) {
-                    return {type};
-                }
-            },
-        }),
+        },
+        isComponent(el) {
+            if (el.tagName === 'INPUT' && elHasClass(el, 'form-control-file')) {
+                return { type };
+            }
+        },
         view: defaultView,
     });
 }

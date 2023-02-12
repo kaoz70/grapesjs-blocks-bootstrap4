@@ -1,7 +1,7 @@
 import contexts from '../bootstrap-contexts';
 import sizes from '../bootstrap-btn-sizes';
 import buttonIcon from "raw-loader!../icons/button.svg";
-import {capitalize} from "../utils";
+import { capitalize } from "../utils";
 
 export const ButtonBlock = (bm, label) => {
     bm.add('button', {
@@ -17,7 +17,7 @@ export default (dc) => {
     const defaultView = defaultType.view;
 
     dc.addType('button', {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...defaultModel.prototype.defaults,
                 'custom-name': 'Button',
@@ -36,33 +36,33 @@ export default (dc) => {
                         type: 'select',
                         name: 'type',
                         options: [
-                            {value: 'submit', name: 'Submit'},
-                            {value: 'reset', name: 'Reset'},
-                            {value: 'button', name: 'Button'},
+                            { value: 'submit', name: 'Submit' },
+                            { value: 'reset', name: 'Reset' },
+                            { value: 'button', name: 'Button' },
                         ]
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'None'},
-                            ... contexts.map((v) => { return {value: `btn-${v}`, name: capitalize(v)} }),
-                            ... contexts.map((v) => { return {value: `btn-outline-${v}`, name: capitalize(v) + ' (Outline)'} })
+                            { value: '', name: 'None' },
+                            ...contexts.map((v) => { return { value: `btn-${v}`, name: capitalize(v) } }),
+                            ...contexts.map((v) => { return { value: `btn-outline-${v}`, name: capitalize(v) + ' (Outline)' } })
                         ],
                         label: 'Context'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Default'},
-                            ... Object.keys(sizes).map((k) => { return {value: `btn-${k}`, name: sizes[k]} })
+                            { value: '', name: 'Default' },
+                            ...Object.keys(sizes).map((k) => { return { value: `btn-${k}`, name: sizes[k] } })
                         ],
                         label: 'Size'
                     },
                     {
                         type: 'class_select',
                         options: [
-                            {value: '', name: 'Inline'},
-                            {value: 'btn-block', name: 'Block'}
+                            { value: '', name: 'Inline' },
+                            { value: 'btn-block', name: 'Block' }
                         ],
                         label: 'Width'
                     }
@@ -75,14 +75,13 @@ export default (dc) => {
                     }
                 }
             }
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('btn')) {
-                    return {type: 'button'};
-                }
+        },
+        isComponent(el) {
+            if (el && el.classList && el.classList.contains('btn')) {
+                return { type: 'button' };
             }
-        }),
-        view: defaultView.extend({
+        },
+        view: {
             events: {
                 'click': 'handleClick'
             },
@@ -98,6 +97,6 @@ export default (dc) => {
             handleClick(e) {
                 e.preventDefault();
             },
-        }),
+        },
     });
 }

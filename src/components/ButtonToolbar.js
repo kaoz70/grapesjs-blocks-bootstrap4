@@ -20,7 +20,7 @@ export default (dc) => {
     const defaultView = defaultType.view;
 
     dc.addType('button_toolbar', {
-        model: defaultModel.extend({
+        model: {
             defaults: Object.assign({}, defaultModel.prototype.defaults, {
                 'custom-name': 'Button Toolbar',
                 tagName: 'div',
@@ -38,13 +38,12 @@ export default (dc) => {
                     }
                 ].concat(defaultModel.prototype.defaults.traits)
             })
-        }, {
-            isComponent(el) {
-                if(el && el.classList && el.classList.contains('btn-toolbar')) {
-                    return {type: 'button_toolbar'};
-                }
+        },
+        isComponent(el) {
+            if (el && el.classList && el.classList.contains('btn-toolbar')) {
+                return { type: 'button_toolbar' };
             }
-        }),
+        },
         view: defaultView
     });
 }

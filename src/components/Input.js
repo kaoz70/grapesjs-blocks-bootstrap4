@@ -16,7 +16,7 @@ export default (dc, traits, config = {}) => {
     const defaultView = defaultType.view;
 
     dc.addType('input', {
-        model: defaultModel.extend({
+        model: {
             defaults: {
                 ...defaultModel.prototype.defaults,
                 'custom-name': config.labels.input,
@@ -31,23 +31,22 @@ export default (dc, traits, config = {}) => {
                         type: 'select',
                         name: 'type',
                         options: [
-                            {value: 'text', name: config.labels.type_text},
-                            {value: 'email', name: config.labels.type_email},
-                            {value: 'password', name: config.labels.type_password},
-                            {value: 'number', name: config.labels.type_number},
-                            {value: 'date', name: config.labels.type_date},
-                            {value: 'hidden', name: config.labels.type_hidden},
+                            { value: 'text', name: config.labels.type_text },
+                            { value: 'email', name: config.labels.type_email },
+                            { value: 'password', name: config.labels.type_password },
+                            { value: 'number', name: config.labels.type_number },
+                            { value: 'date', name: config.labels.type_date },
+                            { value: 'hidden', name: config.labels.type_hidden },
                         ]
                     }, traits.required
                 ],
             },
-        }, {
-            isComponent(el) {
-                if(el.tagName === 'INPUT') {
-                    return {type: 'input'};
-                }
-            },
-        }),
+        },
+        isComponent(el) {
+            if (el.tagName === 'INPUT') {
+                return { type: 'input' };
+            }
+        },
         view: defaultView,
     });
 }
