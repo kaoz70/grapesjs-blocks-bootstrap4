@@ -33,7 +33,7 @@ export default (domc, editor) => {
   const imageView = imageType.view;
 
   domc.addType('card', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card',
         classes: ['card'],
@@ -103,18 +103,18 @@ export default (domc, editor) => {
       cardImageBottom() { this.createCardComponent('card-img-bottom'); },
       createCardComponent(prop) {
         const state = this.get(prop);
-        const type = prop.replace(/-/g,'_').replace(/img/g,'image')
+        const type = prop.replace(/-/g, '_').replace(/img/g, 'image')
         let children = this.components();
-        let existing = children.filter(function(comp) {
+        let existing = children.filter(function (comp) {
           return comp.attributes.type === type;
         })[0]; // should only be one of each.
 
-        if(state && !existing) {
+        if (state && !existing) {
           var comp = children.add({
             type: type
           });
           let comp_children = comp.components();
-          if(prop === 'card-header') {
+          if (prop === 'card-header') {
             comp_children.add({
               type: 'header',
               tagName: 'h4',
@@ -122,7 +122,7 @@ export default (domc, editor) => {
               content: 'Card Header'
             });
           }
-          if(prop === 'card-img-overlay') {
+          if (prop === 'card-img-overlay') {
             comp_children.add({
               type: 'header',
               tagName: 'h4',
@@ -136,7 +136,7 @@ export default (domc, editor) => {
               content: "Some quick example text to build on the card title and make up the bulk of the card's content."
             });
           }
-          if(prop === 'card-body') {
+          if (prop === 'card-body') {
             comp_children.add({
               type: 'header',
               tagName: 'h4',
@@ -176,137 +176,132 @@ export default (domc, editor) => {
       order() {
 
       }
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card')) {
-          return {type: 'card'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card')) {
+        return { type: 'card' };
       }
-    }),
+    },
     view: defaultView
   });
 
   domc.addType('card_image_top', {
-    model: imageModel.extend({
+    extend: 'image',
+    model: {
       defaults: Object.assign({}, imageModel.prototype.defaults, {
         'custom-name': 'Card Image Top',
         classes: ['card-img-top'],
         'card-order': 1
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-img-top')) {
-          return {type: 'card_image_top'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-img-top')) {
+        return { type: 'card_image_top' };
       }
-    }),
+    },
     view: imageView
   });
 
   domc.addType('card_header', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card Header',
         classes: ['card-header'],
         'card-order': 2
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-header')) {
-          return {type: 'card_header'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-header')) {
+        return { type: 'card_header' };
       }
-    }),
+    },
     view: defaultView
   });
 
   domc.addType('card_image', {
-    model: imageModel.extend({
+    extend: 'image',
+    model: {
       defaults: Object.assign({}, imageModel.prototype.defaults, {
         'custom-name': 'Card Image',
         classes: ['card-img'],
         'card-order': 3
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-img')) {
-          return {type: 'card_image'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-img')) {
+        return { type: 'card_image' };
       }
-    }),
+    },
     view: imageView
   });
 
   domc.addType('card_image_overlay', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card Image Overlay',
         classes: ['card-img-overlay'],
         'card-order': 4
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-img-overlay')) {
-          return {type: 'card_image_overlay'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-img-overlay')) {
+        return { type: 'card_image_overlay' };
       }
-    }),
+    },
     view: defaultView
   });
 
   domc.addType('card_body', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card Body',
         classes: ['card-body'],
         'card-order': 5
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-body')) {
-          return {type: 'card_body'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-body')) {
+        return { type: 'card_body' };
       }
-    }),
+    },
     view: defaultView
   });
 
   domc.addType('card_footer', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card Footer',
         classes: ['card-footer'],
         'card-order': 6
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-footer')) {
-          return {type: 'card_footer'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-footer')) {
+        return { type: 'card_footer' };
       }
-    }),
+    },
     view: defaultView
   });
 
   domc.addType('card_image_bottom', {
-    model: imageModel.extend({
+    extend: 'image',
+    model: {
       defaults: Object.assign({}, imageModel.prototype.defaults, {
         'custom-name': 'Card Image Bottom',
         classes: ['card-img-bottom'],
         'card-order': 7
       })
-    }, {
-      isComponent(el) {
-        if(el && el.classList && el.classList.contains('card-img-bottom')) {
-          return {type: 'card_image_bottom'};
-        }
+    },
+    isComponent(el) {
+      if (el && el.classList && el.classList.contains('card-img-bottom')) {
+        return { type: 'card_image_bottom' };
       }
-    }),
+    },
     view: imageView
   });
 
   domc.addType('card_container', {
-    model: defaultModel.extend({
+    model: {
       defaults: Object.assign({}, defaultModel.prototype.defaults, {
         'custom-name': 'Card Container',
         classes: ['card-group'],
@@ -315,25 +310,24 @@ export default (domc, editor) => {
           {
             type: 'class_select',
             options: [
-              {value: 'card-group', name: 'Group'},
-              {value: 'card-deck', name: 'Deck'},
-              {value: 'card-columns', name: 'Columns'},
+              { value: 'card-group', name: 'Group' },
+              { value: 'card-deck', name: 'Deck' },
+              { value: 'card-columns', name: 'Columns' },
             ],
             label: 'Layout',
           }
         ].concat(defaultModel.prototype.defaults.traits)
       })
-    }, {
-      isComponent(el) {
-        const css = Array.from(el.classList || []);
-        const includes = ['card-group','card-deck','card-columns'];
-        const intersection = css.filter(x => includes.includes(x));
+    },
+    isComponent(el) {
+      const css = Array.from(el.classList || []);
+      const includes = ['card-group', 'card-deck', 'card-columns'];
+      const intersection = css.filter(x => includes.includes(x));
 
-        if(el && el.classList && intersection.length) {
-          return {type: 'card_container'};
-        }
+      if (el && el.classList && intersection.length) {
+        return { type: 'card_container' };
       }
-    }),
+    },
     view: defaultView
   });
 
