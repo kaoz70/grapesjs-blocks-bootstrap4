@@ -41,6 +41,6 @@
         "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
-        "npm": "^7.0.14"
+        "npm": "^10.9.0"
     }
 }
