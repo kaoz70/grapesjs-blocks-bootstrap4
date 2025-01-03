@@ -8,6 +8,9 @@
   <img alt="Sponsor" width="888" height="68" src="https://app.codesponsor.io/embed/nb9nPYf2XqCE1PbgcQj6gf4D/artf/grapesjs-plugin-boilerplate.svg"/>
 </a>-->
 
+### Bootstrap 5
+For a Bootstrap 5 version, you can use the [Bootstrap 5 plugin](https://github.com/MoonriseSoftwareCalifornia/grapesjs-blocks-bootstrap5) from [Eric Dean Kauffman](https://github.com/toiyabe) which is a fork of this project.
+
 ## Summary
 
 * Plugin name: `grapesjs-blocks-bootstrap4`
